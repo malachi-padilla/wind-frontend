@@ -1,14 +1,14 @@
+import SideBar from "components/Sidebar/Sidebar";
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import styles from "./Chat.module.css";
-import SideBar from "./SideBar";
 
 const ENDPOINT = "http://localhost:5000";
 
 let socket;
-function ChatPage({ name, friend, setFriend }) {
+export default function ChatPage({ name, friend, setFriend }: any) {
   const [currentMessage, setCurrentMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any>([]);
   useEffect(() => {
     socket = io(ENDPOINT);
 
@@ -30,7 +30,7 @@ function ChatPage({ name, friend, setFriend }) {
 
   return (
     <div className={styles.MainContainer}>
-      <SideBar friend={friend} setFriend={setFriend} />
+      <SideBar friend={friend} />
       <div className={styles.Title}>
         <p>{`you're chatting with ${friend}`}</p>
       </div>
@@ -50,7 +50,7 @@ function ChatPage({ name, friend, setFriend }) {
         ))}
       </div>
       <form
-        onSubmit={(e) => sendMessage(e.target.value)}
+        onSubmit={(e: any) => sendMessage(e.target.value)}
         className={styles.MessagingContainer}
       >
         <input
@@ -64,5 +64,3 @@ function ChatPage({ name, friend, setFriend }) {
     </div>
   );
 }
-
-export default ChatPage;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
-import Chat from "./components/Chat";
-import Login from "./components/Login";
+import Chat from "./components/Chat/Chat";
+import Login from "./components/Login/Login";
 
 export default function App() {
   const [name, setName] = useState("");

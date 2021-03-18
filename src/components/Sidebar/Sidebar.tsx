@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./SideBar.module.css";
+import styles from "./Sidebar.module.css";
 
 export default function SideBar({ friend }) {
   const [chatOpen, setChatOpen] = useState(true);
@@ -33,7 +33,7 @@ export default function SideBar({ friend }) {
 
             <div className={styles.ChatBar}>
               <p>
-                <span style={{ fontWeight: "900" }}>Chat with </span>
+                <span style={{ fontWeight: 900 }}>Chat with </span>
                 {friend}
               </p>
             </div>

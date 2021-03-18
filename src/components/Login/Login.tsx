@@ -17,7 +17,7 @@ export default function Login({ setInChatRoom, setName, setFriend }) {
             <h3>We're so excited to see you again!</h3>
           </div>
           <div className={styles.FormInputs}>
-            <label style={{ fontWeight: "600", fontSize: "12px" }}>
+            <label style={{ fontWeight: 600, fontSize: "12px" }}>
               ENTER YOUR NAME
             </label>
             <input
@@ -25,7 +25,7 @@ export default function Login({ setInChatRoom, setName, setFriend }) {
               type="text"
               required
             ></input>
-            <label style={{ fontWeight: "600", fontSize: "12px" }}>
+            <label style={{ fontWeight: 600, fontSize: "12px" }}>
               ENTER A FRIEND
             </label>
             <input
