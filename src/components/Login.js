@@ -6,7 +6,7 @@ export default function Login({ setInChatRoom, setName, setFriend }) {
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
         <h1>
-          DEV-CHAT <i className="fas fa-headset"></i>
+          WIND <i className="fas fa-wind"></i>
         </h1>
       </div>
       <div className={styles.FormContainer}>
