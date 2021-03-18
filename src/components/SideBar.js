@@ -26,7 +26,10 @@ export default function SideBar({ friend }) {
             <h1 style={{ color: "#fff", marginBottom: "20px" }}>
               Start a New Chat!
             </h1>
-            <input type="text" placeholder="Enter Friend"></input>
+            <div className={styles.EnterFriendWrapper}>
+              <input type="text" placeholder="Enter Friend"></input>
+              <button className={styles.PlusBtn}>+</button>
+            </div>
 
             <div className={styles.ChatBar}>
               <p>
