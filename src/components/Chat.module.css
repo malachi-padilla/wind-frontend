@@ -8,6 +8,7 @@
   background-color: #36393f;
   position: relative;
 }
+
 .Title {
   display: flex;
   align-items: flex-start;
@@ -25,23 +26,29 @@
   display: flex;
   flex-direction: column;
 }
+
 ::-webkit-scrollbar {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-button {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-track-piece {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #27292e;
   border-radius: 3rem;
   height: 10px;
 }
+
 .MainMessage {
   height: fit-content;
   height: fit-content;
@@ -85,6 +92,7 @@
   position: absolute;
   bottom: 10px;
 }
+
 .MessagingContainer input {
   background-color: #31333a;
   width: 100%;
