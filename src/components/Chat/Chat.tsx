@@ -1,22 +1,23 @@
 import SideBar from "components/Sidebar/Sidebar";
+import { ChatPageProps, PrivateChatMessage } from "components/types";
 import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import io  from "socket.io-client";
 import styles from "./Chat.module.css";
 
 const ENDPOINT = "http://localhost:5000";
 
 let socket;
-export default function ChatPage({ name, friend, setFriend }: any) {
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [messages, setMessages] = useState<any>([]);
+export default function ChatPage({ name, friend }: ChatPageProps) {
+  const [currentMessage, setCurrentMessage] = useState<string>();
+  const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   useEffect(() => {
     socket = io(ENDPOINT);
 
     socket.emit("join", { name, friend });
-  }, [ENDPOINT]);
+  }, [friend, name]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
+    socket.on("message", (message: PrivateChatMessage) => {
       console.log(message);
       setMessages((currentMessages) => [...currentMessages, message]);
     });
@@ -55,7 +56,7 @@ export default function ChatPage({ name, friend, setFriend }: any) {
       >
         <input
           value={currentMessage}
-          onChange={(e) => setCurrentMessage(e.target.value)}
+          onChange={(e: any) => setCurrentMessage(e.target.value)}
         ></input>
         <button type="submit" onClick={sendMessage}>
           Send

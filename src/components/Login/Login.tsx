@@ -1,7 +1,8 @@
+import { LoginProps } from "components/types";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 
-export default function Login({ setInChatRoom, setName, setFriend }) {
+export default function Login({ setInChatRoom, setName, setFriend }: LoginProps) {
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
