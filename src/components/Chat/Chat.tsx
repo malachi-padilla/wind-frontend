@@ -5,7 +5,6 @@ import io  from "socket.io-client";
 import styles from "./Chat.module.css";
 
 const ENDPOINT = "http://localhost:5000";
-
 let socket;
 export default function ChatPage({ name, friend }: ChatPageProps) {
   const [currentMessage, setCurrentMessage] = useState<string>();
@@ -14,13 +13,14 @@ export default function ChatPage({ name, friend }: ChatPageProps) {
     socket = io(ENDPOINT);
 
     socket.emit("join", { name, friend });
-  }, [friend, name]);
+  }, []);
 
   useEffect(() => {
     socket.on("message", (message: PrivateChatMessage) => {
       console.log(message);
       setMessages((currentMessages) => [...currentMessages, message]);
     });
+    return () => socket.emit('end');
   }, []);
 
   const sendMessage = (e) => {
