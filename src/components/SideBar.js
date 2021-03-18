@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./sideBar.module.css";
+import styles from "./SideBar.module.css";
 
 export default function SideBar({ friend }) {
   const [chatOpen, setChatOpen] = useState(true);
