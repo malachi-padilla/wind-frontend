@@ -1,5 +1,5 @@
 .MainContainer {
-    display: none;
+    z-index: 1;
 }
 
 @media only screen and (min-width: 1000px) {

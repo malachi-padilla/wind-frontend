@@ -1,17 +1,17 @@
-import SideBar from "components/Sidebar/Sidebar";
 import { PrivateChatMessage, UserContext } from "components/types";
 import React, { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import { MyContext } from "../../Context";
 import axios from "axios";
+import { animateScroll } from "react-scroll";
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
-export default function ChatPage() {
+export default function ChatPage({ friend }) {
   const [currentMessage, setCurrentMessage] = useState<string>();
   const user = useContext(MyContext) as UserContext;
-  const [friend, setFriend] = useState<string>("");
+  
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const name = user.username;
 
@@ -38,7 +38,17 @@ export default function ChatPage() {
           setMessages(res.data);
         }
       });
-  });
+  }, [friend]);
+
+  const scrollToBottom = () => {
+    animateScroll.scrollToBottom({
+      containerId: "ContainerElementID",
+    });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages])
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -48,7 +58,6 @@ export default function ChatPage() {
 
   return (
     <div className={styles.MainContainer}>
-      <SideBar friend={friend} setFriend={setFriend} />
       <div className={styles.Title}>
         <p>
           {friend === ""
@@ -57,7 +66,7 @@ export default function ChatPage() {
         </p>
       </div>
 
-      <div className={styles.ChatBody}>
+      <div className={styles.ChatBody} id="ContainerElementID">
         {messages.map((item) => (
           <>
             <div
