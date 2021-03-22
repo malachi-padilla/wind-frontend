@@ -1,8 +1,29 @@
-import { LoginProps } from "components/types";
-import React, { useState } from "react";
-import styles from "./Login.module.css";
+import styles from "../../components/Login/Login.module.css";
+import {Link} from "react-router-dom"
+import axios from "axios"
+import { useState } from "react";
 
-export default function Login({ setInChatRoom, setName, setFriend }: LoginProps) {
+export default function App() {
+
+     const [loginUsername, setLoginUsername] = useState<string>("");
+     const [loginPassword, setLoginPassword] = useState<string>("");
+
+     const login = () => {
+      axios({
+          method: "POST",
+          data: {
+              username: loginUsername,
+              password: loginPassword,
+          },
+          withCredentials: true,
+          url: "http://localhost:4000/auth/login",
+          }).then((res) => {
+          if (res.status === 200) {
+              window.location.href = "/chat";
+          }
+          });
+     };
+     
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
@@ -19,30 +40,33 @@ export default function Login({ setInChatRoom, setName, setFriend }: LoginProps)
           </div>
           <div className={styles.FormInputs}>
             <label style={{ fontWeight: 600, fontSize: "12px" }}>
-              ENTER YOUR NAME
+              USERNAME
             </label>
             <input
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setLoginUsername(e.target.value)}
               type="text"
               required
             ></input>
             <label style={{ fontWeight: 600, fontSize: "12px" }}>
-              ENTER A FRIEND
+              PASSWORD
             </label>
             <input
-              onChange={(e) => setFriend(e.target.value)}
+              onChange={(e) => setLoginPassword(e.target.value)}
               type="text"
               required
             ></input>
           </div>
           <div className={styles.FormBtns}>
             <button
-              onClick={() => setInChatRoom(true)}
+              onClick={login}
               className={styles.LoginBtn}
               type="submit"
             >
-              Chat
+              Login
             </button>
+              <p>
+                 <Link to="register" style={{color: "#7289da"}}>don't have an acount?</Link>
+            </p>
           </div>
         </div>
       </div>

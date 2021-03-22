@@ -2,8 +2,9 @@ import { SideBarProps } from "components/types";
 import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 
-export default function SideBar({ friend }: SideBarProps) {
+export default function SideBar({ friend, setFriend }: SideBarProps) {
   const [chatOpen, setChatOpen] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState(false);
   return (
     <div className={styles.MainContainer}>
@@ -28,7 +29,7 @@ export default function SideBar({ friend }: SideBarProps) {
               Start a New Chat!
             </h1>
             <div className={styles.EnterFriendWrapper}>
-              <input type="text" placeholder="Enter Friend"></input>
+              <input onChange={e => setFriend(e.target.value)}type="text" placeholder="Enter Friend"></input>
               <button className={styles.PlusBtn}>+</button>
             </div>
 

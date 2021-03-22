@@ -1,21 +1,17 @@
 // Will Extract This Into Folder Later
 
 export interface PrivateChatMessage {
-    message: string,
-    sentBy: string
-}
-
-export interface ChatPageProps {
-    name: string,
-    friend: string
-}
-
-export interface LoginProps {
-    setInChatRoom: (isInChatRoom: boolean) => any;
-    setName: (name: string) => any;
-    setFriend: (friend: string) => any;
+    message: string;
+    sentBy: string;
 }
 
 export interface SideBarProps {
-    friend: string
+    friend: string;
+    setFriend: (friend: string) => any;
+
+}
+
+export interface UserContext {
+    userId: string;
+    username: string;
 }
