@@ -2,7 +2,9 @@
 
 export interface PrivateChatMessage {
   message: string;
+  recipient: string;
   sentBy: string;
+  _id: string;
 }
 
 export interface SideBarProps {

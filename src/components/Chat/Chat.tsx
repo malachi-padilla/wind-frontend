@@ -9,7 +9,7 @@ const ENDPOINT = "http://localhost:4000";
 let socket;
 
 export default function ChatPage({ friend }) {
-  const [currentMessage, setCurrentMessage] = useState<string>();
+  const [currentMessage, setCurrentMessage] = useState<string>("");
   const user = useContext(MyContext) as UserContext;
   
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
@@ -68,8 +68,8 @@ export default function ChatPage({ friend }) {
 
       <div className={styles.ChatBody} id="ContainerElementID">
         {messages.map((item) => (
-          <>
             <div
+              key={item._id}
               className={
                 item.sentBy === name
                   ? styles.MainMessage
@@ -78,7 +78,6 @@ export default function ChatPage({ friend }) {
             >
               {item.message}
             </div>
-          </>
         ))}
       </div>
       <form
@@ -86,8 +85,8 @@ export default function ChatPage({ friend }) {
         className={styles.MessagingContainer}
       >
         <input
-          value={currentMessage}
           onChange={(e: any) => setCurrentMessage(e.target.value)}
+          value={currentMessage}
         ></input>
         <button type="submit" onClick={sendMessage}>
           Send
