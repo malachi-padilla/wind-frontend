@@ -1,21 +1,20 @@
 import SideBar from "components/Sidebar/Sidebar";
 import { PrivateChatMessage, UserContext } from "components/types";
 import React, { useContext, useEffect, useState } from "react";
-import io  from "socket.io-client";
+import io from "socket.io-client";
 import styles from "./Chat.module.css";
-import {MyContext} from "../../Context"
+import { MyContext } from "../../Context";
 import axios from "axios";
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
 export default function ChatPage() {
-
   const [currentMessage, setCurrentMessage] = useState<string>();
   const user = useContext(MyContext) as UserContext;
   const [friend, setFriend] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-  const name = user.username
-  
+  const name = user.username;
+
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("join", { name, friend });
@@ -26,16 +25,20 @@ export default function ChatPage() {
       console.log(message);
       setMessages((currentMessages) => [...currentMessages, message]);
     });
-    return () => socket.emit('end');
+    return () => socket.emit("end");
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`).then(res => {
-      if (res.data) {
-        setMessages(res.data);
-      }
-    })
-  })
+    axios
+      .get(
+        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`
+      )
+      .then((res) => {
+        if (res.data) {
+          setMessages(res.data);
+        }
+      });
+  });
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -45,11 +48,15 @@ export default function ChatPage() {
 
   return (
     <div className={styles.MainContainer}>
-      <SideBar friend={friend} setFriend={setFriend}/>
+      <SideBar friend={friend} setFriend={setFriend} />
       <div className={styles.Title}>
-        <p>{friend === ""? `You're chatting with nobody :(` : `you're chatting with ${friend}`}</p>
+        <p>
+          {friend === ""
+            ? `You're chatting with nobody :(`
+            : `you're chatting with ${friend}`}
+        </p>
       </div>
-      
+
       <div className={styles.ChatBody}>
         {messages.map((item) => (
           <>

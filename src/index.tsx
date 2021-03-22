@@ -6,7 +6,7 @@ import Routes from "Routes";
 ReactDOM.render(
   <React.StrictMode>
     <Context>
-      <Routes/>
+      <Routes />
     </Context>
   </React.StrictMode>,
   document.getElementById("root")
