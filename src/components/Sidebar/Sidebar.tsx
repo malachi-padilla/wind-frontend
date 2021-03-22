@@ -7,6 +7,12 @@ export default function SideBar({ friend, setFriend }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
+
+
+  const addFriend = () => {
+    setFriend(friendInput);
+    setFriendInput("")
+  }
   return (
     <div className={styles.MainContainer}>
       <div className={styles.NavBtns}>
@@ -32,35 +38,42 @@ export default function SideBar({ friend, setFriend }: SideBarProps) {
             <div className={styles.EnterFriendWrapper}>
               <input
                 onKeyDown={(e) =>
-                  e.key == "Enter" ? setFriend(friendInput) : null
+                  e.key == "Enter" ? addFriend() : null
                 }
                 onChange={(e: any) => setFriendInput(e.target.value)}
+                value={friendInput}
                 type="text"
                 placeholder="Enter Friend"
               ></input>
-              <button className={styles.PlusBtn}>+</button>
+              <button onClick={addFriend} className={styles.PlusBtn}>+</button>
             </div>
 
-            {friendInput.length > 0 ? (
-              <div
-                className={styles.ChatBar}
-                onClick={() => setFriend(friendInput)}
+            { !friend 
+            ? null 
+            : (
+            <div
+              className={styles.ChatBar}
               >
                 <p>
-                  <span style={{ fontWeight: 900 }}>Chat with </span>
-                  {friendInput}
+                  {friend}
                 </p>
-              </div>
-            ) : null}
+              </div>)}
           </>
         ) : (
           <>
             <h1 style={{ color: "#fff", marginBottom: "20px" }}>
-              Your Friends!
+           { !friend ? "No Friends Yet :(" :"Your Friends!"}
             </h1>
-            <div className={styles.ChatBar}>
-              <p>{friend}</p>
-            </div>
+            {
+              !friend
+              ? null
+              : (
+              <div className={styles.ChatBar}>
+                <p>{friend}</p>
+              </div>
+              )
+            }
+          
           </>
         )}
       </div>
