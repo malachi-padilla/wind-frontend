@@ -19,7 +19,6 @@ export default function ChatPage() {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("join", { name, friend });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
