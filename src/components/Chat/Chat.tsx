@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import io  from "socket.io-client";
 import styles from "./Chat.module.css";
 import {MyContext} from "../../Context"
-
+import axios from "axios";
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
@@ -29,6 +29,14 @@ export default function ChatPage() {
     return () => socket.emit('end');
   }, []);
 
+  useEffect(() => {
+    axios.get(`http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`).then(res => {
+      if (res.data) {
+        setMessages(res.data);
+      }
+    })
+  })
+
   const sendMessage = (e) => {
     e.preventDefault();
     socket.emit("message", { friend, message: currentMessage });
@@ -41,6 +49,7 @@ export default function ChatPage() {
       <div className={styles.Title}>
         <p>{friend === ""? `You're chatting with nobody :(` : `you're chatting with ${friend}`}</p>
       </div>
+      
       <div className={styles.ChatBody}>
         {messages.map((item) => (
           <>
