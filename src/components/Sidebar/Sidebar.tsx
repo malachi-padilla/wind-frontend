@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 
 export default function SideBar({ friend, setFriend }: SideBarProps) {
-  const [chatOpen, setChatOpen] = useState(true);
+  const [chatOpen, setChatOpen] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [friendsOpen, setFriendsOpen] = useState(false);
+  const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
+  const [friendInput, setFriendInput] = useState<string>("");
   return (
     <div className={styles.MainContainer}>
       <div className={styles.NavBtns}>
@@ -29,16 +30,28 @@ export default function SideBar({ friend, setFriend }: SideBarProps) {
               Start a New Chat!
             </h1>
             <div className={styles.EnterFriendWrapper}>
-              <input onChange={e => setFriend(e.target.value)}type="text" placeholder="Enter Friend"></input>
+              <input
+                onKeyDown={(e) =>
+                  e.key == "Enter" ? setFriend(friendInput) : null
+                }
+                onChange={(e: any) => setFriendInput(e.target.value)}
+                type="text"
+                placeholder="Enter Friend"
+              ></input>
               <button className={styles.PlusBtn}>+</button>
             </div>
 
-            <div className={styles.ChatBar}>
-              <p>
-                <span style={{ fontWeight: 900 }}>Chat with </span>
-                {friend}
-              </p>
-            </div>
+            {friendInput.length > 0 ? (
+              <div
+                className={styles.ChatBar}
+                onClick={() => setFriend(friendInput)}
+              >
+                <p>
+                  <span style={{ fontWeight: 900 }}>Chat with </span>
+                  {friendInput}
+                </p>
+              </div>
+            ) : null}
           </>
         ) : (
           <>
