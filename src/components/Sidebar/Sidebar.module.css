@@ -1,96 +1,95 @@
 .MainContainer {
-  display: none;
+    z-index: 1;
 }
 
 @media only screen and (min-width: 1000px) {
-  .MainContainer {
-    height: 100vh;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    background-color: #27292e;
-    position: absolute;
-    left: 0;
-    font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
-  }
-  .NavBtns {
-    display: flex;
-    flex-direction: row;
-    gap: 1px;
-  }
-  .NavBtns button {
-    width: 100%;
-    height: 50px;
-    outline: none;
-    border: none;
-    background-color: #7289da;
-    color: #fff;
-    font-size: 20px;
-    margin-bottom: 20vh;
-  }
-  button:hover {
-    opacity: 0.9;
-  }
-  .SideBarContents {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .EnterFriendWrapper {
-    width: 100%;
-    margin-left: 10%;
-  }
-  .EnterFriendWrapper input {
-    background-color: #31333a;
-    width: 80%;
-    height: 40px;
-    padding: 10px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 3px;
-    border: 1px solid #27292e;
-    margin-top: 8px;
-    color: #dcddde;
-    font-size: 16px;
-    margin-bottom: 50px;
-    margin-right: 5px;
-  }
-  .EnterFriendWrapper input:hover {
-    transition: ease-in 200ms;
-    border: 1px solid #1b1b1b;
-  }
-  .EnterFriendWrapper input:focus {
-    border: 1px solid #7289da;
-  }
-  .PlusBtn {
-    outline: none;
-    font-size: 20px;
-    font-weight: 5 00;
-    border: 1px solid #43b581;
-    color: #43b581;
-    background-color: #31333a;
-    height: 40px;
-    width: 40px;
-    border-radius: 100%;
-  }
-  .PlusBtn:hover {
-    transition: ease-in 200ms;
-    border-radius: 10px;
-    color: #fff;
-    background-color: #43b581;
-  }
-
-  .ChatBar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    background-color: #43b581;
-    width: 100%;
-    color: #fff;
-  }
-  .ChatBar:hover {
-    opacity: 0.9;
-  }
+    .MainContainer {
+        height: 100vh;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        background-color: #27292e;
+        position: absolute;
+        left: 0;
+        font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
+    }
+    .NavBtns {
+        display: flex;
+        flex-direction: row;
+        gap: 1px;
+    }
+    .NavBtns button {
+        width: 100%;
+        height: 50px;
+        outline: none;
+        border: none;
+        background-color: #7289da;
+        color: #fff;
+        font-size: 20px;
+        margin-bottom: 20vh;
+    }
+    button:hover {
+        opacity: 0.9;
+    }
+    .SideBarContents {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .EnterFriendWrapper {
+        width: 100%;
+        margin-left: 10%;
+    }
+    .EnterFriendWrapper input {
+        background-color: #31333a;
+        width: 80%;
+        height: 40px;
+        padding: 10px;
+        outline: none;
+        box-sizing: border-box;
+        border-radius: 3px;
+        border: 1px solid #27292e;
+        margin-top: 8px;
+        color: #dcddde;
+        font-size: 16px;
+        margin-bottom: 50px;
+        margin-right: 5px;
+    }
+    .EnterFriendWrapper input:hover {
+        transition: ease-in 200ms;
+        border: 1px solid #1b1b1b;
+    }
+    .EnterFriendWrapper input:focus {
+        border: 1px solid #7289da;
+    }
+    .PlusBtn {
+        outline: none;
+        font-size: 20px;
+        font-weight: 5 00;
+        border: 1px solid #43b581;
+        color: #43b581;
+        background-color: #31333a;
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+    }
+    .PlusBtn:hover {
+        transition: ease-in 200ms;
+        border-radius: 10px;
+        color: #fff;
+        background-color: #43b581;
+    }
+    .ChatBar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        background-color: #43b581;
+        width: 100%;
+        color: #fff;
+    }
+    .ChatBar:hover {
+        opacity: 0.9;
+    }
 }

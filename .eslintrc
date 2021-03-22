@@ -1,4 +1,4 @@
-module.exports = {
+{
     "env": {
         "browser": true,
         "es2021": true
@@ -28,4 +28,4 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0
     }
-};
+}

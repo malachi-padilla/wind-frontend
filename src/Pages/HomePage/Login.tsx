@@ -1,30 +1,29 @@
-import React from 'react';
+import React from "react";
 import styles from "../../components/Login/Login.module.css";
-import {Link} from "react-router-dom"
-import axios from "axios"
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { useState } from "react";
 
 export default function App() {
+  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [loginPassword, setLoginPassword] = useState<string>("");
 
-     const [loginUsername, setLoginUsername] = useState<string>("");
-     const [loginPassword, setLoginPassword] = useState<string>("");
+  const login = () => {
+    axios({
+      method: "POST",
+      data: {
+        username: loginUsername,
+        password: loginPassword,
+      },
+      withCredentials: true,
+      url: "http://localhost:4000/auth/login",
+    }).then((res) => {
+      if (res.status === 200) {
+        window.location.href = "/chat";
+      }
+    });
+  };
 
-     const login = () => {
-      axios({
-          method: "POST",
-          data: {
-              username: loginUsername,
-              password: loginPassword,
-          },
-          withCredentials: true,
-          url: "http://localhost:4000/auth/login",
-          }).then((res) => {
-          if (res.status === 200) {
-              window.location.href = "/chat";
-          }
-          });
-     };
-     
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
@@ -58,15 +57,13 @@ export default function App() {
             ></input>
           </div>
           <div className={styles.FormBtns}>
-            <button
-              onClick={login}
-              className={styles.LoginBtn}
-              type="submit"
-            >
+            <button onClick={login} className={styles.LoginBtn} type="submit">
               Login
             </button>
-              <p>
-                 <Link to="register" style={{color: "#7289da"}}>don't have an acount?</Link>
+            <p>
+              <Link to="register" style={{ color: "#7289da" }}>
+                don't have an acount?
+              </Link>
             </p>
           </div>
         </div>

@@ -1,130 +1,131 @@
 .MainContainer {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
-  background-color: #36393f;
-  position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
+    background-color: #36393f;
+    position: relative;
 }
 
 .Title {
-  display: flex;
-  align-items: flex-start;
-  color: #72767d;
-  font-size: 16px;
-  position: absolute;
-  top: 20px;
+    display: flex;
+    align-items: flex-start;
+    color: #72767d;
+    font-size: 16px;
+    position: absolute;
+    top: 20px;
 }
 
 .ChatBody {
-  height: 60vh;
-  width: 90vw;
-  overflow: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+    height: 60vh;
+    width: 90vw;
+    overflow: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 ::-webkit-scrollbar {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-button {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-track-piece {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #27292e;
-  border-radius: 3rem;
-  height: 10px;
+    background-color: #27292e;
+    border-radius: 3rem;
+    height: 10px;
 }
 
 .MainMessage {
-  height: fit-content;
-  height: fit-content;
-  width: fit-content;
-  max-width: 50%;
-  word-break: break-all;
-  word-wrap: break-word;
-  padding: 10px;
-  background-color: #7289da;
-  border-radius: 30px;
-  color: #fff;
-  margin-bottom: 8px;
-  align-self: flex-end;
-  position: relative;
-  margin-right: 20px;
+    height: fit-content;
+    height: fit-content;
+    width: fit-content;
+    max-width: 50%;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding: 10px;
+    background-color: #7289da;
+    border-radius: 30px;
+    color: #fff;
+    margin-bottom: 8px;
+    align-self: flex-end;
+    position: relative;
+    margin-right: 20px;
 }
 
 .SecondaryMessage {
-  height: fit-content;
-  height: fit-content;
-  width: fit-content;
-  max-width: 50%;
-  word-break: break-all;
-  word-wrap: break-word;
-  padding: 10px;
-  background-color: #72767d;
-  border-radius: 30px;
-  color: #fff;
-  margin-bottom: 20px;
-  align-self: flex-start;
-  position: relative;
+    height: fit-content;
+    height: fit-content;
+    width: fit-content;
+    max-width: 50%;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding: 10px;
+    background-color: #72767d;
+    border-radius: 30px;
+    color: #fff;
+    margin-bottom: 20px;
+    align-self: flex-start;
+    position: relative;
 }
 
 .MessagingContainer {
-  display: flex;
-  height: 200px;
-  width: 70%;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  position: absolute;
-  bottom: 10px;
+    display: flex;
+    height: 200px;
+    width: 70%;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
 }
 
 .MessagingContainer input {
-  background-color: #31333a;
-  width: 100%;
-  height: 40px;
-  padding: 10px;
-  outline: none;
-  box-sizing: border-box;
-  border-radius: 3px;
-  border: 1px solid #27292e;
-  color: #dcddde;
-  font-size: 16px;
+    background-color: #31333a;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #27292e;
+    color: #dcddde;
+    font-size: 16px;
 }
+
 .MessagingContainer button {
-  height: 40px;
-  outline: none;
-  border: none;
-  padding: 10px;
-  border-radius: 3px;
-  background-color: #7289da;
-  color: #fff;
+    height: 40px;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #7289da;
+    color: #fff;
 }
 
 @media only screen and (min-width: 1000px) {
-  .Title {
-    margin-left: 20%;
-  }
-  .ChatBody {
-    width: 50%;
-    margin-left: 20%;
-  }
-  .MessagingContainer {
-    width: 50%;
-    margin-left: 20%;
-  }
+    .Title {
+        margin-left: 20%;
+    }
+    .ChatBody {
+        width: 50%;
+        margin-left: 20%;
+    }
+    .MessagingContainer {
+        width: 50%;
+        margin-left: 20%;
+    }
 }
