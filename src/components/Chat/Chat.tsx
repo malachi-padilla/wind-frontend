@@ -1,18 +1,25 @@
 import SideBar from "components/Sidebar/Sidebar";
-import { ChatPageProps, PrivateChatMessage } from "components/types";
-import React, { useEffect, useState } from "react";
+import { PrivateChatMessage, UserContext } from "components/types";
+import React, { useContext, useEffect, useState } from "react";
 import io  from "socket.io-client";
 import styles from "./Chat.module.css";
+import {MyContext} from "../../Context"
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://localhost:4000";
 let socket;
-export default function ChatPage({ name, friend }: ChatPageProps) {
+
+export default function ChatPage() {
+
   const [currentMessage, setCurrentMessage] = useState<string>();
+  const user = useContext(MyContext) as UserContext;
+  const [friend, setFriend] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
+  const name = user.username
+  
   useEffect(() => {
     socket = io(ENDPOINT);
-
     socket.emit("join", { name, friend });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -31,9 +38,9 @@ export default function ChatPage({ name, friend }: ChatPageProps) {
 
   return (
     <div className={styles.MainContainer}>
-      <SideBar friend={friend} />
+      <SideBar friend={friend} setFriend={setFriend}/>
       <div className={styles.Title}>
-        <p>{`you're chatting with ${friend}`}</p>
+        <p>{friend === ""? `You're chatting with nobody :(` : `you're chatting with ${friend}`}</p>
       </div>
       <div className={styles.ChatBody}>
         {messages.map((item) => (
