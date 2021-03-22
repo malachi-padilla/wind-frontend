@@ -8,6 +8,7 @@ export interface PrivateChatMessage {
 export interface SideBarProps {
     friend: string;
     setFriend: (friend: string) => any;
+    user: UserContext;
 
 }
 
