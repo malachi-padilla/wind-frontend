@@ -3,23 +3,13 @@ import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 import ProfileModal from "./ProfileModal"
 
-export default function SideBar({ friend, setFriend, user }: SideBarProps) {
+export default function SideBar({ friend, setFriend }: SideBarProps) {
   const [chatOpen, setChatOpen] = useState<boolean>(true);
-  const [ userInput, setUserInput] = useState<string>("");
-  const [profileModal, setProfileModal] = useState<boolean>(false);
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [friendsOpen, setFriendsOpen] = useState(false);
-  const addFriend = () => {
-    setFriend(userInput);
-    setUserInput("");
-  }
+  const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
+  const [friendInput, setFriendInput] = useState<string>("");
   return (
     <>
-    { profileModal
-      ? <ProfileModal/>
-      : null
-    }
     <div className={styles.MainContainer}>
       <div className={styles.NavBtns}>
         <button onClick={() => setChatOpen(true)}>
@@ -42,20 +32,28 @@ export default function SideBar({ friend, setFriend, user }: SideBarProps) {
               Start a New Chat!
             </h1>
             <div className={styles.EnterFriendWrapper}>
-              <input  value={userInput} onChange={e => setUserInput(e.target.value)}type="text" placeholder="Enter Friend"></input>
-              <button onClick={addFriend}className={styles.PlusBtn}>+</button>
+              <input
+                onKeyDown={(e) =>
+                  e.key == "Enter" ? setFriend(friendInput) : null
+                }
+                onChange={(e: any) => setFriendInput(e.target.value)}
+                type="text"
+                placeholder="Enter Friend"
+              ></input>
+              <button className={styles.PlusBtn}>+</button>
             </div>
 
-            {
-              !friend
-              ? null
-              :
-               ( <div className={styles.ChatBar}>
+            {friendInput.length > 0 ? (
+              <div
+                className={styles.ChatBar}
+                onClick={() => setFriend(friendInput)}
+              >
                 <p>
-                 {friend}
+                  <span style={{ fontWeight: 900 }}>Chat with </span>
+                  {friendInput}
                 </p>
-                </div>)
-            }
+              </div>
+            ) : null}
           </>
         ) : (
           <>
@@ -71,13 +69,6 @@ export default function SideBar({ friend, setFriend, user }: SideBarProps) {
             }
           </>
         )}
-      </div>
-      <div className={styles.ProfileBar}>
-        <div>
-            <p style={{fontWeight: 'bold'}}>{user.username}</p>
-            <p style={{color: '#72767d'}}>#{user.userId}</p>
-        </div>
-        <button onClick={() => setProfileModal(true)}><i className="fas fa-cog"></i></button>
       </div>
     </div>
     </>

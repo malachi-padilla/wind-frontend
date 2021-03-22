@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 import styles from "../../components/Login/Login.module.css";
-import axios from "axios"
+import axios from "axios";
 import { useState } from "react";
 
 export default function Register() {
-
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerPassword, setRegisterPassword] = useState<string>("");
 
