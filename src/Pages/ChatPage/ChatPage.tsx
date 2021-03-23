@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import Chat from "../../components/Chat/Chat";
 import SideBar from "components/Sidebar/Sidebar";
+import styles from './ChatPage.module.css';
 import { MyContext } from "Context";
 import { UserContext } from "components/types";
 
@@ -9,7 +10,7 @@ export default function ChatPage() {
   const user = useContext(MyContext) as UserContext;
 
   return (
-    <div>
+    <div className={styles.ChatPageWrapper}>
       <SideBar userInfo={user} friend={friend} setFriend={setFriend} />
       <Chat userInfo={user} friend={friend} />
     </div>
