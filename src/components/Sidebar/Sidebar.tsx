@@ -1,12 +1,23 @@
+import axios from "axios";
 import { SideBarProps } from "components/types";
 import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 
-export default function SideBar({ friend, setFriend }: SideBarProps) {
+export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
   const [chatOpen, setChatOpen] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
+
+  const logout = () => {
+    axios
+      .get("http://localhost:4000/auth/logout", {
+        withCredentials: true,
+      })
+      .then(() => {
+        window.location.href = "/";
+      });
+  };
 
   const addFriend = () => {
     setFriend(friendInput);
@@ -31,25 +42,30 @@ export default function SideBar({ friend, setFriend }: SideBarProps) {
       <div className={styles.SideBarContents}>
         {chatOpen ? (
           <>
-            <h1 style={{ color: "#fff", marginBottom: "20px" }}>
-              Start a New Chat!
-            </h1>
             <div className={styles.EnterFriendWrapper}>
               <input
                 onKeyDown={(e) => (e.key == "Enter" ? addFriend() : null)}
                 onChange={(e: any) => setFriendInput(e.target.value)}
                 value={friendInput}
                 type="text"
-                placeholder="Enter Friend"
+                placeholder="Type the username of a friend"
               ></input>
               <button onClick={addFriend} className={styles.PlusBtn}>
                 +
               </button>
             </div>
-
+            <div>
+              <h3 style={{ color: "#72767d" }}>DIRECT MESSAGES</h3>
+            </div>
             {!friend ? null : (
-              <div className={styles.ChatBar}>
-                <p>{friend}</p>
+              <div className={styles.FriendBar}>
+                {friend}
+                <button
+                  className={styles.RemoveFriendButton}
+                  onClick={() => setFriend("")}
+                >
+                  <i className="fas fa-times"></i>
+                </button>
               </div>
             )}
           </>
@@ -58,13 +74,31 @@ export default function SideBar({ friend, setFriend }: SideBarProps) {
             <h1 style={{ color: "#fff", marginBottom: "20px" }}>
               {!friend ? "No Friends Yet :(" : "Your Friends!"}
             </h1>
-            {!friend ? null : (
-              <div className={styles.ChatBar}>
-                <p>{friend}</p>
-              </div>
-            )}
+            {!friend ? null : <div className={styles.FriendBar}>{friend}</div>}
           </>
         )}
+      </div>
+      <div className={styles.ProfileBar}>
+        <div>
+          <p
+            style={{
+              fontWeight: "bold",
+              marginBottom: "5px",
+              fontSize: "12px",
+            }}
+          >
+            {userInfo.username}
+          </p>
+          <p style={{ color: "#36393f", fontSize: "12px" }}>
+            #{userInfo.userId}
+          </p>
+        </div>
+        <button>
+          <i className="fas fa-cog"></i>
+        </button>
+        <button className={styles.LogoutBtn} onClick={logout}>
+          Logout
+        </button>
       </div>
     </div>
   );
