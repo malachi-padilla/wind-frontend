@@ -56,50 +56,47 @@ export default function ChatPage({ friend, userInfo }) {
   };
 
   if (!friend) {
-    return <NoFriendsPage />
+    return <NoFriendsPage />;
   }
-
 
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
         <div className={styles.TitleContent}>
-        <p>
-          you're chatting with {friend}
-        </p>
+          <p>you're chatting with {friend}</p>
         </div>
       </div>
 
-      <div className={styles.ChatBody} id="ContainerElementID">
-        <div className={styles.ChatMessages}>
-        {messages.map((item) => (
-          <>
-            <div
-              className={
-                item.sentBy === name
-                  ? styles.MainMessage
-                  : styles.SecondaryMessage
-              }
-            >
-              {item.message}
-            </div>
-          </>
-        ))}
+      <div className={styles.ChatBody}>
+        <div className={styles.ChatMessages} id="ContainerElementID">
+          {messages.map((item) => (
+            <>
+              <div
+                className={
+                  item.sentBy === name
+                    ? styles.MainMessage
+                    : styles.SecondaryMessage
+                }
+              >
+                {item.message}
+              </div>
+            </>
+          ))}
         </div>
       </div>
       <div className={styles.InputWrapper}>
-      <form
-        onSubmit={(e: any) => sendMessage(e.target.value)}
-        className={styles.InputContent}
-      >
-        <input
-          value={currentMessage}
-          onChange={(e: any) => setCurrentMessage(e.target.value)}
-        ></input>
-        <button type="submit" onClick={sendMessage}>
-          Send
-        </button>
-      </form>
+        <form
+          onSubmit={(e: any) => sendMessage(e.target.value)}
+          className={styles.InputContent}
+        >
+          <input
+            value={currentMessage}
+            onChange={(e: any) => setCurrentMessage(e.target.value)}
+          ></input>
+          <button type="submit" onClick={sendMessage}>
+            Send
+          </button>
+        </form>
       </div>
     </div>
   );

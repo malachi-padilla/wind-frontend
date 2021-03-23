@@ -22,18 +22,24 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
   };
 
   const findUserByUsername = async (username) => {
-    return axios.get(`http://localhost:4000/user?username=${username}`).then(res => res.data).catch(err => err)
-  }
+    return axios
+      .get(`http://localhost:4000/user?username=${username}`)
+      .then((res) => res.data)
+      .catch((err) => err);
+  };
 
   const addFriend = async () => {
     // Perform Check To See If User Exists First!
     if (friendInput.length > 0 && friendInput !== userInfo.username) {
       const userResult = await findUserByUsername(friendInput);
-      if (userResult !== "Not Found" && recentlyMessaged.indexOf(friendInput) === -1) {
+      if (
+        userResult !== "Not Found" &&
+        recentlyMessaged.indexOf(friendInput) === -1
+      ) {
         setNotFoundError(false);
         setFriend(friendInput);
-        setRecentlyMessaged(current => [...current, friendInput])
-        setFriendInput("");  
+        setRecentlyMessaged((current) => [...current, friendInput]);
+        setFriendInput("");
       } else {
         setNotFoundError(true);
       }
@@ -59,7 +65,9 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
           <>
             <div className={styles.EnterFriendWrapper}>
               <input
-                style={{ border: notFoundError ? "1px solid #b92d2d" : undefined }}
+                style={{
+                  border: notFoundError ? "1px solid #b92d2d" : undefined,
+                }}
                 onKeyDown={(e) => (e.key == "Enter" ? addFriend() : null)}
                 onChange={(e: any) => setFriendInput(e.target.value)}
                 value={friendInput}
@@ -70,26 +78,54 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
                 +
               </button>
             </div>
-            <div className={styles.RecentFriendsWrapper}> {
-              recentlyMessaged.length > 0 ? (
-                <h3 style={{ color: "#72767d", marginBottom: "20px" }}>DIRECT MESSAGES</h3>
-              ) : null
-            }
-              {!friend ? null :
+            <div className={styles.RecentFriendsWrapper}>
+              {" "}
+              {recentlyMessaged.length > 0 ? (
+                <h3 style={{ color: "#72767d", marginBottom: "20px" }}>
+                  DIRECT MESSAGES
+                </h3>
+              ) : null}
+              {!friend ? null : (
                 <div className={styles.RecentlyMessagedList}>
-                  {recentlyMessaged.map(item => (
-                    <div style={{ backgroundColor: friend === item ? "#7288da" : "#3c3f47" }} className={styles.FriendBar} key={item} onClick={() => setFriend(item)}>
-                      { item}
-                      <button
-                        className={styles.RemoveFriendButton}
-                        onClick={() => setRecentlyMessaged(current => current.filter(node => item !== node))}
-                      >
-                        <i className="fas fa-times"></i>
-                      </button>
+                  {recentlyMessaged.map((item, index) => (
+                    <div
+                      style={{
+                        backgroundColor:
+                          friend === item ? "#7288da" : "#3c3f47",
+                      }}
+                      className={styles.FriendBar}
+                      key={index}
+                      onClick={() => setFriend(item)}
+                    >
+                      <div className={styles.FriendBarLeft}>
+                        {friend === item ? (
+                          <span
+                            style={{
+                              height: "10px",
+                              width: "10px",
+                              borderRadius: "100%",
+                              backgroundColor: "#43b581",
+                            }}
+                          ></span>
+                        ) : null}
+                        <p>{item}</p>
+                      </div>
+                      <div className={styles.FriendBarRight}>
+                        <button
+                          className={styles.RemoveFriendButton}
+                          onClick={() =>
+                            setRecentlyMessaged((current) =>
+                              current.filter((node) => item !== node)
+                            )
+                          }
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
                     </div>
                   ))}
-                </div >
-              }
+                </div>
+              )}
             </div>
           </>
         ) : (
@@ -100,11 +136,49 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
               </h1>
             </div>
             <div className={styles.RecentlyMessagedList}>
-              {!friend ? null : <div className={styles.FriendBar}>{friend}</div>}
+              {!friend ? null : (
+                <div className={styles.RecentlyMessagedList}>
+                  {recentlyMessaged.map((item, index) => (
+                    <div
+                      style={{
+                        backgroundColor:
+                          friend === item ? "#7288da" : "#3c3f47",
+                      }}
+                      className={styles.FriendBar}
+                      key={index}
+                    >
+                      <div className={styles.FriendBarLeft}>
+                        {friend === item ? (
+                          <span
+                            style={{
+                              height: "10px",
+                              width: "10px",
+                              borderRadius: "100%",
+                              backgroundColor: "#43b581",
+                            }}
+                          ></span>
+                        ) : null}
+                        <p>{item}</p>
+                      </div>
+                      <div className={styles.FriendBarRight}>
+                        <button
+                          className={styles.RemoveFriendButton}
+                          onClick={() =>
+                            setRecentlyMessaged((current) =>
+                              current.filter((node) => item !== node)
+                            )
+                          }
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </>
-        )
-        }
+        )}
       </div>
       <div className={styles.ProfileBar}>
         <div>
@@ -128,6 +202,6 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
           Logout
         </button>
       </div>
-    </div >
+    </div>
   );
 }

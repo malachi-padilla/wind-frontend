@@ -86,10 +86,12 @@
     border: 1px solid #7289da;
   }
   .PlusBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     outline: none;
     font-size: 20px;
     font-weight: 500;
-    padding-bottom: 2px;
     border: 1px solid #43b581;
     color: #43b581;
     background-color: #31333a;
@@ -108,16 +110,30 @@
     min-height: 40px;
     width: 90%;
     border-radius: 3px;
-    position: relative;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
+    gap: 60%;
+    flex-direction: row;
     align-items: center;
-    padding-left: 10px;
     background-color: #3c3f47;
     color: #fff;
     cursor: pointer;
-    bottom: 0;
     margin-top: 20px;
+  }
+  .FriendBar:hover {
+    opacity: 0.9;
+  }
+  .FriendBarLeft {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .FriendBarRight {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   .RemoveFriendButton {
@@ -126,8 +142,6 @@
     font-size: 16px;
     outline: none;
     border: none;
-    position: absolute;
-    right: 30px;
   }
   .RemoveFriendButton:hover {
     transition: ease-in 100ms;
