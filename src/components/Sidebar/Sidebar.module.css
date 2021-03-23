@@ -9,7 +9,6 @@
     display: flex;
     flex-direction: column;
     background-color: #27292e;
-    position: absolute;
     left: 0;
     font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
     z-index: 1;
@@ -53,7 +52,7 @@
   }
   .SideBarContents {
     display: flex;
-    height: 80%;
+    height: 90%;
     position: relative;
     flex-direction: column;
     align-items: center;
@@ -141,7 +140,6 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    position: absolute;
     background-color: #1d1e22;
     color: #fff;
     bottom: 0;

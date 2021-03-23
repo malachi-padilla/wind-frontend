@@ -29,7 +29,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
     // Perform Check To See If User Exists First!
     if (friendInput.length > 0 && friendInput !== userInfo.username) {
       const userResult = await findUserByUsername(friendInput);
-      if (userResult !== "Not Found") {
+      if (userResult !== "Not Found" && recentlyMessaged.indexOf(friendInput) === -1) {
         setNotFoundError(false);
         setFriend(friendInput);
         setRecentlyMessaged(current => [...current, friendInput])
