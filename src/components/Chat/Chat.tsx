@@ -8,12 +8,11 @@ import { animateScroll } from "react-scroll";
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
-export default function ChatPage({ friend }) {
+export default function ChatPage({ friend, userInfo }) {
   const [currentMessage, setCurrentMessage] = useState<string>();
-  const user = useContext(MyContext) as UserContext;
-  
+
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-  const name = user.username;
+  const name = userInfo.username;
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -44,11 +43,11 @@ export default function ChatPage({ friend }) {
     animateScroll.scrollToBottom({
       containerId: "ContainerElementID",
     });
-  }
+  };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages])
+  }, [messages]);
 
   const sendMessage = (e) => {
     e.preventDefault();

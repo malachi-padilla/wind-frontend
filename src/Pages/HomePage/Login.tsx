@@ -51,6 +51,7 @@ export default function App() {
               PASSWORD
             </label>
             <input
+              onKeyDown={(e) => (e.key === "Enter" ? login() : null)}
               onChange={(e) => setLoginPassword(e.target.value)}
               type="text"
               required
