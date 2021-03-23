@@ -41,6 +41,7 @@ export default function Register() {
               CREATE A USERNAME
             </label>
             <input
+              onKeyDown={(e) => (e.key === "Enter" ? register() : null)}
               onChange={(e) => setRegisterUsername(e.target.value)}
               type="text"
               required
