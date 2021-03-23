@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 800px) {
   .MainContainer {
     height: 100vh;
     width: 30%;
@@ -19,6 +19,24 @@
     flex-direction: row;
     gap: 1px;
   }
+  .RecentlyMessagedList {
+    overflow-y: scroll;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .RecentFriendsWrapper {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
   .NavBtns button {
     width: 100%;
     height: 50px;
@@ -27,7 +45,6 @@
     background-color: #3c3f47;
     color: #fff;
     font-size: 20px;
-    margin-bottom: 5vh;
   }
   .NavBtns button:hover {
     transition: ease-in 200ms;
@@ -36,14 +53,17 @@
   }
   .SideBarContents {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 80%;
     position: relative;
+    flex-direction: column;
+    align-items: center;
   }
   .EnterFriendWrapper {
     width: 100%;
-    margin-left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
   }
   .EnterFriendWrapper input {
     background-color: #31333a;
@@ -54,10 +74,8 @@
     box-sizing: border-box;
     border-radius: 3px;
     border: 1px solid #27292e;
-    margin-top: 8px;
     color: #dcddde;
     font-size: 16px;
-    margin-bottom: 10vh;
     margin-right: 5px;
   }
   .EnterFriendWrapper input:hover {
@@ -70,7 +88,8 @@
   .PlusBtn {
     outline: none;
     font-size: 20px;
-    font-weight: 5 00;
+    font-weight: 500;
+    padding-bottom: 2px;
     border: 1px solid #43b581;
     color: #43b581;
     background-color: #31333a;
@@ -86,15 +105,17 @@
   }
 
   .FriendBar {
-    height: 40px;
+    min-height: 40px;
     width: 90%;
     border-radius: 3px;
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-left: 10px;
     background-color: #3c3f47;
     color: #fff;
+    cursor: pointer;
     bottom: 0;
     margin-top: 20px;
   }
@@ -105,8 +126,8 @@
     font-size: 16px;
     outline: none;
     border: none;
-    margin-left: 80%;
-    padding-right: 5px;
+    position: absolute;
+    right: 30px;
   }
   .RemoveFriendButton:hover {
     transition: ease-in 100ms;
@@ -114,7 +135,7 @@
   }
 
   .ProfileBar {
-    height: 60px;
+    height: 10%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
