@@ -1,8 +1,7 @@
-import { PrivateChatMessage, UserContext } from "components/types";
-import React, { useContext, useEffect, useState } from "react";
+import { PrivateChatMessage } from "components/types";
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
-import { MyContext } from "../../Context";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
 const ENDPOINT = "http://localhost:4000";
