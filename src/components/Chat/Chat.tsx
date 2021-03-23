@@ -1,10 +1,10 @@
-import { PrivateChatMessage, UserContext } from "components/types";
-import React, { useContext, useEffect, useState } from "react";
+import { PrivateChatMessage } from "components/types";
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
-import { MyContext } from "../../Context";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
+import NoFriendsPage from "./NoFriendsPage";
 const ENDPOINT = "http://localhost:4000";
 let socket;
 
@@ -55,17 +55,23 @@ export default function ChatPage({ friend, userInfo }) {
     setCurrentMessage("");
   };
 
+  if (!friend) {
+    return <NoFriendsPage />
+  }
+
+
   return (
     <div className={styles.MainContainer}>
       <div className={styles.Title}>
+        <div className={styles.TitleContent}>
         <p>
-          {friend === ""
-            ? `You're chatting with nobody :(`
-            : `you're chatting with ${friend}`}
+          you're chatting with {friend}
         </p>
+        </div>
       </div>
 
       <div className={styles.ChatBody} id="ContainerElementID">
+        <div className={styles.ChatMessages}>
         {messages.map((item) => (
           <>
             <div
@@ -79,10 +85,12 @@ export default function ChatPage({ friend, userInfo }) {
             </div>
           </>
         ))}
+        </div>
       </div>
+      <div className={styles.InputWrapper}>
       <form
         onSubmit={(e: any) => sendMessage(e.target.value)}
-        className={styles.MessagingContainer}
+        className={styles.InputContent}
       >
         <input
           value={currentMessage}
@@ -92,6 +100,7 @@ export default function ChatPage({ friend, userInfo }) {
           Send
         </button>
       </form>
+      </div>
     </div>
   );
 }

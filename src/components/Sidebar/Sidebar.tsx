@@ -9,6 +9,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
+  const [notFoundError, setNotFoundError] = useState<boolean>(false);
 
   const logout = () => {
     axios
@@ -20,12 +21,22 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
       });
   };
 
-  const addFriend = () => {
+  const findUserByUsername = async (username) => {
+    return axios.get(`http://localhost:4000/user?username=${username}`).then(res => res.data).catch(err => err)
+  }
+
+  const addFriend = async () => {
     // Perform Check To See If User Exists First!
-    if (friendInput.length > 0) {
-      setFriend(friendInput);
-      setRecentlyMessaged(current => [...current, friendInput])
-      setFriendInput("");
+    if (friendInput.length > 0 && friendInput !== userInfo.username) {
+      const userResult = await findUserByUsername(friendInput);
+      if (userResult !== "Not Found" && recentlyMessaged.indexOf(friendInput) === -1) {
+        setNotFoundError(false);
+        setFriend(friendInput);
+        setRecentlyMessaged(current => [...current, friendInput])
+        setFriendInput("");  
+      } else {
+        setNotFoundError(true);
+      }
     }
   };
   return (
@@ -48,6 +59,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
           <>
             <div className={styles.EnterFriendWrapper}>
               <input
+                style={{ border: notFoundError ? "1px solid #b92d2d" : undefined }}
                 onKeyDown={(e) => (e.key == "Enter" ? addFriend() : null)}
                 onChange={(e: any) => setFriendInput(e.target.value)}
                 value={friendInput}
