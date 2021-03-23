@@ -83,7 +83,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
         ) : (
           <>
             <div className={styles.EnterFriendWrapper}>
-              <h1 style={{ color: "#fff", marginBottom: "20px" }}>
+              <h1 style={{ color: "#fff" }}>
                 {!friend ? "No Friends Yet :(" : "Your Friends!"}
               </h1>
             </div>
