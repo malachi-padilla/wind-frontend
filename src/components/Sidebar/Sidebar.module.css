@@ -24,14 +24,12 @@
     height: 50px;
     outline: none;
     border: none;
-    background-color: #3c3f47;
+    background-color: #7289da;
     color: #fff;
     font-size: 20px;
-    margin-bottom: 5vh;
+    margin-bottom: 20vh;
   }
-  .NavBtns button:hover {
-    transition: ease-in 200ms;
-    background-color: #43b581;
+  button:hover {
     opacity: 0.9;
   }
   .SideBarContents {
@@ -39,7 +37,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
   }
   .EnterFriendWrapper {
     width: 100%;
@@ -57,7 +54,7 @@
     margin-top: 8px;
     color: #dcddde;
     font-size: 16px;
-    margin-bottom: 10vh;
+    margin-bottom: 50px;
     margin-right: 5px;
   }
   .EnterFriendWrapper input:hover {
@@ -85,56 +82,16 @@
     background-color: #43b581;
   }
 
-  .FriendBar {
+  .ChatBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 40px;
-    width: 90%;
-    border-radius: 3px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 10px;
-    background-color: #3c3f47;
-    color: #fff;
-    bottom: 0;
-    margin-top: 20px;
-  }
-
-  .RemoveFriendButton {
-    background: none;
-    color: #aab0bd;
-    font-size: 16px;
-    outline: none;
-    border: none;
-    margin-left: 80%;
-    padding-right: 5px;
-  }
-  .RemoveFriendButton:hover {
-    transition: ease-in 100ms;
-    color: #fff;
-  }
-
-  .ProfileBar {
-    height: 60px;
+    background-color: #43b581;
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    position: absolute;
-    background-color: #1d1e22;
     color: #fff;
-    bottom: 0;
   }
-
-  .ProfileBar button {
-    background: none;
-    color: #8d929b;
-    font-size: 20px;
-    outline: none;
-    border: none;
-  }
-
-  .LogoutBtn:hover {
-    transition: ease-in 200ms;
-    color: rgb(240, 71, 71);
+  .ChatBar:hover {
+    opacity: 0.9;
   }
 }

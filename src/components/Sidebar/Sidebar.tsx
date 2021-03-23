@@ -9,16 +9,6 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
 
-  const logout = () => {
-    axios
-      .get("http://localhost:4000/auth/logout", {
-        withCredentials: true,
-      })
-      .then(() => {
-        window.location.href = "/";
-      });
-  };
-
   const addFriend = () => {
     setFriend(friendInput);
     setFriendInput("");
@@ -54,18 +44,10 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
                 +
               </button>
             </div>
-            <div>
-              <h3 style={{ color: "#72767d" }}>DIRECT MESSAGES</h3>
-            </div>
+
             {!friend ? null : (
-              <div className={styles.FriendBar}>
-                {friend}
-                <button
-                  className={styles.RemoveFriendButton}
-                  onClick={() => setFriend("")}
-                >
-                  <i className="fas fa-times"></i>
-                </button>
+              <div className={styles.ChatBar}>
+                <p>{friend}</p>
               </div>
             )}
           </>
@@ -74,7 +56,11 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
             <h1 style={{ color: "#fff", marginBottom: "20px" }}>
               {!friend ? "No Friends Yet :(" : "Your Friends!"}
             </h1>
-            {!friend ? null : <div className={styles.FriendBar}>{friend}</div>}
+            {!friend ? null : (
+              <div className={styles.ChatBar}>
+                <p>{friend}</p>
+              </div>
+            )}
           </>
         )}
       </div>
