@@ -97,7 +97,7 @@
     background-color: #31333a;
     height: 40px;
     width: 40px;
-    border-radius: 100%;
+    border-radius: 50%;
   }
   .PlusBtn:hover {
     transition: ease-in 200ms;
@@ -132,31 +132,18 @@
 
   .IsTyping {
     will-change: transform;
-    transform: scaley(-1);
   }
 
   .IsTyping span {
-    height: 7px;
-    width: 7px;
+    height: 10px;
+    width: 10px;
     float: left;
     margin: 0 1px;
     background-color: #43b581;
     display: block;
-    border-radius: 2px;
+    border-radius: 50%;
     opacity: 0.4;
     animation: loadingFade 1s infinite;
-  }
-  .IsTyping span:nth-of-type(1) {
-    animation-delay: 0s;
-    height: 7px;
-  }
-  .IsTyping span:nth-of-type(2) {
-    animation-delay: 0.2s;
-    height: 10px;
-  }
-  .IsTyping span:nth-of-type(3) {
-    animation-delay: 0.4s;
-    height: 15px;
   }
 
   @keyframes loadingFade {

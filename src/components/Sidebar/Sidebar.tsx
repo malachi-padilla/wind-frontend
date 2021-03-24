@@ -111,8 +111,6 @@ export default function SideBar({
                         {recipientIsTyping ? (
                           <div className={styles.IsTyping}>
                             <span></span>
-                            <span></span>
-                            <span></span>
                           </div>
                         ) : null}
                         <p>{item}</p>
