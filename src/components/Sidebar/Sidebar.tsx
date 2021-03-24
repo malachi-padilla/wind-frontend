@@ -152,6 +152,10 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
                       }}
                       className={styles.FriendBar}
                       key={index}
+                      onClick={() => {
+                        setChatOpen(true);
+                        setFriend(item);
+                      }}
                     >
                       <div className={styles.FriendBarLeft}>
                         <p>{item}</p>
