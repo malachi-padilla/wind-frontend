@@ -5,9 +5,9 @@ import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
 import NoFriendsPage from "./NoFriendsPage";
+
 const ENDPOINT = "http://localhost:4000";
 let socket;
-
 export default function ChatPage({ friend, userInfo }) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
@@ -18,23 +18,11 @@ export default function ChatPage({ friend, userInfo }) {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("join", { name, friend });
-  }, []);
-
-  useEffect(() => {
     socket.on("message", (message: PrivateChatMessage) => {
       setMessages((currentMessages) => [...currentMessages, message]);
     });
-
-    socket.on("typing", ({ personTyping, isTyping }) => {
-      console.log(`${personTyping} is typing: ${isTyping}`);
-      console.log(personTyping, friend)
-      if (personTyping === friend) {
-        setRecipientIsTyping(isTyping);
-      }
-    })
     return () => socket.emit("end");
-  }, [friend]);
-
+  }, []);
 
   useEffect(() => {
     axios
@@ -46,15 +34,21 @@ export default function ChatPage({ friend, userInfo }) {
           setMessages(res.data);
         }
       });
+
+    socket.on("typing", ({ personTyping, isTyping }) => {
+      if (personTyping === friend) {
+        setRecipientIsTyping(isTyping);
+      }
+    });
   }, [friend]);
 
   useEffect(() => {
     if (currentMessage!.length > 0) {
-      socket.emit("typing", { friend, isTyping: true});
+      socket.emit("typing", { friend, isTyping: true });
     } else {
-      socket.emit("typing", { friend, isTyping: false});
+      socket.emit("typing", { friend, isTyping: false });
     }
-  }, [currentMessage])
+  }, [currentMessage]);
 
   const scrollToBottom = () => {
     animateScroll.scrollToBottom({
@@ -102,9 +96,9 @@ export default function ChatPage({ friend, userInfo }) {
         </div>
       </div>
       <div className={styles.InputWrapper}>
-      {recipientIsTyping ? (
-        <span style={{ color: "white" }}>{friend} is typing</span>
-      ) : null}
+        {recipientIsTyping ? (
+          <span style={{ color: "white" }}>{friend} is typing</span>
+        ) : null}
         <form
           onSubmit={(e: any) => sendMessage(e.target.value)}
           className={styles.InputContent}
