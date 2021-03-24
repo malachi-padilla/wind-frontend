@@ -93,12 +93,17 @@ export default function ChatPage({ friend, userInfo }) {
               </div>
             </>
           ))}
+          {recipientIsTyping ? (
+            <div className={`${styles.IsTyping} && ${styles.SecondaryMessage}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          ) : null}
         </div>
       </div>
+
       <div className={styles.InputWrapper}>
-        {recipientIsTyping ? (
-          <span style={{ color: "white" }}>{friend} is typing</span>
-        ) : null}
         <form
           onSubmit={(e: any) => sendMessage(e.target.value)}
           className={styles.InputContent}
