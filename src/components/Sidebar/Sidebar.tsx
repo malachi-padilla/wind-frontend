@@ -41,7 +41,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
         setFriend(friendInput);
         setRecentlyMessaged((current) => [...current, friendInput]);
         if (friendsList.includes(friendInput)) {
-          null;
+          return;
         } else {
           setFriendsList((current) => [...current, friendInput]);
         }
