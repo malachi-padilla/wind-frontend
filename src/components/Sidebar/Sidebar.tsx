@@ -9,6 +9,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
+  const [friendsList, setFriendsList] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
 
   const logout = () => {
@@ -39,6 +40,11 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
         setNotFoundError(false);
         setFriend(friendInput);
         setRecentlyMessaged((current) => [...current, friendInput]);
+        if (friendsList.includes(friendInput)) {
+          return;
+        } else {
+          setFriendsList((current) => [...current, friendInput]);
+        }
         setFriendInput("");
       } else {
         setNotFoundError(true);
@@ -138,7 +144,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
             <div className={styles.RecentlyMessagedList}>
               {!friend ? null : (
                 <div className={styles.RecentlyMessagedList}>
-                  {recentlyMessaged.map((item, index) => (
+                  {friendsList.map((item, index) => (
                     <div
                       style={{
                         backgroundColor:
@@ -146,25 +152,19 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
                       }}
                       className={styles.FriendBar}
                       key={index}
+                      onClick={() => {
+                        setChatOpen(true);
+                        setFriend(item);
+                      }}
                     >
                       <div className={styles.FriendBarLeft}>
-                        {friend === item ? (
-                          <span
-                            style={{
-                              height: "10px",
-                              width: "10px",
-                              borderRadius: "100%",
-                              backgroundColor: "#43b581",
-                            }}
-                          ></span>
-                        ) : null}
                         <p>{item}</p>
                       </div>
                       <div className={styles.FriendBarRight}>
                         <button
                           className={styles.RemoveFriendButton}
                           onClick={() =>
-                            setRecentlyMessaged((current) =>
+                            setFriendsList((current) =>
                               current.filter((node) => item !== node)
                             )
                           }
