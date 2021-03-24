@@ -40,7 +40,7 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
         setNotFoundError(false);
         setFriend(friendInput);
         setRecentlyMessaged((current) => [...current, friendInput]);
-        if (friendsList.includes(friendInput) === true) {
+        if (friendsList.includes(friendInput)) {
           null;
         } else {
           setFriendsList((current) => [...current, friendInput]);
