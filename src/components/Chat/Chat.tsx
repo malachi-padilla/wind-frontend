@@ -58,7 +58,7 @@ export default function ChatPage({ friend, userInfo }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, recipientIsTyping]);
 
   const sendMessage = (e) => {
     e.preventDefault();
