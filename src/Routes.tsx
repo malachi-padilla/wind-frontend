@@ -7,8 +7,9 @@ import { MyContext } from "Context";
 
 export default function Routes() {
   const user = useContext(MyContext);
-  console.log(user);
-
+  if (user === null) {
+    return null;
+  }
   return (
     <BrowserRouter>
       <Switch>
@@ -18,7 +19,9 @@ export default function Routes() {
             <Route path="/register" component={Register} />
           </>
         ) : (
+          <>
           <Route path="/chat" component={ChatPage} />
+          </>
         )}
       </Switch>
     </BrowserRouter>
