@@ -8,10 +8,14 @@ import NoFriendsPage from "./NoFriendsPage";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
-export default function ChatPage({ friend, userInfo }) {
+export default function ChatPage({
+  friend,
+  userInfo,
+  setRecipientIsTyping,
+  recipientIsTyping,
+}) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-  const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
 
   const name = userInfo.username;
 
@@ -58,7 +62,7 @@ export default function ChatPage({ friend, userInfo }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, recipientIsTyping, currentMessage]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -93,12 +97,17 @@ export default function ChatPage({ friend, userInfo }) {
               </div>
             </>
           ))}
+          {recipientIsTyping ? (
+            <div className={`${styles.IsTyping} && ${styles.SecondaryMessage}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          ) : null}
         </div>
       </div>
+
       <div className={styles.InputWrapper}>
-        {recipientIsTyping ? (
-          <span style={{ color: "white" }}>{friend} is typing</span>
-        ) : null}
         <form
           onSubmit={(e: any) => sendMessage(e.target.value)}
           className={styles.InputContent}

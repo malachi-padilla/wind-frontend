@@ -9,6 +9,7 @@ export interface SideBarProps {
   friend: string;
   setFriend: (friend: string) => any;
   userInfo: UserContext;
+  recipientIsTyping: boolean;
 }
 
 export interface UserContext {

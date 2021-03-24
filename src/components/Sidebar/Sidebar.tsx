@@ -3,7 +3,12 @@ import { SideBarProps } from "components/types";
 import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 
-export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
+export default function SideBar({
+  friend,
+  setFriend,
+  userInfo,
+  recipientIsTyping,
+}: SideBarProps) {
   const [chatOpen, setChatOpen] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
@@ -85,7 +90,6 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
               </button>
             </div>
             <div className={styles.RecentFriendsWrapper}>
-              {" "}
               {recentlyMessaged.length > 0 ? (
                 <h3 style={{ color: "#72767d", marginBottom: "20px" }}>
                   DIRECT MESSAGES
@@ -104,15 +108,10 @@ export default function SideBar({ friend, setFriend, userInfo }: SideBarProps) {
                       onClick={() => setFriend(item)}
                     >
                       <div className={styles.FriendBarLeft}>
-                        {friend === item ? (
-                          <span
-                            style={{
-                              height: "10px",
-                              width: "10px",
-                              borderRadius: "100%",
-                              backgroundColor: "#43b581",
-                            }}
-                          ></span>
+                        {recipientIsTyping ? (
+                          <div className={styles.IsTyping}>
+                            <span></span>
+                          </div>
                         ) : null}
                         <p>{item}</p>
                       </div>
