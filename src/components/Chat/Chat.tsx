@@ -8,10 +8,14 @@ import NoFriendsPage from "./NoFriendsPage";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
-export default function ChatPage({ friend, userInfo }) {
+export default function ChatPage({
+  friend,
+  userInfo,
+  setRecipientIsTyping,
+  recipientIsTyping,
+}) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-  const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
 
   const name = userInfo.username;
 
