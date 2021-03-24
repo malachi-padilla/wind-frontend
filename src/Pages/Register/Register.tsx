@@ -51,7 +51,7 @@ export default function Register() {
             </label>
             <input
               onChange={(e) => setRegisterPassword(e.target.value)}
-              type="text"
+              type="password"
               required
             ></input>
           </div>
