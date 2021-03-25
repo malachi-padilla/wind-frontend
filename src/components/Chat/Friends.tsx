@@ -7,6 +7,7 @@ export default function Friends({
   setFriendsList,
   setFriend,
   setFriendsIsOpen,
+  recipientIsTyping,
 }) {
   return (
     <div className={inheritedStyles.MainContainer}>
@@ -14,7 +15,15 @@ export default function Friends({
         {friendsList.map((item, index) => (
           <div className={styles.FriendBar} key={index}>
             <div className={styles.UserInfo}>
+              {recipientIsTyping ? (
+                <div className={styles.IsTyping}>
+                  <span></span>
+                </div>
+              ) : null}
               <h3>{item}</h3>
+              <p style={{ color: "#888e9b" }}>
+                {recipientIsTyping ? "Online" : null}
+              </p>
             </div>
             <div className={styles.Actions}>
               <button

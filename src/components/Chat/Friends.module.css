@@ -18,9 +18,10 @@
   border-top: 1px solid #72767d;
 }
 .UserInfo {
+  display: flex;
+  flex-direction: column;
   color: #fff;
 }
-
 .Actions {
   margin-right: 10%;
 }
@@ -31,4 +32,10 @@
   border-radius: 50%;
   background-color: #2f3136;
   color: #aab0bd;
+}
+.ChatBtn:hover {
+  transition: ease-in 200ms;
+  height: 40px;
+  width: 40px;
+  color: #43b581;
 }

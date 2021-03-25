@@ -54,7 +54,7 @@
 ::-webkit-scrollbar-thumb {
   background-color: #27292e;
   border-radius: 3rem;
-  height: 10px;
+  height: 5px;
 }
 
 .MainMessage {

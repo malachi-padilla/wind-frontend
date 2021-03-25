@@ -12,6 +12,7 @@ export default function SideBar({
   friendsIsOpen,
   friendsList,
   setFriendsList,
+  setRecipientIsTyping,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);

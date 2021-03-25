@@ -24,6 +24,7 @@ export default function ChatPage() {
         </div>
         <SideBar
           recipientIsTyping={recipientIsTyping}
+          setRecipientIsTyping={setRecipientIsTyping}
           userInfo={user}
           friend={friend}
           setFriend={setFriend}
@@ -46,6 +47,7 @@ export default function ChatPage() {
           setFriendsList={setFriendsList}
           setFriend={setFriend}
           setFriendsIsOpen={setFriendsIsOpen}
+          recipientIsTyping={recipientIsTyping}
         />
       )}
 
