@@ -26,11 +26,7 @@ export default function App() {
 
   return (
     <div className={styles.MainContainer}>
-      <div className={styles.Title}>
-        <h1>
-          WIND <i className="fas fa-wind"></i>
-        </h1>
-      </div>
+      <div className={styles.Logo}></div>
       <div className={styles.FormContainer}>
         <div className={styles.Form}>
           <div className={styles.FormTitle}>
@@ -69,6 +65,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      <div className={styles.BackgroundShape}></div>
     </div>
   );
 }
