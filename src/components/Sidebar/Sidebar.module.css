@@ -5,28 +5,21 @@
 @media only screen and (min-width: 800px) {
   .MainContainer {
     height: 100vh;
-    width: 30%;
+    width: 248px;
     display: flex;
     flex-direction: column;
-    background-color: #27292e;
+    align-items: center;
+    background-color: #2f3136;
     left: 0;
     font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
-    z-index: 1;
   }
-  .NavBtns {
+  .SideBarContents {
     display: flex;
-    flex-direction: row;
-    gap: 1px;
-  }
-  .RecentlyMessagedList {
-    overflow-y: scroll;
+    height: 100%;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     flex-direction: column;
+    align-items: center;
   }
-
   .RecentFriendsWrapper {
     width: 100%;
     height: 80%;
@@ -36,47 +29,35 @@
     flex-direction: column;
   }
 
-  .NavBtns button {
-    width: 100%;
-    height: 50px;
-    outline: none;
-    border: none;
-    background-color: #3c3f47;
-    color: #fff;
-    font-size: 20px;
-  }
-  .NavBtns button:hover {
-    transition: ease-in 200ms;
-    background-color: #43b581;
-    opacity: 0.9;
-  }
-  .SideBarContents {
+  .RecentlyMessagedList {
+    overflow-y: scroll;
+    width: 95%;
     display: flex;
-    height: 90%;
-    position: relative;
-    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
   }
+
   .EnterFriendWrapper {
     width: 100%;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 20%;
+    height: 5%;
+    line-height: 24px;
   }
   .EnterFriendWrapper input {
-    background-color: #31333a;
-    width: 80%;
-    height: 40px;
+    background-color: #202225;
+    width: 90%;
+    height: 28px;
     padding: 10px;
     outline: none;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 4px;
     border: 1px solid #27292e;
     color: #dcddde;
-    font-size: 16px;
-    margin-right: 5px;
+    font-size: 14px;
+    font-weight: 500px !important;
   }
   .EnterFriendWrapper input:hover {
     transition: ease-in 200ms;
@@ -85,49 +66,66 @@
   .EnterFriendWrapper input:focus {
     border: 1px solid #7289da;
   }
-  .PlusBtn {
+  .FriendsTab {
     display: flex;
+    justify-content: flex-start;
+    gap: 10%;
     align-items: center;
-    justify-content: center;
-    outline: none;
-    font-size: 20px;
-    font-weight: 500;
-    border: 1px solid #43b581;
-    color: #43b581;
-    background-color: #31333a;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
+    background-color: transparent;
+    width: 224px;
+    height: 42px;
+    border-radius: 4px;
+    padding: 0 8px;
+    font-size: 16px;
+    color: #888e9b;
+    cursor: pointer;
+    margin-top: 20px;
   }
-  .PlusBtn:hover {
-    transition: ease-in 200ms;
-    border-radius: 10px;
+  .FriendsTab:hover {
+    background-color: #36393f;
     color: #fff;
-    background-color: #43b581;
+  }
+  .DirectMessageTab {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 11px;
+    padding: 18px 8px 4px 18px;
+    font-weight: 500;
+    position: relative;
+  }
+
+  .DirectMessageTab:hover {
+    color: #fff;
+  }
+  .DirectMessageTab button {
+    color: #aab0bd;
+    font-size: 25px;
+    position: absolute;
+    right: 30px;
   }
 
   .FriendBar {
     min-height: 40px;
-    width: 90%;
-    border-radius: 3px;
+    width: 100%;
+    border-radius: 4px;
+    padding-left: 12px;
     display: flex;
-    justify-content: space-around;
-    gap: 60%;
+    justify-content: flex-start;
     flex-direction: row;
     align-items: center;
     background-color: #3c3f47;
     color: #fff;
     cursor: pointer;
     margin-top: 20px;
+    position: relative;
   }
+
   .FriendBar:hover {
-    opacity: 0.9;
-  }
-  .FriendBarLeft {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-start;
-    align-items: center;
+    background-color: #36393f;
   }
 
   .IsTyping {
@@ -158,18 +156,14 @@
     }
   }
 
-  .FriendBarRight {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
   .RemoveFriendButton {
     background: none;
-    color: #aab0bd;
+    color: #888e9b;
     font-size: 16px;
     outline: none;
     border: none;
+    position: absolute;
+    right: 10px;
   }
   .RemoveFriendButton:hover {
     transition: ease-in 100ms;
@@ -177,22 +171,25 @@
   }
 
   .ProfileBar {
-    height: 10%;
+    height: 52px;
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #1d1e22;
+    background-color: #292b2f;
     color: #fff;
-    bottom: 0;
   }
-
   .ProfileBar button {
-    background: none;
-    color: #8d929b;
-    font-size: 20px;
-    outline: none;
-    border: none;
+    font-size: 16px;
+    color: #aab0bd;
+  }
+  .ProfileBtns {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    gap: 10px;
+    align-items: center;
   }
 
   .LogoutBtn:hover {

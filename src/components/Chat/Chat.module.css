@@ -3,8 +3,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
   background-color: #36393f;
   position: relative;
@@ -162,6 +162,14 @@
 }
 .IsTyping span:nth-of-type(3) {
   animation-delay: 0.4s;
+}
+.Logo {
+  height: 100px;
+  width: 100px;
+  background-image: url(../../Wind\ Logo/logo_2.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 @keyframes loadingFade {

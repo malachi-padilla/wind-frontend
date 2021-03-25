@@ -1,0 +1,40 @@
+.MainContainer {
+  display: none;
+}
+@media only screen and (min-width: 1200px) {
+  .MainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    background-color: #2f3136;
+    color: #b9bbbe;
+  }
+  .Title {
+    display: flex;
+    margin-top: 80px;
+    margin-right: 70%;
+    font-size: 12px;
+    margin-bottom: 40px;
+  }
+  .ActiveUsersContainer {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .LonelyWrapper {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    padding: 20px;
+    background-color: #36393f;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

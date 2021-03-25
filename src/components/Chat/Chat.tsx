@@ -114,6 +114,7 @@ export default function ChatPage({
         >
           <input
             value={currentMessage}
+            placeholder={`message @${friend}`}
             onChange={(e: any) => setCurrentMessage(e.target.value)}
           ></input>
           <button type="submit" onClick={sendMessage}>

@@ -1,8 +1,47 @@
 .ChatPageWrapper {
-    overflow: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: row;
+  color: #b9bbbe;
+}
+.SideBarWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.NavBar {
+  display: none;
+}
+@media only screen and (min-width: 800px) {
+  .NavBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 72px;
+    background-color: #202225;
+    padding: 12px;
+  }
+  .Home {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 48px;
+    width: 48px;
+    color: #fff;
+    background-color: #7289da;
+    border-radius: 15px;
+    padding: 5px;
+  }
+  .Logo {
+    height: 100%;
     width: 100%;
-    flex-direction: row;
+    background-image: url(../../Wind\ Logo/logo_2.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
