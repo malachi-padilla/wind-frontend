@@ -65,7 +65,6 @@ export default function ChatPage({
   }, [messages, recipientIsTyping, currentMessage]);
 
   const sendMessage = (e) => {
-    e.preventDefault();
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
@@ -76,12 +75,10 @@ export default function ChatPage({
 
   return (
     <div className={styles.MainContainer}>
-      <div className={styles.Title}>
-        <div className={styles.TitleContent}>
-          <p>you're chatting with {friend}</p>
-        </div>
+      <div className={styles.ActionBar}>
+        <h3 style={{ color: "#72767d", marginRight: "10px" }}>@</h3>
+        <h3 style={{ color: "#fff" }}>{friend}</h3>
       </div>
-
       <div className={styles.ChatBody}>
         <div className={styles.ChatMessages} id="ContainerElementID">
           {messages.map((item) => (
@@ -108,19 +105,16 @@ export default function ChatPage({
       </div>
 
       <div className={styles.InputWrapper}>
-        <form
-          onSubmit={(e: any) => sendMessage(e.target.value)}
-          className={styles.InputContent}
-        >
+        <div className={styles.InputContent}>
           <input
             value={currentMessage}
+            onKeyDown={(e) =>
+              e.key === "Enter" ? sendMessage(currentMessage) : null
+            }
             placeholder={`message @${friend}`}
             onChange={(e: any) => setCurrentMessage(e.target.value)}
           ></input>
-          <button type="submit" onClick={sendMessage}>
-            Send
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -11,6 +11,17 @@ export default function Friends({
 }) {
   return (
     <div className={inheritedStyles.MainContainer}>
+      <div className={styles.ActionBar}>
+        <div className={styles.FriendsTab}>
+          <i className="fas fa-user-friends"></i>
+          <p style={{ color: "#fff", fontWeight: 700 }}>Friends</p>
+        </div>
+        <div className={styles.ActionBarBtns}>
+          <button className={styles.FriendsBtn}>Online</button>
+          <button className={styles.FriendsBtn}>All</button>
+          <button className={styles.AddBtn}>Add Friend</button>
+        </div>
+      </div>
       <div className={styles.FriendsList}>
         {friendsList.map((item, index) => (
           <div className={styles.FriendBar} key={index}>
