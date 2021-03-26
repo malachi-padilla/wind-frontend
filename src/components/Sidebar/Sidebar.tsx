@@ -11,8 +11,6 @@ export default function SideBar({
   setFriendsIsOpen,
   friendsIsOpen,
   friendsList,
-  setFriendsList,
-  setRecipientIsTyping,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
@@ -32,7 +30,9 @@ export default function SideBar({
 
   const findUserByUsername = async (username: string) => {
     return axios
-      .get(`http://localhost:4000/user?username=${username}`)
+      .get(`http://localhost:4000/user?username=${username}`, {
+        withCredentials: true,
+      })
       .then((res) => res.data)
       .catch(() => "Not Found");
   };
@@ -49,11 +49,6 @@ export default function SideBar({
         setFriend(friendInput);
         setFriendsIsOpen(false);
         setRecentlyMessaged((current) => [...current, friendInput]);
-        if (friendsList.includes(friendInput)) {
-          return;
-        } else {
-          setFriendsList((current) => [...current, friendInput]);
-        }
         setFriendInput("");
       } else {
         setNotFoundError(true);

@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { UserContext } from "components/types";
+import { PersonalUserInfo, UserContext } from "components/types";
 
-export const MyContext = createContext<UserContext | null | undefined>(null);
+export const MyContext = createContext<UserContext>([null, null]);
 const Context = ({ children }) => {
-  const [user, setUser] = useState<UserContext | null | undefined>(null);
+  const [user, setUser] = useState<PersonalUserInfo | null | undefined>(null);
+  const [fetchNew, setFetchNew] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -17,8 +18,12 @@ const Context = ({ children }) => {
           setUser(undefined);
         }
       });
-  }, []);
-  return <MyContext.Provider value={user}>{children}</MyContext.Provider>;
+  }, [fetchNew]);
+  return (
+    <MyContext.Provider value={[user, [fetchNew, setFetchNew]]}>
+      {children}
+    </MyContext.Provider>
+  );
 };
 
 export default Context;

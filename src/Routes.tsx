@@ -6,7 +6,7 @@ import ChatPage from "Pages/ChatPage/ChatPage";
 import { MyContext } from "Context";
 
 export default function Routes() {
-  const user = useContext(MyContext);
+  const [user] = useContext(MyContext);
   if (user === null) {
     return null;
   }

@@ -9,6 +9,11 @@
   background-color: #36393f;
   position: relative;
 }
+.Title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
 .ActionBar {
   width: 100%;
@@ -175,6 +180,7 @@
   .MainContainer {
     width: 70%;
   }
+
   .ChatBody {
     width: 100%;
   }

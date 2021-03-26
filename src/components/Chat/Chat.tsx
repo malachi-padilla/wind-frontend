@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
-import NoFriendsPage from "./NoFriendsPage";
+import FriendButton from "components/Buttons/FriendButton";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
@@ -13,9 +13,12 @@ export default function ChatPage({
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
+  friendsList,
+  setFriendsList,
 }) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
+  const [recipientData, setRecipientData] = useState<any>();
 
   const name = userInfo.username;
 
@@ -31,7 +34,8 @@ export default function ChatPage({
   useEffect(() => {
     axios
       .get(
-        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`
+        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`,
+        { withCredentials: true }
       )
       .then((res) => {
         if (res.data) {
@@ -64,20 +68,31 @@ export default function ChatPage({
     scrollToBottom();
   }, [messages, recipientIsTyping, currentMessage]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/user?username=${friend}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setRecipientData(res.data);
+      });
+  }, [friend]);
+
+  if (!recipientData) {
+    return null;
+  }
+
   const sendMessage = (e) => {
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
-
-  if (!friend) {
-    return <NoFriendsPage />;
-  }
 
   return (
     <div className={styles.MainContainer}>
       <div className={styles.ActionBar}>
         <h3 style={{ color: "#72767d", marginRight: "10px" }}>@</h3>
         <h3 style={{ color: "#fff" }}>{friend}</h3>
+        <FriendButton recipientId={recipientData.userId} />
       </div>
       <div className={styles.ChatBody}>
         <div className={styles.ChatMessages} id="ContainerElementID">

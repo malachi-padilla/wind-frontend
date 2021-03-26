@@ -1,0 +1,16 @@
+.FriendsBtn {
+  height: 28px;
+  min-width: 40px;
+  color: #fff;
+  font-size: 14px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: #43b581;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.FriendsBtns {
+  display: flex;
+  width: 100%;
+}
