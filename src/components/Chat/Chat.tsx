@@ -1,10 +1,9 @@
 import { PrivateChatMessage } from "components/types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
-import NoFriendsPage from "components/Chat/NoFriendsPage";
 import FriendButton from "components/Buttons/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
 
@@ -35,16 +34,30 @@ export default function ChatPage({
     return () => socket.emit("end");
   }, []);
 
-  useEffect(() => {
+  const fetchUser = () => {
     axios
       .get(`http://localhost:4000/user?username=${friend}`, {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res.data);
         setRecipientData(res.data);
         setLoadingRecipientData(false);
       });
-  }, [friend, userInfo]);
+  };
+
+  useEffect(() => {
+    setLoadingRecipientData(true);
+    fetchUser();
+  }, [friend]);
+
+  // Poll User Information
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      fetchUser();
+    }, 10000);
+    return () => clearInterval(myInterval);
+  }, [friend]);
 
   useEffect(() => {
     axios
@@ -87,7 +100,7 @@ export default function ChatPage({
     return <LoadingPage />;
   }
 
-  const sendMessage = (e) => {
+  const sendMessage = () => {
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
@@ -97,7 +110,11 @@ export default function ChatPage({
       <div className={styles.ActionBar}>
         <h3 style={{ color: "#72767d", marginRight: "10px" }}>@</h3>
         <h3 style={{ color: "#fff" }}>{friend}</h3>
-        <FriendButton recipientId={recipientData.userId} />
+        <FriendButton
+          fetchUser={fetchUser}
+          recipientId={recipientData.userId}
+          relation={recipientData.relation}
+        />
       </div>
       <div className={styles.ChatBody}>
         <div className={styles.ChatMessages} id="ContainerElementID">
@@ -128,9 +145,7 @@ export default function ChatPage({
         <div className={styles.InputContent}>
           <input
             value={currentMessage}
-            onKeyDown={(e) =>
-              e.key === "Enter" ? sendMessage(currentMessage) : null
-            }
+            onKeyDown={(e) => (e.key === "Enter" ? sendMessage() : null)}
             placeholder={`message @${friend}`}
             onChange={(e: any) => setCurrentMessage(e.target.value)}
           ></input>

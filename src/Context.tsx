@@ -15,7 +15,6 @@ const Context = ({ children }) => {
     axios
       .get("http://localhost:4000/auth/user", { withCredentials: true })
       .then((res) => {
-        console.log(res);
         if (res.data !== "no user") {
           setUser(res.data);
         } else {

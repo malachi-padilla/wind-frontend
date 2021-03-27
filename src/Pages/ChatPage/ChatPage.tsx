@@ -7,11 +7,7 @@ import ActiveFriends from "components/Chat/ActiveFriends";
 import Friends from "components/Chat/Friends";
 import NoFriendsPage from "components/Chat/NoFriendsPage";
 import axios from "axios";
-import {
-  PersonalUserInfo,
-  UserContext,
-  UserContextNotNull,
-} from "components/types";
+import { UserContextNotNull } from "components/types";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
@@ -27,7 +23,6 @@ export default function ChatPage() {
       })
       .then((res) => {
         setFriendsList(res.data);
-        console.log(res.data);
       });
   }, [friend]);
 

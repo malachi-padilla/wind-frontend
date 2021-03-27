@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import defaultStyles from "./FriendButton.module.css";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "components/types";
@@ -7,11 +7,15 @@ import { UserContextNotNull } from "components/types";
 export interface FriendButtonProps {
   styles?: any;
   recipientId: any;
+  relation: string;
+  fetchUser: any;
 }
 
 export default function FriendButton({
   recipientId,
   styles,
+  relation,
+  fetchUser,
 }: FriendButtonProps) {
   const { fetchNew, setFetchNew, user: userInfo } = useContext(
     MyContext
@@ -30,8 +34,7 @@ export default function FriendButton({
         }
       )
       .then(() => {
-        console.log("Fetching More User Info");
-        setFetchNew(!fetchNew);
+        fetchUser();
       });
   };
 
@@ -45,7 +48,7 @@ export default function FriendButton({
         withCredentials: true,
       })
       .then(() => {
-        setFetchNew(!fetchNew);
+        fetchUser();
       });
   };
   // Scenario : Build out UI to make action in Front End and render result without seperate HTTP Requestsa
@@ -53,19 +56,18 @@ export default function FriendButton({
   return (
     <button
       onClick={
-        userInfo.friends.includes(recipientId) ||
-        userInfo.sentFriendRequests.includes(recipientId)
+        relation === "Requested" || relation === "Friends"
           ? removeFriend
           : addFriend
       }
       style={styles ? styles : undefined}
       className={!styles ? defaultStyles.FriendsBtn : undefined}
     >
-      {userInfo.sentFriendRequests.includes(recipientId)
+      {relation === "Requested"
         ? "Sent Request"
-        : userInfo.recievedFriendRequests.includes(recipientId)
+        : relation === "Recipient Requested"
         ? "Accept Friend"
-        : userInfo.friends.includes(recipientId)
+        : relation === "Friends"
         ? "Friends"
         : "Add Friend"}
     </button>
