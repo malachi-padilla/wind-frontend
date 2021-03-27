@@ -23,7 +23,9 @@ export default function Friends({
         </div>
       </div>
       {friendsList.length < 1 ? (
-        <h1>No Friends Yet :( </h1>
+        <div className={styles.FriendsList}>
+          <h1>No Friends Yet :( </h1>
+        </div>
       ) : (
         <div className={styles.FriendsList}>
           {friendsList &&
