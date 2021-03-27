@@ -16,7 +16,6 @@ export default function ChatPage({
   recipientIsTyping,
   pollingInterval,
 }) {
-  console.log("Re rendering");
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const [recipientData, setRecipientData] = useState<any>();
