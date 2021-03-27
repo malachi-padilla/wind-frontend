@@ -16,8 +16,6 @@ export default function Friends({
   const [requestedFilter, setRequestedFilter] = useState<boolean>();
   const [mappingList, setMappingList] = useState<any>();
 
-  console.log(mappingList);
-
   useEffect(() => {
     if (!requestedFilter && !requestsFilter && !onlineFilter) {
       setMappingList(friendsList);

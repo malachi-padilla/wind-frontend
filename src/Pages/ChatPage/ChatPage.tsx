@@ -57,7 +57,7 @@ export default function ChatPage() {
             setFriendsList={setFriendsList}
           />
         )
-      ) : (
+      ) : friendsList?.length > 0 ? (
         <Friends
           userInfo={user}
           friendsList={friendsList}
@@ -65,6 +65,8 @@ export default function ChatPage() {
           setFriendsIsOpen={setFriendsIsOpen}
           recipientIsTyping={recipientIsTyping}
         />
+      ) : (
+        <h1>Loading...</h1>
       )}
 
       <ActiveFriends recipientIsTyping={recipientIsTyping} />
