@@ -1,10 +1,12 @@
 import { PrivateChatMessage } from "components/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
+import NoFriendsPage from "components/Chat/NoFriendsPage";
 import FriendButton from "components/Buttons/FriendButton";
+import LoadingPage from "./LoadingPage/LoadingPage";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
@@ -19,7 +21,9 @@ export default function ChatPage({
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const [recipientData, setRecipientData] = useState<any>();
-
+  const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
+    true
+  );
   const name = userInfo.username;
 
   useEffect(() => {
@@ -30,6 +34,17 @@ export default function ChatPage({
     });
     return () => socket.emit("end");
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/user?username=${friend}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setRecipientData(res.data);
+        setLoadingRecipientData(false);
+      });
+  }, [friend, userInfo]);
 
   useEffect(() => {
     axios
@@ -68,18 +83,8 @@ export default function ChatPage({
     scrollToBottom();
   }, [messages, recipientIsTyping, currentMessage]);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/user?username=${friend}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setRecipientData(res.data);
-      });
-  }, [friend]);
-
-  if (!recipientData) {
-    return null;
+  if (loadingRecipientData) {
+    return <LoadingPage />;
   }
 
   const sendMessage = (e) => {

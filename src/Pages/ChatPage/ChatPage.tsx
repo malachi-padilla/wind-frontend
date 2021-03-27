@@ -7,14 +7,15 @@ import ActiveFriends from "components/Chat/ActiveFriends";
 import Friends from "components/Chat/Friends";
 import NoFriendsPage from "components/Chat/NoFriendsPage";
 import axios from "axios";
-import { PersonalUserInfo, UserContext } from "components/types";
+import {
+  PersonalUserInfo,
+  UserContext,
+  UserContextNotNull,
+} from "components/types";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
-  // Get The Context
-  const context = useContext(MyContext);
-  const user = context[0] as PersonalUserInfo;
-  // Get The User from Context and Assert Not Null | Undefined
+  const { user } = useContext(MyContext) as UserContextNotNull;
   const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();

@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import defaultStyles from "./FriendButton.module.css";
 import { MyContext } from "Context";
+import { UserContextNotNull } from "components/types";
 
 export interface FriendButtonProps {
   styles?: any;
@@ -12,7 +13,10 @@ export default function FriendButton({
   recipientId,
   styles,
 }: FriendButtonProps) {
-  const [userInfo, [fetchNew, setFetchNew]]: any = useContext(MyContext);
+  const { fetchNew, setFetchNew, user: userInfo } = useContext(
+    MyContext
+  ) as UserContextNotNull;
+
   const addFriend = async () => {
     await axios
       .post(
@@ -25,7 +29,10 @@ export default function FriendButton({
           withCredentials: true,
         }
       )
-      .then(setFetchNew(!fetchNew));
+      .then(() => {
+        console.log("Fetching More User Info");
+        setFetchNew(!fetchNew);
+      });
   };
 
   const removeFriend = async () => {
@@ -37,14 +44,17 @@ export default function FriendButton({
         },
         withCredentials: true,
       })
-      .then(setFetchNew(!fetchNew));
+      .then(() => {
+        setFetchNew(!fetchNew);
+      });
   };
+  // Scenario : Build out UI to make action in Front End and render result without seperate HTTP Requestsa
 
   return (
     <button
       onClick={
-        userInfo.sentFriendRequests.includes(recipientId) ||
-        userInfo.friends.includes(recipientId)
+        userInfo.friends.includes(recipientId) ||
+        userInfo.sentFriendRequests.includes(recipientId)
           ? removeFriend
           : addFriend
       }
