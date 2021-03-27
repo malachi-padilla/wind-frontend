@@ -59,6 +59,7 @@ export default function ChatPage() {
         )
       ) : (
         <Friends
+          userInfo={user}
           friendsList={friendsList}
           setFriend={setFriend}
           setFriendsIsOpen={setFriendsIsOpen}

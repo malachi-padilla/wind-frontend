@@ -27,7 +27,8 @@
 
 .FriendsBtn {
   height: 28px;
-  min-width: 80px;
+  min-width: 90px;
+  padding: 5px;
   color: #fff;
   font-size: 14px;
   border-radius: 4px;
@@ -37,8 +38,9 @@
 
 .AddBtn {
   height: 28px;
-  min-width: 80px;
+  min-width: 90px;
   border-radius: 4px;
+  padding: 5px;
   color: #fff;
   background-color: #43b581;
 }
