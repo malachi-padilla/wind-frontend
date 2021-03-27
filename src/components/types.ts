@@ -25,12 +25,10 @@ export interface PersonalUserInfo {
 
 export interface UserContext {
   user: PersonalUserInfo | null | undefined;
-  fetchNew: boolean;
   setFetchNew: any;
 }
 
 export interface UserContextNotNull {
   user: PersonalUserInfo;
-  fetchNew: boolean;
   setFetchNew: any;
 }

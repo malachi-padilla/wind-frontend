@@ -17,9 +17,7 @@ export default function FriendButton({
   relation,
   fetchUser,
 }: FriendButtonProps) {
-  const { fetchNew, setFetchNew, user: userInfo } = useContext(
-    MyContext
-  ) as UserContextNotNull;
+  const { user: userInfo } = useContext(MyContext) as UserContextNotNull;
 
   const addFriend = async () => {
     await axios

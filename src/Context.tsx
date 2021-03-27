@@ -4,7 +4,6 @@ import { PersonalUserInfo, UserContext } from "components/types";
 
 export const MyContext = createContext<UserContext>({
   user: null,
-  fetchNew: false,
   setFetchNew: null,
 });
 const Context = ({ children }) => {
@@ -23,7 +22,7 @@ const Context = ({ children }) => {
       });
   }, [fetchNew]);
   return (
-    <MyContext.Provider value={{ user, fetchNew, setFetchNew }}>
+    <MyContext.Provider value={{ user, setFetchNew }}>
       {children}
     </MyContext.Provider>
   );

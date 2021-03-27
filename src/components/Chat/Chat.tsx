@@ -14,9 +14,9 @@ export default function ChatPage({
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
-  friendsList,
-  setFriendsList,
+  pollingInterval,
 }) {
+  console.log("Re rendering");
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const [recipientData, setRecipientData] = useState<any>();
@@ -40,7 +40,6 @@ export default function ChatPage({
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         setRecipientData(res.data);
         setLoadingRecipientData(false);
       });
@@ -53,11 +52,8 @@ export default function ChatPage({
 
   // Poll User Information
   useEffect(() => {
-    const myInterval = setInterval(() => {
-      fetchUser();
-    }, 10000);
-    return () => clearInterval(myInterval);
-  }, [friend]);
+    fetchUser();
+  }, [pollingInterval]);
 
   useEffect(() => {
     axios
