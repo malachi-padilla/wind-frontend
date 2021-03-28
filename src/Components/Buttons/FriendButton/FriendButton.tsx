@@ -1,20 +1,23 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import defaultStyles from "./FriendButton.module.css";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Components/types";
 import { addFriendRequest, removeFriendRequest } from "Api/friends";
+import { PrimaryButton } from "Theme/Buttons";
+import styled from "styled-components";
 
 export interface FriendButtonProps {
-  styles?: any;
   recipientId: string;
   relation: string;
   fetchUser: () => void;
 }
 
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  margin-left: 10px;
+`;
+
 export default function FriendButton({
   recipientId,
-  styles,
   relation,
   fetchUser,
 }: FriendButtonProps) {
@@ -33,14 +36,12 @@ export default function FriendButton({
   };
 
   return (
-    <button
+    <StyledPrimaryButton
       onClick={
         relation === "Requested" || relation === "Friends"
           ? removeFriend
           : addFriend
       }
-      style={styles ? styles : undefined}
-      className={!styles ? defaultStyles.FriendsBtn : undefined}
     >
       {relation === "Requested"
         ? "Sent Request"
@@ -49,6 +50,6 @@ export default function FriendButton({
         : relation === "Friends"
         ? "Friends"
         : "Add Friend"}
-    </button>
+    </StyledPrimaryButton>
   );
 }

@@ -1,4 +1,7 @@
-.ActionBar {
+import styled, { css } from "styled-components";
+import { PrimaryButton, SecondaryButton } from "Theme/Buttons";
+
+export const ActionBar = styled.div`
   width: 100%;
   height: 48px;
   display: flex;
@@ -9,24 +12,24 @@
   position: absolute;
   padding: 10px;
   gap: 10px;
-}
+`;
 
-.FriendsTab {
+export const FriendsTab = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
   padding-right: 1rem;
   border-right: 1px solid #72767d5d;
-}
+`;
 
-.ActionBarBtns {
+export const ActionBarBtns = styled.div`
   display: flex;
   width: 50%;
   gap: 20px;
-}
+`;
 
-.Notification {
+export const Notification = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,38 +42,24 @@
   position: absolute;
   top: -10px;
   right: -10%;
-}
+`;
 
-.FriendsBtn {
-  height: 28px;
-  min-width: 90px;
-  padding: 5px;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 4px;
-  background-color: #40444b;
-  font-weight: 600;
-}
+export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
+  background: ${(props) => (props.selected ? "#5676af" : "#40444b")};
+`;
 
-.AddBtn {
-  height: 28px;
-  min-width: 90px;
-  border-radius: 4px;
-  padding: 5px;
-  color: #fff;
-  background-color: #43b581;
-}
+export const AddBtn = styled(PrimaryButton)``;
 
-.RequestBtnContents {
+export const RequestBtnContents = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
   gap: 10px;
   position: relative;
-}
+`;
 
-.FriendsList {
+export const FriendsList = styled.div`
   width: 100%;
   height: 80%;
   margin-top: 30px;
@@ -79,9 +68,9 @@
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
-}
+`;
 
-.FriendBar {
+export const FriendBar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -89,39 +78,47 @@
   height: 62px;
   width: 90%;
   border-top: 1px solid #72767d;
-}
-.Friendbar:hover {
-  background-color: #72767d;
-  border-radius: 8px;
-}
-.UserInfo {
+  &:hover {
+    background-color: #72767d;
+    border-radius: 8px;
+  }
+`;
+
+export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
-}
-.Actions {
+`;
+export const Actions = styled.div`
   margin-right: 10%;
-}
+`;
 
-.ChatBtn {
+export const ButtonStyles = css`
   height: 36px;
   width: 36px;
   border-radius: 50%;
   background-color: #2f3136;
   color: #aab0bd;
-}
+  &:hover {
+    transition: ease-in 200ms;
+    height: 40px;
+    width: 40px;
+  }
+`;
 
-.AcceptBtn {
+export const ChatBtn = styled.button`
+  ${ButtonStyles}
+`;
+
+export const AcceptBtn = styled.button`
+  ${ButtonStyles};
   color: #43b581;
-}
-.DenyBtn {
+`;
+
+export const DenyBtn = styled.button`
+  ${ButtonStyles};
   color: rgb(230, 71, 71);
-}
-.DenyBtn:hover {
-  color: rgb(230, 71, 71);
-}
-.ChatBtn:hover {
-  transition: ease-in 200ms;
-  height: 40px;
-  width: 40px;
-}
+  &:hover {
+    color: rgb(230, 71, 71);
+  }
+`;

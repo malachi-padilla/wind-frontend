@@ -1,3 +1,4 @@
+import { logoutRequest } from "Api/user";
 import axios from "axios";
 import { SideBarProps } from "Components/types";
 import React, { useState } from "react";
@@ -19,13 +20,9 @@ export default function SideBar({
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
 
   const logout = () => {
-    axios
-      .get("http://localhost:4000/auth/logout", {
-        withCredentials: true,
-      })
-      .then(() => {
-        window.location.href = "/";
-      });
+    logoutRequest().then(() => {
+      window.location.href = "/";
+    });
   };
 
   const findUserByUsername = async (username: string) => {

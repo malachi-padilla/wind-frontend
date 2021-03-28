@@ -1,8 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "util/utilFunctions";
-import inheritedStyles from "./Chat.module.css";
-import styles from "./Friends.module.css";
+import { getMinutesLastOnline } from "Util/utilFunctions";
+import { getUsersRequest } from "Api/user";
+import { MainContainer } from "Theme/Containers";
+import {
+  AcceptBtn,
+  ActionBar,
+  ActionBarBtns,
+  Actions,
+  AddBtn,
+  ChatBtn,
+  DenyBtn,
+  FriendBar,
+  FriendsBtn,
+  FriendsList,
+  FriendsTab,
+  Notification,
+  RequestBtnContents,
+  UserInfo,
+} from "./Friends-css";
 
 export default function Friends({
   friendsList,
@@ -11,9 +27,9 @@ export default function Friends({
   recipientIsTyping,
   userInfo,
 }) {
-  const [onlineFilter, setOnlineFilter] = useState<boolean>();
-  const [requestsFilter, setRequestsFilter] = useState<boolean>();
-  const [requestedFilter, setRequestedFilter] = useState<boolean>();
+  const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
+  const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
+  const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
   const [mappingList, setMappingList] = useState<any>();
 
   useEffect(() => {
@@ -25,33 +41,13 @@ export default function Friends({
         friendsList.filter((item) => getMinutesLastOnline(item.lastOnline) < 10)
       );
     } else if (requestsFilter) {
-      axios
-        .post(
-          `http://localhost:4000/user/getUsers`,
-          {
-            users: userInfo.recievedFriendRequests,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          setMappingList(res.data);
-        });
+      getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
+        setMappingList(res.data);
+      });
     } else if (requestedFilter) {
-      axios
-        .post(
-          `http://localhost:4000/user/getUsers`,
-          {
-            users: userInfo.sentFriendRequests,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          setMappingList(res.data);
-        });
+      getUsersRequest(userInfo.sentFriendRequests).then((res) => {
+        setMappingList(res.data);
+      });
     }
   }, [friendsList, onlineFilter, requestsFilter, requestedFilter, userInfo]);
 
@@ -84,49 +80,44 @@ export default function Friends({
   };
 
   return (
-    <div className={inheritedStyles.MainContainer}>
-      <div className={styles.ActionBar}>
-        <div className={styles.FriendsTab}>
+    <MainContainer>
+      <ActionBar>
+        <FriendsTab>
           <i className="fas fa-user-friends"></i>
           <p style={{ color: "#fff", fontWeight: 700 }}>Friends</p>
-        </div>
-        <div className={styles.ActionBarBtns}>
-          <button
-            style={{ backgroundColor: !onlineFilter ? "#40444b" : "#5676af" }}
-            className={styles.FriendsBtn}
+        </FriendsTab>
+        <ActionBarBtns>
+          <FriendsBtn
+            selected={onlineFilter}
             onClick={() => setFilter("Online")}
           >
             Online
-          </button>
-          <button
-            style={{
-              backgroundColor: !requestedFilter ? "#40444b" : "#5676af",
-            }}
-            className={styles.FriendsBtn}
+          </FriendsBtn>
+          <FriendsBtn
+            selected={requestedFilter}
             onClick={() => setFilter("Requested")}
           >
             Requested
-          </button>
-          <button
-            style={{ backgroundColor: !requestsFilter ? "#40444b" : "#5676af" }}
-            className={styles.FriendsBtn}
+          </FriendsBtn>
+          <FriendsBtn
+            selected={requestsFilter}
             onClick={() => setFilter("Requests")}
           >
-            <div className={styles.RequestBtnContents}>
+            <RequestBtnContents>
               Requests
               {requestsFilter ? (
-                <div className={styles.Notification}>
+                <Notification>
                   <p>{mappingList?.length}</p>
-                </div>
+                </Notification>
               ) : null}
-            </div>
-          </button>
+            </RequestBtnContents>
+          </FriendsBtn>
+          <AddBtn>Add Friend</AddBtn>
+        </ActionBarBtns>
+      </ActionBar>
 
-          <button className={styles.AddBtn}>Add Friend</button>
-        </div>
-      </div>
       {friendsList.length < 1 || mappingList?.length < 1 ? (
-        <div className={styles.FriendsList}>
+        <FriendsList>
           {requestsFilter ? (
             <h1>No Open Requests At This Time</h1>
           ) : requestedFilter ? (
@@ -136,53 +127,45 @@ export default function Friends({
           ) : (
             <h1>No Friends Yet</h1>
           )}
-        </div>
+        </FriendsList>
       ) : (
-        <div className={styles.FriendsList}>
+        <FriendsList>
           {mappingList &&
             mappingList.map((item, index) => (
-              <div className={styles.FriendBar} key={index}>
-                <div className={styles.UserInfo}>
+              <FriendBar key={index}>
+                <UserInfo>
                   {recipientIsTyping ? (
-                    <div className={styles.IsTyping}>
+                    <div>
                       <span></span>
                     </div>
                   ) : null}
                   <h3>{item.username}</h3>
-                  <p style={{ color: "#888e9b" }}>
-                    {recipientIsTyping ? "Online" : null}
-                  </p>
-                </div>
-                <div className={styles.Actions}>
+                </UserInfo>
+                <Actions>
                   {!requestsFilter ? (
-                    <button
+                    <ChatBtn
                       onClick={() => {
                         setFriend(item.username);
                         setFriendsIsOpen(false);
                       }}
-                      className={styles.ChatBtn}
                     >
                       <i className="fas fa-comment-alt"></i>
-                    </button>
+                    </ChatBtn>
                   ) : (
                     <>
-                      <button
-                        className={`${styles.ChatBtn} && ${styles.AcceptBtn}`}
-                      >
+                      <AcceptBtn>
                         <i className="fas fa-check"></i>
-                      </button>
-                      <button
-                        className={`${styles.ChatBtn} && ${styles.DenyBtn}`}
-                      >
+                      </AcceptBtn>
+                      <DenyBtn>
                         <i className="fas fa-times"></i>
-                      </button>
+                      </DenyBtn>
                     </>
                   )}
-                </div>
-              </div>
+                </Actions>
+              </FriendBar>
             ))}
-        </div>
+        </FriendsList>
       )}
-    </div>
+    </MainContainer>
   );
 }
