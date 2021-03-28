@@ -14,7 +14,7 @@ export function getUsersRequest(users: any[]) {
 }
 
 export function getUserByUsernameRequest(username) {
-  return axios.get(`${API_URL}user?username=${username}`, {
+  return axios.get(`${API_URL}/user?username=${username}`, {
     withCredentials: true,
   });
 }
@@ -29,5 +29,18 @@ export function getMessagesRequest(user1: string, user2: string) {
   return axios.get(
     `${API_URL}/messages/getMessages?user1=${user1}&user2=${user2}`,
     { withCredentials: true }
+  );
+}
+
+export function loginRequest(username, password) {
+  return axios.post(
+    `${API_URL}/auth/login`,
+    {
+      username,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
   );
 }

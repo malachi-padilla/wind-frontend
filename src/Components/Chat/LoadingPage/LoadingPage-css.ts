@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { FlexRowCenterCenter } from "Theme/Containers";
+import { FlexColCenterCenter, FlexRowCenterCenter } from "Theme/Containers";
 
 export const bounce = keyframes`
   0% {
@@ -13,12 +13,11 @@ export const bounce = keyframes`
   }
 `;
 
-export const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const LogoContainer = styled(FlexColCenterCenter)`
+  width: unset;
+  height: unset;
   border-radius: 2rem;
-  background-color: #7289da;
+  background-color: ${(props) => props.theme.messaging.primaryBlue};
   padding: 5px;
   animation: ${bounce} 1500ms ease infinite;
 `;

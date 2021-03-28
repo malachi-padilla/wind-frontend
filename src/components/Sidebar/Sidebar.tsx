@@ -1,8 +1,23 @@
 import { logoutRequest } from "Api/user";
 import axios from "axios";
 import { SideBarProps } from "Components/types";
-import React, { useState } from "react";
-import styles from "./Sidebar.module.css";
+import React, { useEffect, useState } from "react";
+import {
+  DirectMessageTab,
+  EnterFriendWrapper,
+  FriendBar,
+  FriendsTab,
+  IsTyping,
+  LogoutBtn,
+  ProfileBar,
+  ProfileBtns,
+  RecentFriendsWrapper,
+  RecentlyMessagedList,
+  RemoveFriendButton,
+  SideBarContents,
+  StyledFriendInput,
+  StyledMainContainer,
+} from "./Sidebar-css";
 
 export default function SideBar({
   friend,
@@ -52,44 +67,45 @@ export default function SideBar({
       }
     }
   };
+
+  useEffect(() => {
+    setNotFoundError(false);
+  }, [friendInput]);
+
   return (
-    <div className={styles.MainContainer}>
-      <div className={styles.SideBarContents}>
-        <div className={styles.EnterFriendWrapper}>
-          <input
-            style={{
-              border: notFoundError ? "1px solid #b92d2d" : undefined,
-            }}
+    <StyledMainContainer>
+      <SideBarContents>
+        <EnterFriendWrapper>
+          <StyledFriendInput
+            error={notFoundError}
             onKeyDown={(e) => (e.key == "Enter" ? addFriend() : null)}
             onChange={(e: any) => setFriendInput(e.target.value)}
             value={friendInput}
             type="text"
             placeholder="Find or start a conversation"
-          ></input>
-        </div>
-        <div className={styles.RecentFriendsWrapper}>
-          <div
+          ></StyledFriendInput>
+        </EnterFriendWrapper>
+        <RecentFriendsWrapper>
+          <FriendsTab
             onClick={() => setFriendsIsOpen(true)}
-            className={styles.FriendsTab}
             style={{ backgroundColor: friendsIsOpen ? "#36393f" : undefined }}
           >
             <div>
               <i className="fas fa-user-friends"></i>
             </div>
             <p>Friends</p>
-          </div>
-          <div className={styles.DirectMessageTab}>
+          </FriendsTab>
+          <DirectMessageTab>
             <p>DIRECT MESSAGES</p>
             <button>+</button>
-          </div>
+          </DirectMessageTab>
           {!friend ? null : (
-            <div className={styles.RecentlyMessagedList}>
+            <RecentlyMessagedList>
               {recentlyMessaged.map((item, index) => (
-                <div
+                <FriendBar
                   style={{
                     backgroundColor: friend === item ? "#36393f" : "#2f3136",
                   }}
-                  className={styles.FriendBar}
                   key={index}
                   onClick={() => {
                     setFriend(item);
@@ -97,13 +113,12 @@ export default function SideBar({
                   }}
                 >
                   {recipientIsTyping ? (
-                    <div className={styles.IsTyping}>
+                    <IsTyping>
                       <span></span>
-                    </div>
+                    </IsTyping>
                   ) : null}
                   <p>{item}</p>
-                  <button
-                    className={styles.RemoveFriendButton}
+                  <RemoveFriendButton
                     onClick={() =>
                       setRecentlyMessaged((current) =>
                         current.filter((node) => item !== node)
@@ -111,24 +126,22 @@ export default function SideBar({
                     }
                   >
                     <i className="fas fa-times"></i>
-                  </button>
-                </div>
+                  </RemoveFriendButton>
+                </FriendBar>
               ))}
-            </div>
+            </RecentlyMessagedList>
           )}
-        </div>
-      </div>
-      <div className={styles.ProfileBar}>
-        <p className={styles.Username}>{userInfo.username}</p>
-        <div className={styles.ProfileBtns}>
+        </RecentFriendsWrapper>
+      </SideBarContents>
+      <ProfileBar>
+        <p>{userInfo.username}</p>
+        <ProfileBtns>
           <button>
             <i className="fas fa-cog"></i>
           </button>
-          <button className={styles.LogoutBtn} onClick={logout}>
-            Logout
-          </button>
-        </div>
-      </div>
-    </div>
+          <LogoutBtn onClick={logout}>Logout</LogoutBtn>
+        </ProfileBtns>
+      </ProfileBar>
+    </StyledMainContainer>
   );
 }

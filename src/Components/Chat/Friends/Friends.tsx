@@ -15,6 +15,7 @@ import {
   FriendsBtn,
   FriendsList,
   FriendsTab,
+  FriendsTabText,
   Notification,
   RequestBtnContents,
   UserInfo,
@@ -84,7 +85,7 @@ export default function Friends({
       <ActionBar>
         <FriendsTab>
           <i className="fas fa-user-friends"></i>
-          <p style={{ color: "#fff", fontWeight: 700 }}>Friends</p>
+          <FriendsTabText>Friends</FriendsTabText>
         </FriendsTab>
         <ActionBarBtns>
           <FriendsBtn

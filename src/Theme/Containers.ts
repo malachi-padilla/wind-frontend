@@ -45,6 +45,24 @@ export const FlexRowCenterEnd = styled.div`
   height: 100%;
 `;
 
+export const FlexRowCenterBetween = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+`;
+
+export const FlexRowCenterEvenly = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+`;
+
 export const MainContainer = styled.div`
   height: 100vh;
   width: 100%;
@@ -53,7 +71,7 @@ export const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
   font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
-  background-color: ${(props) => props.theme.darkTheme.mainGrey};
+  background-color: ${(props) => props.theme.mainGrey};
   position: relative;
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultWhite};
+  color: ${(props) => props.theme.fontColors.defaultWhite};
 `;

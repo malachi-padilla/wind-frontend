@@ -14,8 +14,8 @@ export const ActionBar = styled(FlexRowCenterStart)`
   height: 48px;
   position: absolute;
   top: 0;
-  border-bottom: ${(props) => props.theme.darkTheme.defaultBorderBottom};
-  box-shadow: ${(props) => props.theme.darkTheme.defaultBoxShadow};
+  border-bottom: ${(props) => props.theme.defaultBorderBottom};
+  box-shadow: ${(props) => props.theme.defaultBoxShadow};
   padding-left: 10px;
 `;
 
@@ -38,7 +38,7 @@ export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
       ? props.theme.messaging.secondaryGrey
       : props.theme.messaging.primaryBlue};
   border-radius: 30px;
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultWhite};
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   margin-bottom: ${(props) => (props.secondaryMessage ? "20px" : "8px")};
   align-self: ${(props) =>
     props.secondaryMessage ? "flex-start" : "flex-end"};
@@ -50,15 +50,15 @@ export const InputContent = styled(FlexRowCenterCenter)`
   width: 80%;
   margin-top: 20px;
   input {
-    background-color: ${(props) => props.theme.darkTheme.tertiaryGrey};
+    background-color: ${(props) => props.theme.tertiaryGrey};
     width: 100%;
     height: 48px;
     padding: 10px;
     outline: none;
     box-sizing: border-box;
     border-radius: 8px;
-    border: ${(props) => props.theme.darkTheme.inputBorder};
-    color: ${(props) => props.theme.darkTheme.fontColors.defaultLightGrey};
+    border: ${(props) => props.theme.inputBorder};
+    color: ${(props) => props.theme.fontColors.defaultLightGrey};
     font-size: 16px;
   }
 `;
@@ -66,13 +66,13 @@ export const InputContent = styled(FlexRowCenterCenter)`
 export const FriendLabel = styled(FlexRowCenterCenter)`
   width: unset;
   justify-content: flex-start;
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultLightGrey};
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
   padding: 5px;
 `;
 
 export const FriendLabelText = styled.h3`
   margin-left: 2px;
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultWhite};
+  color: ${(props) => props.theme.fontColors.defaultWhite};
 `;
 
 export const InputWrapper = styled(FlexColCenterCenter)`

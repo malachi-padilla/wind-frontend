@@ -3,20 +3,20 @@ import { FlexColCenterCenter, FlexColCenterStart } from "Theme/Containers";
 
 export const MainContainer = styled(FlexColCenterCenter)`
   width: 20%;
-  background-color: ${(props) => props.theme.darkTheme.secondaryDarkGrey};
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultLightGrey};
+  background-color: ${(props) => props.theme.secondaryDarkGrey};
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
   @media only screen and (max-width: 1200px) {
     display: none;
   }
 `;
 
 export const Subheading = styled.h4`
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultWhite};
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   margin-bottom: "10px";
 `;
 
 export const Text = styled.p`
-  color: ${(props) => props.theme.darkTheme.fontColors.defaultMediumGrey};
+  color: ${(props) => props.theme.fontColors.defaultMediumGrey};
 `;
 
 export const Title = styled.div`
@@ -39,7 +39,7 @@ export const ActiveUsersContainer = styled(FlexColCenterStart)`
 export const LonelyWrapper = styled(FlexColCenterCenter)`
   height: fit-content;
   padding: 20px;
-  background-color: ${(props) => props.theme.darkTheme.mainGrey};
+  background-color: ${(props) => props.theme.mainGrey};
   @media only screen and (max-width: 1200px) {
     display: none;
   }

@@ -1,13 +1,18 @@
 import styled, { css } from "styled-components";
 import { PrimaryButton, SecondaryButton } from "Theme/Buttons";
+import {
+  FlexColCenterStart,
+  FlexRowCenterBetween,
+  FlexRowCenterCenter,
+} from "Theme/Containers";
 
 export const ActionBar = styled.div`
   width: 100%;
   height: 48px;
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid #202225;
-  box-shadow: 1px 1px 10px #2022255b;
+  border-bottom: ${(props) => props.theme.defaultBorderBottom};
+  box-shadow: ${(props) => props.theme.defaultBoxShadow};
   top: 0;
   position: absolute;
   padding: 10px;
@@ -20,7 +25,7 @@ export const FriendsTab = styled.div`
   align-items: center;
   gap: 10px;
   padding-right: 1rem;
-  border-right: 1px solid #72767d5d;
+  border-right: 1px solid ${(props) => props.theme.mediumGray};
 `;
 
 export const ActionBarBtns = styled.div`
@@ -29,10 +34,7 @@ export const ActionBarBtns = styled.div`
   gap: 20px;
 `;
 
-export const Notification = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const Notification = styled(FlexRowCenterCenter)`
   padding: 2px;
   height: 20px;
   width: 20px;
@@ -50,36 +52,25 @@ export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
 
 export const AddBtn = styled(PrimaryButton)``;
 
-export const RequestBtnContents = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+export const RequestBtnContents = styled(FlexRowCenterCenter)`
+  height: unset;
+  width: unset;
   gap: 10px;
   position: relative;
 `;
 
-export const FriendsList = styled.div`
-  width: 100%;
+export const FriendsList = styled(FlexColCenterStart)`
   height: 80%;
   margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   gap: 20px;
 `;
 
-export const FriendBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+export const FriendBar = styled(FlexRowCenterBetween)`
   height: 62px;
   width: 90%;
-  border-top: 1px solid #72767d;
+  border-top: 1px solid ${(props) => props.theme.messaging.secondaryGrey};
   &:hover {
-    background-color: #72767d;
+    background-color: ${(props) => props.theme.messaging.secondaryGrey};
     border-radius: 8px;
   }
 `;
@@ -87,8 +78,9 @@ export const FriendBar = styled.div`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
 `;
+
 export const Actions = styled.div`
   margin-right: 10%;
 `;
@@ -97,7 +89,7 @@ export const ButtonStyles = css`
   height: 36px;
   width: 36px;
   border-radius: 50%;
-  background-color: #2f3136;
+  background-color: ${(props) => props.theme.secondaryDarkGrey};
   color: #aab0bd;
   &:hover {
     transition: ease-in 200ms;
@@ -121,4 +113,9 @@ export const DenyBtn = styled.button`
   &:hover {
     color: rgb(230, 71, 71);
   }
+`;
+
+export const FriendsTabText = styled.p`
+  color: ${(props) => props.theme.fontColors.defaultWhite};
+  font-weight: 700;
 `;
