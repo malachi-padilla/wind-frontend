@@ -22,7 +22,7 @@ export default function Friends({
     }
     if (onlineFilter) {
       setMappingList(
-        friendsList.filter((item) => getMinutesLastOnline(item.lastOnline) < 2)
+        friendsList.filter((item) => getMinutesLastOnline(item.lastOnline) < 10)
       );
     } else if (requestsFilter) {
       axios
@@ -112,8 +112,16 @@ export default function Friends({
             className={styles.FriendsBtn}
             onClick={() => setFilter("Requests")}
           >
-            Requests
+            <div className={styles.RequestBtnContents}>
+              Requests
+              {requestsFilter ? (
+                <div className={styles.Notification}>
+                  <p>{mappingList?.length}</p>
+                </div>
+              ) : null}
+            </div>
           </button>
+
           <button className={styles.AddBtn}>Add Friend</button>
         </div>
       </div>
@@ -146,15 +154,30 @@ export default function Friends({
                   </p>
                 </div>
                 <div className={styles.Actions}>
-                  <button
-                    onClick={() => {
-                      setFriend(item.username);
-                      setFriendsIsOpen(false);
-                    }}
-                    className={styles.ChatBtn}
-                  >
-                    <i className="fas fa-comment-alt"></i>
-                  </button>
+                  {!requestsFilter ? (
+                    <button
+                      onClick={() => {
+                        setFriend(item.username);
+                        setFriendsIsOpen(false);
+                      }}
+                      className={styles.ChatBtn}
+                    >
+                      <i className="fas fa-comment-alt"></i>
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        className={`${styles.ChatBtn} && ${styles.AcceptBtn}`}
+                      >
+                        <i className="fas fa-check"></i>
+                      </button>
+                      <button
+                        className={`${styles.ChatBtn} && ${styles.DenyBtn}`}
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
