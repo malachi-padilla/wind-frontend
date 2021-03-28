@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../components/Login/Login.module.css";
+import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";

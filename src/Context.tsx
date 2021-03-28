@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { PersonalUserInfo, UserContext } from "components/types";
+import { PersonalUserInfo, UserContext } from "Components/types";
 
 export const MyContext = createContext<UserContext>({
   user: null,

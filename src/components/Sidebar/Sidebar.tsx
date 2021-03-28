@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SideBarProps } from "components/types";
+import { SideBarProps } from "Components/types";
 import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
 

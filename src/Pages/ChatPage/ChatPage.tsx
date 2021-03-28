@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import Chat from "../../components/Chat/Chat";
-import SideBar from "components/Sidebar/Sidebar";
+import Chat from "../../Components/Chat/Chat";
+import SideBar from "Components/Sidebar/Sidebar";
 import styles from "./ChatPage.module.css";
 import { MyContext } from "Context";
-import ActiveFriends from "components/Chat/ActiveFriends";
-import Friends from "components/Chat/Friends";
-import NoFriendsPage from "components/Chat/NoFriendsPage";
+import ActiveFriends from "Components/Chat/ActiveFriends";
+import Friends from "Components/Chat/Friends";
+import NoFriendsPage from "Components/Chat/NoFriendsPage";
 import axios from "axios";
-import { UserContextNotNull } from "components/types";
-import LoadingPage from "components/Chat/LoadingPage/LoadingPage";
+import { UserContextNotNull } from "Components/types";
+import LoadingPage from "Components/Chat/LoadingPage/LoadingPage";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");

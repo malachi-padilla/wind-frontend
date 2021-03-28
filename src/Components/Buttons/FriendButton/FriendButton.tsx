@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useContext } from "react";
 import defaultStyles from "./FriendButton.module.css";
 import { MyContext } from "Context";
-import { UserContextNotNull } from "components/types";
+import { UserContextNotNull } from "Components/types";
+import { addFriendRequest, removeFriendRequest } from "Api/friends";
 
 export interface FriendButtonProps {
   styles?: any;
-  recipientId: any;
+  recipientId: string;
   relation: string;
-  fetchUser: any;
+  fetchUser: () => void;
 }
 
 export default function FriendButton({
@@ -20,36 +21,16 @@ export default function FriendButton({
   const { user: userInfo } = useContext(MyContext) as UserContextNotNull;
 
   const addFriend = async () => {
-    await axios
-      .post(
-        "http://localhost:4000/friends/friendRequest",
-        {
-          user1: userInfo.userId,
-          user2: recipientId,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then(() => {
-        fetchUser();
-      });
+    addFriendRequest(userInfo.userId, recipientId).then(() => {
+      fetchUser();
+    });
   };
 
   const removeFriend = async () => {
-    await axios
-      .delete("http://localhost:4000/friends/friendRequest", {
-        data: {
-          user1: userInfo.userId,
-          user2: recipientId,
-        },
-        withCredentials: true,
-      })
-      .then(() => {
-        fetchUser();
-      });
+    removeFriendRequest(userInfo.userId, recipientId).then(() => {
+      fetchUser();
+    });
   };
-  // Scenario : Build out UI to make action in Front End and render result without seperate HTTP Requestsa
 
   return (
     <button

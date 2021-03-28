@@ -1,10 +1,10 @@
-import { PrivateChatMessage } from "components/types";
+import { PrivateChatMessage } from "Components/types";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
-import FriendButton from "components/Buttons/FriendButton";
+import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
 
 const ENDPOINT = "http://localhost:4000";
