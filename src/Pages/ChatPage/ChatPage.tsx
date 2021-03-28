@@ -8,6 +8,7 @@ import Friends from "components/Chat/Friends";
 import NoFriendsPage from "components/Chat/NoFriendsPage";
 import axios from "axios";
 import { UserContextNotNull } from "components/types";
+import LoadingPage from "components/Chat/LoadingPage/LoadingPage";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
@@ -34,6 +35,10 @@ export default function ChatPage() {
     }, 10000);
     return () => clearInterval(myInterval);
   }, []);
+
+  if (friendsList === undefined) {
+    return <LoadingPage propStyles={{ width: "100vw" }} />;
+  }
 
   return (
     <div className={styles.ChatPageWrapper}>
@@ -74,10 +79,10 @@ export default function ChatPage() {
           recipientIsTyping={recipientIsTyping}
         />
       ) : (
-        <h1>Loading...</h1>
+        <LoadingPage />
       )}
 
-      <ActiveFriends recipientIsTyping={recipientIsTyping} />
+      <ActiveFriends friendsList={friendsList} />
     </div>
   );
 }

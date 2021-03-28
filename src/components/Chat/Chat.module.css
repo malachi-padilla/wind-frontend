@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
   background-color: #36393f;
   position: relative;
@@ -17,12 +17,13 @@
 
 .ActionBar {
   width: 100%;
-  height: 8%;
+  height: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid #202225;
   box-shadow: 1px 1px 10px #2022255b;
+  position: absolute;
   top: 0;
   padding-left: 10px;
 }

@@ -6,6 +6,7 @@
   border-bottom: 1px solid #202225;
   box-shadow: 1px 1px 10px #2022255b;
   top: 0;
+  position: absolute;
   padding: 10px;
   gap: 10px;
 }
@@ -23,6 +24,21 @@
   display: flex;
   width: 50%;
   gap: 20px;
+}
+
+.Notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: rgb(230, 71, 71);
+  color: #fff;
+  position: absolute;
+  top: -10px;
+  right: -10%;
 }
 
 .FriendsBtn {
@@ -43,6 +59,15 @@
   padding: 5px;
   color: #fff;
   background-color: #43b581;
+}
+
+.RequestBtnContents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+  position: relative;
 }
 
 .FriendsList {
@@ -85,9 +110,18 @@
   background-color: #2f3136;
   color: #aab0bd;
 }
+
+.AcceptBtn {
+  color: #43b581;
+}
+.DenyBtn {
+  color: rgb(230, 71, 71);
+}
+.DenyBtn:hover {
+  color: rgb(230, 71, 71);
+}
 .ChatBtn:hover {
   transition: ease-in 200ms;
   height: 40px;
   width: 40px;
-  color: #43b581;
 }
