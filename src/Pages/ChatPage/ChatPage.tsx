@@ -1,18 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Chat from "../../components/Chat/Chat";
 import SideBar from "components/Sidebar/Sidebar";
 import styles from "./ChatPage.module.css";
 import { MyContext } from "Context";
-import { UserContext } from "components/types";
 import ActiveFriends from "components/Chat/ActiveFriends";
 import Friends from "components/Chat/Friends";
+import NoFriendsPage from "components/Chat/NoFriendsPage";
+import axios from "axios";
+import { UserContextNotNull } from "components/types";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
-  const user = useContext(MyContext) as UserContext;
+  const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
-  const [friendsList, setFriendsList] = useState<string[]>([]);
+  const [friendsList, setFriendsList] = useState<any>();
+  const [pollingInterval, setPollingInterval] = useState<boolean>(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/friends?user=${user.userId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setFriendsList(res.data);
+      });
+  }, [pollingInterval]);
+
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      setPollingInterval((current) => !current);
+      setFetchNew((current) => !current);
+    }, 10000);
+    return () => clearInterval(myInterval);
+  }, []);
 
   return (
     <div className={styles.ChatPageWrapper}>
@@ -24,31 +45,36 @@ export default function ChatPage() {
         </div>
         <SideBar
           recipientIsTyping={recipientIsTyping}
-          setRecipientIsTyping={setRecipientIsTyping}
           userInfo={user}
           friend={friend}
           setFriend={setFriend}
           friendsIsOpen={friendsIsOpen}
           setFriendsIsOpen={setFriendsIsOpen}
           friendsList={friendsList}
-          setFriendsList={setFriendsList}
         />
       </div>
       {!friendsIsOpen ? (
-        <Chat
-          recipientIsTyping={recipientIsTyping}
-          setRecipientIsTyping={setRecipientIsTyping}
-          userInfo={user}
-          friend={friend}
-        />
-      ) : (
+        !friend ? (
+          <NoFriendsPage />
+        ) : (
+          <Chat
+            recipientIsTyping={recipientIsTyping}
+            setRecipientIsTyping={setRecipientIsTyping}
+            userInfo={user}
+            friend={friend}
+            pollingInterval={pollingInterval}
+          />
+        )
+      ) : friendsList?.length > 0 ? (
         <Friends
+          userInfo={user}
           friendsList={friendsList}
-          setFriendsList={setFriendsList}
           setFriend={setFriend}
           setFriendsIsOpen={setFriendsIsOpen}
           recipientIsTyping={recipientIsTyping}
         />
+      ) : (
+        <h1>Loading...</h1>
       )}
 
       <ActiveFriends recipientIsTyping={recipientIsTyping} />

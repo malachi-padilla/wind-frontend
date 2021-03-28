@@ -8,16 +8,27 @@ export interface PrivateChatMessage {
 export interface SideBarProps {
   friend: string;
   setFriend: (friend: string) => any;
-  userInfo: UserContext;
+  userInfo: PersonalUserInfo;
   recipientIsTyping: boolean;
-  setRecipientIsTyping: (recipientIsTyping: boolean) => any;
   friendsIsOpen: boolean;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
-  friendsList: string[];
-  setFriendsList: (friendsList: any) => any;
+  friendsList: any;
+}
+
+export interface PersonalUserInfo {
+  userId: string;
+  username: string;
+  friends: string[];
+  sentFriendRequests: string[];
+  recievedFriendRequests: string[];
 }
 
 export interface UserContext {
-  userId: string;
-  username: string;
+  user: PersonalUserInfo | null | undefined;
+  setFetchNew: any;
+}
+
+export interface UserContextNotNull {
+  user: PersonalUserInfo;
+  setFetchNew: any;
 }

@@ -4,7 +4,8 @@ import io from "socket.io-client";
 import styles from "./Chat.module.css";
 import axios from "axios";
 import { animateScroll } from "react-scroll";
-import NoFriendsPage from "./NoFriendsPage";
+import FriendButton from "components/Buttons/FriendButton";
+import LoadingPage from "./LoadingPage/LoadingPage";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
@@ -13,10 +14,14 @@ export default function ChatPage({
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
+  pollingInterval,
 }) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-
+  const [recipientData, setRecipientData] = useState<any>();
+  const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
+    true
+  );
   const name = userInfo.username;
 
   useEffect(() => {
@@ -28,10 +33,32 @@ export default function ChatPage({
     return () => socket.emit("end");
   }, []);
 
+  const fetchUser = () => {
+    axios
+      .get(`http://localhost:4000/user?username=${friend}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setRecipientData(res.data);
+        setLoadingRecipientData(false);
+      });
+  };
+
+  useEffect(() => {
+    setLoadingRecipientData(true);
+    fetchUser();
+  }, [friend]);
+
+  // Poll User Information
+  useEffect(() => {
+    fetchUser();
+  }, [pollingInterval]);
+
   useEffect(() => {
     axios
       .get(
-        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`
+        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`,
+        { withCredentials: true }
       )
       .then((res) => {
         if (res.data) {
@@ -64,20 +91,25 @@ export default function ChatPage({
     scrollToBottom();
   }, [messages, recipientIsTyping, currentMessage]);
 
-  const sendMessage = (e) => {
+  if (loadingRecipientData) {
+    return <LoadingPage />;
+  }
+
+  const sendMessage = () => {
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
-
-  if (!friend) {
-    return <NoFriendsPage />;
-  }
 
   return (
     <div className={styles.MainContainer}>
       <div className={styles.ActionBar}>
         <h3 style={{ color: "#72767d", marginRight: "10px" }}>@</h3>
         <h3 style={{ color: "#fff" }}>{friend}</h3>
+        <FriendButton
+          fetchUser={fetchUser}
+          recipientId={recipientData.userId}
+          relation={recipientData.relation}
+        />
       </div>
       <div className={styles.ChatBody}>
         <div className={styles.ChatMessages} id="ContainerElementID">
@@ -108,9 +140,7 @@ export default function ChatPage({
         <div className={styles.InputContent}>
           <input
             value={currentMessage}
-            onKeyDown={(e) =>
-              e.key === "Enter" ? sendMessage(currentMessage) : null
-            }
+            onKeyDown={(e) => (e.key === "Enter" ? sendMessage() : null)}
             placeholder={`message @${friend}`}
             onChange={(e: any) => setCurrentMessage(e.target.value)}
           ></input>
