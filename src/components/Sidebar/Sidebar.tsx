@@ -14,6 +14,7 @@ import {
   RecentFriendsWrapper,
   RecentlyMessagedList,
   RemoveFriendButton,
+  SettingsBtn,
   SideBarContents,
   StyledFriendInput,
   StyledMainContainer,
@@ -136,9 +137,9 @@ export default function SideBar({
       <ProfileBar>
         <p>{userInfo.username}</p>
         <ProfileBtns>
-          <button>
+          <SettingsBtn>
             <i className="fas fa-cog"></i>
-          </button>
+          </SettingsBtn>
           <LogoutBtn onClick={logout}>Logout</LogoutBtn>
         </ProfileBtns>
       </ProfileBar>

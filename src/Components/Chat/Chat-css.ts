@@ -20,7 +20,7 @@ export const ActionBar = styled(FlexRowCenterStart)`
 `;
 
 export const ChatBody = styled(FlexColCenterCenter)`
-  height: 70%;
+  height: 85%;
   margin-top: 30px;
 
   @media only screen and (max-width: 800px) {
@@ -76,11 +76,11 @@ export const FriendLabelText = styled.h3`
 `;
 
 export const InputWrapper = styled(FlexColCenterCenter)`
-  height: 20%;
+  height: 10%;
 `;
 
 export const ChatMessages = styled(FlexColCenterCenter)`
-  height: 90%;
+  height: 95%;
   width: 80%;
   justify-content: unset;
   overflow-y: scroll;

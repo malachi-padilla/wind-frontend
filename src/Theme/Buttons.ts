@@ -11,7 +11,7 @@ export const defaultCSS = css`
 `;
 export const PrimaryButton = styled.button`
   ${defaultCSS};
-  background-color: #43b581;
+  background-color: ${(props) => props.theme.fontColors.actionGreen};
 `;
 
 export const SecondaryButton = styled.button`

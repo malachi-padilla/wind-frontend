@@ -6,6 +6,7 @@ import {
   MainContainer,
   FlexRowCenterEvenly,
   FlexRowCenterEnd,
+  FriendBarTheme,
 } from "Theme/Containers";
 import { SecondaryButton } from "Theme/Buttons";
 
@@ -45,7 +46,6 @@ export const StyledFriendInput = styled.input<{ error: boolean }>`
   border-radius: 4px;
   color: #dcddde;
   font-size: 14px;
-
   font-weight: 500px !important;
   &:hover {
     transition: ease-in 200ms;
@@ -74,9 +74,11 @@ export const FriendsTab = styled(FlexRowCenterStart)`
 
 export const DirectMessageTab = styled(FlexRowCenterStart)`
   height: 40px;
+  width: 100%;
   font-size: 11px;
   padding: 18px 8px 4px 18px;
-  font-weight: 500;
+  font-weight: 700;
+  color: ${(props) => props.theme.fontColors.defaultMediumGrey};
   position: relative;
   :hover {
     color: #fff;
@@ -89,20 +91,7 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
   }
 `;
 
-export const FriendBar = styled(FlexRowCenterStart)`
-  min-height: 40px;
-  border-radius: 4px;
-  padding-left: 12px;
-  height: unset;
-  background-color: #3c3f47;
-  color: #fff;
-  cursor: pointer;
-  margin-top: 20px;
-  position: relative;
-  :hover {
-    background-color: #36393f;
-  }
-`;
+export const FriendBar = styled(FriendBarTheme)``;
 
 export const loadingFade = keyframes`
   0% {
@@ -123,7 +112,7 @@ export const IsTyping = styled.div`
     width: 10px;
     float: left;
     margin-right: 5px;
-    background-color: #43b581;
+    background-color: ${(props) => props.theme.fontColors.actionGreen};
     display: block;
     border-radius: 50%;
     opacity: 0.4;
@@ -151,18 +140,22 @@ export const ProfileBar = styled(FlexRowCenterEvenly)`
   color: #fff;
   button {
     font-size: 16px;
-    color: #aab0bd;
   }
 `;
 
 export const ProfileBtns = styled(FlexRowCenterEnd)`
-  gap: 10px;
-  width: unset;
+  width: 60%;
+`;
+
+export const SettingsBtn = styled.button`
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
 `;
 
 export const LogoutBtn = styled(SecondaryButton)`
-  &hover {
+  background-color: transparent;
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
+  :hover {
     transition: ease-in 200ms;
-    color: rgb(240, 71, 71);
+    color: ${(props) => props.theme.fontColors.importantRed};
   }
 `;

@@ -9,6 +9,8 @@ const theme: DefaultTheme = {
     defaultWhite: "#FFF",
     defaultLightGrey: "#b9bbbe",
     defaultMediumGrey: "#9e9ea1",
+    importantRed: "#F04747",
+    actionGreen: "#43b581",
   },
   defaultBoxShadow: "1px 1px 10px #2022255b",
   inputBorder: "1px solid #27292e",

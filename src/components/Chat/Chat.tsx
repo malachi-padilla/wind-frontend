@@ -122,7 +122,7 @@ export default function ChatPage({
           {messages.map((item) => (
             <>
               <MainMessage
-                secondaryMessage={item.sentBy === name ? true : false}
+                secondaryMessage={item.sentBy === name ? false : true}
               >
                 {item.message}
               </MainMessage>

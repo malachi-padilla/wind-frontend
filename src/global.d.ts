@@ -12,6 +12,8 @@ declare module "styled-components" {
       defaultWhite: string;
       defaultLightGrey: string;
       defaultMediumGrey: string;
+      importantRed: string;
+      actionGreen: string;
     };
     defaultBoxShadow: string;
     defaultBorderBottom: string;

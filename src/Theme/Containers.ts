@@ -75,3 +75,23 @@ export const MainContainer = styled.div`
   position: relative;
   color: ${(props) => props.theme.fontColors.defaultWhite};
 `;
+
+export const FriendBarTheme = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  width: 100%;
+  min-height: 40px;
+  border-radius: 4px;
+  padding-left: 12px;
+  height: unset;
+  background-color: #3c3f47;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  position: relative;
+  :hover {
+    background-color: #36393f;
+  }
+`;

@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { FlexColCenterCenter, FlexColCenterStart } from "Theme/Containers";
+import {
+  FlexColCenterCenter,
+  FlexColCenterStart,
+  FlexRowCenterStart,
+  FriendBarTheme,
+} from "Theme/Containers";
 
 export const MainContainer = styled(FlexColCenterCenter)`
   width: 20%;
@@ -45,5 +50,17 @@ export const LonelyWrapper = styled(FlexColCenterCenter)`
   }
 `;
 
-export const ActiveUsersList = styled.div``;
-export const ActiveUser = styled.div``;
+export const OnlineIndicator = styled.div`
+  span {
+    height: 10px;
+    width: 10px;
+    float: left;
+    margin-right: 10px;
+    background-color: ${(props) => props.theme.fontColors.actionGreen};
+    display: block;
+    border-radius: 50%;
+  }
+`;
+
+export const ActiveUsersList = styled(FlexColCenterStart)``;
+export const ActiveUser = styled(FriendBarTheme)``;

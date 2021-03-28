@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "Util/utilFunctions";
+import { getMinutesLastOnline } from "../../../util/utilFunctions";
 import { getUsersRequest } from "Api/user";
 import { MainContainer } from "Theme/Containers";
 import {
@@ -19,6 +19,11 @@ import {
   Notification,
   RequestBtnContents,
   UserInfo,
+  InputContent,
+  SendRequestBtn,
+  ButtonContainer,
+  AddFriendContainer,
+  Title,
 } from "./Friends-css";
 
 export default function Friends({
@@ -31,6 +36,7 @@ export default function Friends({
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
+  const [addFriendOpen, setAddFriendOpen] = useState<boolean>(false);
   const [mappingList, setMappingList] = useState<any>();
 
   useEffect(() => {
@@ -90,19 +96,28 @@ export default function Friends({
         <ActionBarBtns>
           <FriendsBtn
             selected={onlineFilter}
-            onClick={() => setFilter("Online")}
+            onClick={() => {
+              setFilter("Online");
+              setAddFriendOpen(false);
+            }}
           >
             Online
           </FriendsBtn>
           <FriendsBtn
             selected={requestedFilter}
-            onClick={() => setFilter("Requested")}
+            onClick={() => {
+              setFilter("Requested");
+              setAddFriendOpen(false);
+            }}
           >
             Requested
           </FriendsBtn>
           <FriendsBtn
             selected={requestsFilter}
-            onClick={() => setFilter("Requests")}
+            onClick={() => {
+              setFilter("Requests");
+              setAddFriendOpen(false);
+            }}
           >
             <RequestBtnContents>
               Requests
@@ -113,7 +128,7 @@ export default function Friends({
               ) : null}
             </RequestBtnContents>
           </FriendsBtn>
-          <AddBtn>Add Friend</AddBtn>
+          <AddBtn onClick={() => setAddFriendOpen(true)}>Add Friend</AddBtn>
         </ActionBarBtns>
       </ActionBar>
 
@@ -131,15 +146,21 @@ export default function Friends({
         </FriendsList>
       ) : (
         <FriendsList>
-          {mappingList &&
+          {addFriendOpen ? (
+            <AddFriendContainer>
+              <Title>ADD FRIEND</Title>
+              <InputContent>
+                <input placeholder="Enter a Username" type=""></input>
+                <ButtonContainer>
+                  <SendRequestBtn>Send Friend Request</SendRequestBtn>
+                </ButtonContainer>
+              </InputContent>
+            </AddFriendContainer>
+          ) : (
+            mappingList &&
             mappingList.map((item, index) => (
               <FriendBar key={index}>
                 <UserInfo>
-                  {recipientIsTyping ? (
-                    <div>
-                      <span></span>
-                    </div>
-                  ) : null}
                   <h3>{item.username}</h3>
                 </UserInfo>
                 <Actions>
@@ -164,7 +185,8 @@ export default function Friends({
                   )}
                 </Actions>
               </FriendBar>
-            ))}
+            ))
+          )}
         </FriendsList>
       )}
     </MainContainer>

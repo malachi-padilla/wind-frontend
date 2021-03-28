@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "Util/utilFunctions";
+import { getMinutesLastOnline } from "../../../util/utilFunctions";
 import {
   ActiveUsersContainer,
   ActiveUsersList,
@@ -9,6 +9,7 @@ import {
   Text,
   ActiveUser,
   Subheading,
+  OnlineIndicator,
 } from "./ActiveFriends-css";
 
 export default function ActiveFriends({ friendsList }) {
@@ -16,7 +17,7 @@ export default function ActiveFriends({ friendsList }) {
   useEffect(() => {
     setActiveUsers(
       friendsList.filter((item) => {
-        return getMinutesLastOnline(item.lastOnline) > 10;
+        return getMinutesLastOnline(item.lastOnline) < 10;
       })
     );
   }, [friendsList]);
@@ -39,7 +40,10 @@ export default function ActiveFriends({ friendsList }) {
           <ActiveUsersList>
             {activeUsers.map((item, index) => (
               <ActiveUser key={index}>
-                <h1>{item.username}</h1>
+                <OnlineIndicator>
+                  <span></span>
+                </OnlineIndicator>
+                <p>{item.username}</p>
               </ActiveUser>
             ))}
           </ActiveUsersList>

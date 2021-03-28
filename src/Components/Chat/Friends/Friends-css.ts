@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
 import { PrimaryButton, SecondaryButton } from "Theme/Buttons";
 import {
+  FlexColCenterCenter,
   FlexColCenterStart,
   FlexRowCenterBetween,
   FlexRowCenterCenter,
+  FlexRowCenterStart,
 } from "Theme/Containers";
 
 export const ActionBar = styled.div`
@@ -39,7 +41,7 @@ export const Notification = styled(FlexRowCenterCenter)`
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background-color: rgb(230, 71, 71);
+  background-color: ${(props) => props.theme.fontColors.importantRed};
   color: #fff;
   position: absolute;
   top: -10px;
@@ -47,7 +49,10 @@ export const Notification = styled(FlexRowCenterCenter)`
 `;
 
 export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
-  background: ${(props) => (props.selected ? "#5676af" : "#40444b")};
+  background: ${(props) =>
+    props.selected
+      ? props.theme.messaging.primaryBlue
+      : props.theme.tertiaryGrey};
 `;
 
 export const AddBtn = styled(PrimaryButton)``;
@@ -68,10 +73,13 @@ export const FriendsList = styled(FlexColCenterStart)`
 export const FriendBar = styled(FlexRowCenterBetween)`
   height: 62px;
   width: 90%;
-  border-top: 1px solid ${(props) => props.theme.messaging.secondaryGrey};
+  border-top: 1px solid ${(props) => props.theme.tertiaryGrey};
+  padding: 10px;
+
   &:hover {
-    background-color: ${(props) => props.theme.messaging.secondaryGrey};
+    background-color: ${(props) => props.theme.tertiaryGrey};
     border-radius: 8px;
+    border-top: none;
   }
 `;
 
@@ -82,7 +90,9 @@ export const UserInfo = styled.div`
 `;
 
 export const Actions = styled.div`
+  display: flex;
   margin-right: 10%;
+  gap: 20px;
 `;
 
 export const ButtonStyles = css`
@@ -91,11 +101,6 @@ export const ButtonStyles = css`
   border-radius: 50%;
   background-color: ${(props) => props.theme.secondaryDarkGrey};
   color: #aab0bd;
-  &:hover {
-    transition: ease-in 200ms;
-    height: 40px;
-    width: 40px;
-  }
 `;
 
 export const ChatBtn = styled.button`
@@ -104,18 +109,67 @@ export const ChatBtn = styled.button`
 
 export const AcceptBtn = styled.button`
   ${ButtonStyles};
-  color: #43b581;
+  color: ${(props) => props.theme.fontColors.actionGreen};
 `;
 
 export const DenyBtn = styled.button`
   ${ButtonStyles};
-  color: rgb(230, 71, 71);
-  &:hover {
-    color: rgb(230, 71, 71);
-  }
+  color: ${(props) => props.theme.fontColors.importantRed};
 `;
 
 export const FriendsTabText = styled.p`
   color: ${(props) => props.theme.fontColors.defaultWhite};
   font-weight: 700;
+`;
+
+export const AddFriendContainer = styled(FlexColCenterStart)``;
+
+export const Title = styled.p`
+  align-self: flex-start;
+  margin-left: 10%;
+  margin-bottom: 50px;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
+  font-weight: 700;
+  font-size: 16px;
+`;
+
+export const InputContent = styled(FlexRowCenterCenter)`
+  align-items: flex-start;
+  height: 25%;
+  width: 80%;
+  border-bottom: 1px solid ${(props) => props.theme.secondaryDarkGrey};
+  input {
+    background-color: ${(props) => props.theme.tertiaryGrey};
+    width: 70%;
+    height: 52px;
+    padding: 10px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 8px 0 0 8px;
+    border: ${(props) => props.theme.inputBorder};
+    border-right: none;
+    color: ${(props) => props.theme.fontColors.defaultLightGrey};
+    font-size: 16px;
+  }
+`;
+
+export const ButtonContainer = styled(FlexRowCenterCenter)`
+  height: 52px;
+  justify-content: flex-end;
+  background-color: ${(props) => props.theme.tertiaryGrey};
+  border: ${(props) => props.theme.inputBorder};
+  border-left: none;
+  width: 30%;
+  border-radius: 0 8px 8px 0;
+  padding: 15px;
+`;
+
+export const SendRequestBtn = styled(PrimaryButton)`
+  height: 32px;
+  width: 60%;
+  border-radius: 3px;
+  background-color: ${(props) => props.theme.messaging.primaryBlue};
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
