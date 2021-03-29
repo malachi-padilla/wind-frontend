@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Logo } from "Theme/Misc";
+import { Logo } from "Theme/misc";
 import {
   FormBtns,
   FormContainer,

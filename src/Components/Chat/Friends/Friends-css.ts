@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
-import { PrimaryButton, SecondaryButton } from "Theme/Buttons";
+import { PrimaryButton, SecondaryButton } from "Theme/buttons";
 import {
   FlexColCenterStart,
   FlexRowCenterBetween,
   FlexRowCenterCenter,
-} from "Theme/Containers";
+} from "Theme/containers";
 
 export const ActionBar = styled.div`
   width: 100%;
@@ -36,7 +36,7 @@ export const ActionBarBtns = styled.div`
 
 export const Notification = styled(FlexRowCenterCenter)`
   padding: 2px;
-  height: 20px;
+  height: 20px;s
   width: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.fontColors.importantRed};

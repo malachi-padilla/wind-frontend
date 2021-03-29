@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import WindLogo from "../WindLogo/logo_2.png";
+import WindLogo from "Assets/WindLogo/logo_2.png";
 
 export const Logo = styled.div`
   height: 100px;

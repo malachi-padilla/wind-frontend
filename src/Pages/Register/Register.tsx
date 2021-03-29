@@ -9,7 +9,7 @@ import {
   StyledMainContainer,
 } from "Pages/Login/Login-css";
 import { registerRequest } from "Api/user";
-import { Logo } from "Theme/Misc";
+import { Logo } from "Theme/misc";
 
 export default function Register() {
   const [registerUsername, setRegisterUsername] = useState<string>("");

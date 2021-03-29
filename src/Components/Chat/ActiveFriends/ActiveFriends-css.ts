@@ -3,7 +3,7 @@ import {
   FlexColCenterCenter,
   FlexColCenterStart,
   FriendBarTheme,
-} from "Theme/Containers";
+} from "Theme/containers";
 
 export const MainContainer = styled(FlexColCenterCenter)`
   width: 20%;

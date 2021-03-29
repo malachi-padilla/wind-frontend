@@ -1,8 +1,8 @@
 import React from "react";
-import { Logo } from "Theme/Misc";
+import { Logo } from "Theme/misc";
 import { IsTyping } from "../Chat-css";
 import { LoadingContainer, LogoContainer } from "./LoadingPage-css";
-import { MainContainer } from "Theme/Containers";
+import { MainContainer } from "Theme/containers";
 
 export default function LoadingPage({ propStyles = undefined }: any) {
   return (

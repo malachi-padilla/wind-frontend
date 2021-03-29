@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import Routes from "Routes";
 import "./globalStyles.ts";
 import { ThemeProvider } from "styled-components";
-import { theme } from "Theme/Theme";
+import { theme } from "Theme/theme";
 import { GlobalStyle } from "globalStyles";
 
 ReactDOM.render(

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Components/types";
 import { addFriendRequest, removeFriendRequest } from "Api/friends";
-import { PrimaryButton } from "Theme/Buttons";
+import { PrimaryButton } from "Theme/buttons";
 import styled from "styled-components";
 
 export interface FriendButtonProps {

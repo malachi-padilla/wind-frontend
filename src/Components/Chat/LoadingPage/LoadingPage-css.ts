@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { FlexColCenterCenter, FlexRowCenterCenter } from "Theme/Containers";
+import { FlexColCenterCenter, FlexRowCenterCenter } from "Theme/containers";
 
 export const bounce = keyframes`
   0% {

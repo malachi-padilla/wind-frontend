@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { MainContainer } from "Theme/Containers";
+import { MainContainer } from "Theme/containers";
 import { StyledLogo, Title } from "./WelcomePage-css";
 
 export default function NoFriendsPage() {

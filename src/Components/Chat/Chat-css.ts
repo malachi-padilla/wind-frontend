@@ -3,7 +3,7 @@ import {
   FlexColCenterCenter,
   FlexRowCenterCenter,
   FlexRowCenterStart,
-} from "Theme/Containers";
+} from "Theme/containers";
 export const Title = styled.div`
   display: flex;
   flex-direction: row;

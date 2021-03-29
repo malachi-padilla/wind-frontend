@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { FlexColCenterCenter, MainContainer } from "Theme/Containers";
-import { Logo } from "Theme/Misc";
+import { FlexColCenterCenter, MainContainer } from "Theme/containers";
+import { Logo } from "Theme/misc";
 
 export const StyledMainContainer = styled(MainContainer)`
   @media only screen and (min-width: 1025px) {

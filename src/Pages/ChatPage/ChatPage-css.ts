@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { FlexColCenterCenter, FlexRowCenterCenter } from "Theme/Containers";
-import { Logo } from "Theme/Misc";
+import { FlexColCenterCenter, FlexRowCenterCenter } from "Theme/containers";
+import { Logo } from "Theme/misc";
 
 export const ChatPageWrapper = styled(FlexRowCenterCenter)`
   overflow: hidden;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Logo } from "Theme/Misc";
-import { FlexRowCenterCenter } from "Theme/Containers";
+import { Logo } from "Theme/misc";
+import { FlexRowCenterCenter } from "Theme/containers";
 
 export const Title = styled(FlexRowCenterCenter)`
   color: ${(props) => props.theme.messaging.secondaryGrey};

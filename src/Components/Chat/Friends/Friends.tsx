@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMinutesLastOnline } from "Util/utilFunctions";
 import { getUsersRequest } from "Api/user";
-import { MainContainer } from "Theme/Containers";
+import { MainContainer } from "Theme/containers";
 import {
   AcceptBtn,
   ActionBar,
