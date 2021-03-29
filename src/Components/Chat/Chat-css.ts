@@ -104,7 +104,7 @@ export const IsTypingCSS = css`
     width: 10px;
     float: left;
     margin: 0 1px;
-    background-color: #9e9ea1;
+    background-color: ${(props) => props.theme.fontColors.defaultMediumGrey};
     display: block;
     border-radius: 50%;
     opacity: 0.4;

@@ -29,22 +29,22 @@ export const RecentlyMessagedList = styled(FlexColCenterStart)`
 export const EnterFriendWrapper = styled(FlexColCenterCenter)`
   height: 48px;
   line-height: 24px;
-  border-bottom: 1px solid #202225;
-  box-shadow: 1px 1px 10px #2022255b;
+  border-bottom: ${(props) => props.theme.defaultBorderBottom};
+  box-shadow: ${(props) => props.theme.defaultBoxShadow};
 `;
 
 export const StyledFriendInput = styled.input<{ error: boolean }>`
   border: ${(props) =>
     props.error ? "1px solid #b92d2d" : "1px solid #1b1b1b"};
 
-  background-color: #202225;
+  background-color: ${(props) => props.theme.tertiaryDarkGrey};
   width: 90%;
   height: 28px;
   padding: 10px;
   outline: none;
   box-sizing: border-box;
   border-radius: 4px;
-  color: #dcddde;
+  color: ${(props) => props.theme.fontColors.offWhite};
   font-size: 14px;
   font-weight: 500px !important;
   &:hover {
@@ -67,7 +67,7 @@ export const FriendsTab = styled(FlexRowCenterStart)`
   cursor: pointer;
   margin-top: 20px;
   :hover {
-    background-color: #36393f;
+    background-color: ${(props) => props.theme.mainGrey};
     color: #fff;
   }
 `;
@@ -122,7 +122,7 @@ export const IsTyping = styled.div`
 
 export const RemoveFriendButton = styled.button`
   background: none;
-  color: #888e9b;
+  color: ${(props) => props.theme.fontColors.defaultMediumGrey};
   font-size: 16px;
   outline: none;
   border: none;
@@ -130,14 +130,14 @@ export const RemoveFriendButton = styled.button`
   right: 10px;
   :hover {
     transition: ease-in 100ms;
-    color: #fff;
+    color: ${(props) => props.theme.fontColors.defaultWhite};
   }
 `;
 
 export const ProfileBar = styled(FlexRowCenterEvenly)`
   height: 52px;
   background-color: #292b2f;
-  color: #fff;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   button {
     font-size: 16px;
   }
