@@ -52,6 +52,7 @@ export default function ChatPage({
   };
 
   useEffect(() => {
+    setRecipientIsTyping(false);
     setLoadingRecipientData(true);
     fetchUser();
   }, [friend]);

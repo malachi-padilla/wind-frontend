@@ -36,7 +36,7 @@ export const ActionBarBtns = styled.div`
 
 export const Notification = styled(FlexRowCenterCenter)`
   padding: 2px;
-  height: 20px;s
+  height: 20px;
   width: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.fontColors.importantRed};
@@ -164,10 +164,9 @@ export const ButtonContainer = styled(FlexRowCenterCenter)`
 
 export const SendRequestBtn = styled(PrimaryButton)`
   height: 32px;
-  width: 60%;
-  border-radius: 3px;
+  width: 70%;
+  border-radius: 4px;
   background-color: ${(props) => props.theme.messaging.primaryBlue};
-  @media (max-width: 1200px) {
-    font-size: 10px;
-  }
+  font-size: 12px;
+  padding: 2px;
 `;

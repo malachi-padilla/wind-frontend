@@ -106,7 +106,7 @@ export default function SideBar({
                     setFriendsIsOpen(false);
                   }}
                 >
-                  {recipientIsTyping ? (
+                  {recipientIsTyping && item === friend ? (
                     <IsTyping>
                       <span></span>
                     </IsTyping>
