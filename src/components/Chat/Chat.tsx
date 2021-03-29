@@ -1,6 +1,5 @@
 import { ChatProps, PrivateChatMessage } from "Components/types";
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
 import {
   ActionBar,
   ChatBody,
@@ -18,14 +17,13 @@ import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
 import { getMessagesRequest, getUserByUsernameRequest } from "Api/user";
 
-const ENDPOINT = "http://localhost:4000";
-let socket;
 export default function ChatPage({
   friend,
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
   pollingInterval,
+  socket,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
@@ -36,12 +34,10 @@ export default function ChatPage({
   const name = userInfo.username;
 
   useEffect(() => {
-    socket = io(ENDPOINT);
     socket.emit("join", { name, friend });
     socket.on("message", (message: PrivateChatMessage) => {
       setMessages((currentMessages) => [...currentMessages, message]);
     });
-    return () => socket.emit("end");
   }, []);
 
   const fetchUser = () => {

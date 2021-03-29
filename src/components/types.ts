@@ -7,6 +7,7 @@ export interface PrivateChatMessage {
 
 export interface SideBarProps {
   friend: string;
+  socket: any;
   setFriend: (friend: string) => any;
   userInfo: PersonalUserInfo;
   recipientIsTyping: boolean;
@@ -25,6 +26,7 @@ export interface FriendProps {
 
 export interface ChatProps {
   friend: string;
+  socket: any;
   userInfo: PersonalUserInfo;
   setRecipientIsTyping: (recipientIsTyping: boolean) => any;
   recipientIsTyping: boolean;

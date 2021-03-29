@@ -27,13 +27,28 @@ export default function SideBar({
   recipientIsTyping,
   setFriendsIsOpen,
   friendsIsOpen,
-  friendsList,
+  socket,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
+  const [peopleTyping, setPeopleTyping] = useState<any>({});
+
+  console.log(peopleTyping);
+  useEffect(() => {
+    socket.on("typing", ({ personTyping, isTyping }) => {
+      if (personTyping) {
+        setPeopleTyping((current) => {
+          return {
+            ...current,
+            [personTyping]: isTyping,
+          };
+        });
+      }
+    });
+  }, []);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -106,7 +121,7 @@ export default function SideBar({
                     setFriendsIsOpen(false);
                   }}
                 >
-                  {recipientIsTyping && item === friend ? (
+                  {peopleTyping[item] ? (
                     <IsTyping>
                       <span></span>
                     </IsTyping>
