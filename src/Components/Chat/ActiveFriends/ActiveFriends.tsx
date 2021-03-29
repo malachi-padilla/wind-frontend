@@ -1,4 +1,6 @@
+import { ActiveFriendsProps } from "Components/Types/props";
 import React, { useEffect, useState } from "react";
+import { RecipientUserInfo } from "Types/models";
 import { getMinutesLastOnline } from "Util/utilFunctions";
 import {
   ActiveUsersContainer,
@@ -12,8 +14,8 @@ import {
   OnlineIndicator,
 } from "./ActiveFriends-css";
 
-export default function ActiveFriends({ friendsList }) {
-  const [activeUsers, setActiveUsers] = useState<any>([]);
+export default function ActiveFriends({ friendsList }: ActiveFriendsProps) {
+  const [activeUsers, setActiveUsers] = useState<RecipientUserInfo[]>([]);
   useEffect(() => {
     setActiveUsers(
       friendsList.filter((item) => {

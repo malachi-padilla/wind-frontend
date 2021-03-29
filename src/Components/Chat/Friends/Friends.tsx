@@ -25,19 +25,20 @@ import {
   Title,
   MoreBtn,
 } from "./Friends-css";
-import { FriendProps } from "Components/types";
+import { RecipientUserInfo } from "Types/models";
+import { FriendsProps } from "Components/Types/props";
 
 export default function Friends({
   friendsList,
   setFriend,
   setFriendsIsOpen,
   userInfo,
-}: FriendProps) {
+}: FriendsProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
   const [addFriendOpen, setAddFriendOpen] = useState<boolean>(false);
-  const [mappingList, setMappingList] = useState<any>();
+  const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
 
   useEffect(() => {
     if (!requestedFilter && !requestsFilter && !onlineFilter) {

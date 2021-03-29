@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "Config/globalVariables";
 
-export function getUsersRequest(users: any[]) {
+export function getUsersRequest(users: string[]) {
   return axios.post(
     `${API_URL}/user/getUsers`,
     {
@@ -13,7 +13,7 @@ export function getUsersRequest(users: any[]) {
   );
 }
 
-export function getUserByUsernameRequest(username) {
+export function getUserByUsernameRequest(username: string) {
   return axios.get(`${API_URL}/user?username=${username}`, {
     withCredentials: true,
   });
@@ -32,7 +32,7 @@ export function getMessagesRequest(user1: string, user2: string) {
   );
 }
 
-export function loginRequest(username, password) {
+export function loginRequest(username: string, password: string) {
   return axios.post(
     `${API_URL}/auth/login`,
     {
@@ -51,7 +51,7 @@ export function getLoggedInUserRequest() {
   });
 }
 
-export function registerRequest(username, password) {
+export function registerRequest(username: string, password: string) {
   return axios.post(
     `${API_URL}/auth/register`,
     {

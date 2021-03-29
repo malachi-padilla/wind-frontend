@@ -1,5 +1,5 @@
 import { logoutRequest } from "Api/user";
-import { SideBarProps } from "Components/types";
+import { SideBarProps } from "Components/Types/props";
 import React, { useEffect, useState } from "react";
 import {
   DirectMessageTab,
@@ -19,21 +19,38 @@ import {
   StyledMainContainer,
 } from "./Sidebar-css";
 import { getUserByUsernameRequest } from "Api/user";
+import { SocketIsTypingMessage } from "Components/Types/models";
 
+interface PeopleTyping {
+  [key: string]: boolean;
+}
 export default function SideBar({
   friend,
   setFriend,
   userInfo,
-  recipientIsTyping,
   setFriendsIsOpen,
   friendsIsOpen,
-  friendsList,
+  socket,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
+  const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
+
+  useEffect(() => {
+    socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
+      if (personTyping) {
+        setPeopleTyping((current) => {
+          return {
+            ...current,
+            [personTyping]: isTyping,
+          };
+        });
+      }
+    });
+  }, []);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -106,7 +123,7 @@ export default function SideBar({
                     setFriendsIsOpen(false);
                   }}
                 >
-                  {recipientIsTyping && item === friend ? (
+                  {peopleTyping[item] ? (
                     <IsTyping>
                       <span></span>
                     </IsTyping>

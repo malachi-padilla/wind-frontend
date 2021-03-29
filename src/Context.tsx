@@ -1,12 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
-import { PersonalUserInfo, UserContext } from "Components/types";
 import { getLoggedInUserRequest } from "Api/user";
+import { PersonalUserInfo } from "Types/models";
+import { UserContext } from "Types/types";
 
 export const MyContext = createContext<UserContext>({
   user: null,
   setFetchNew: null,
 });
-const Context = ({ children }) => {
+
+const Context = ({ children }: any) => {
   const [user, setUser] = useState<PersonalUserInfo | null | undefined>(null);
   const [fetchNew, setFetchNew] = useState<boolean>(false);
 

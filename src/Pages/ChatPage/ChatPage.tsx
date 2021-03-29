@@ -5,7 +5,7 @@ import { MyContext } from "Context";
 import ActiveFriends from "../../Components/Chat/ActiveFriends/ActiveFriends";
 import Friends from "../../Components/Chat/Friends/Friends";
 import WelcomePage from "../../Components/Chat/WelcomePage/WelcomePage";
-import { UserContextNotNull } from "Components/types";
+import io from "socket.io-client";
 import LoadingPage from "../../Components/Chat/LoadingPage/LoadingPage";
 import { getFriendsRequest } from "Api/friends";
 import {
@@ -15,7 +15,10 @@ import {
   SideBarWrapper,
   StyledLogo,
 } from "./ChatPage-css";
+import { UserContextNotNull } from "Types/types";
 
+const ENDPOINT = "http://localhost:4000";
+let socket: any;
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
@@ -23,6 +26,12 @@ export default function ChatPage() {
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+
+    return () => socket.emit("end");
+  }, []);
 
   useEffect(() => {
     getFriendsRequest(user.userId).then((res) => {
@@ -33,7 +42,7 @@ export default function ChatPage() {
   useEffect(() => {
     const myInterval = setInterval(() => {
       setPollingInterval((current) => !current);
-      setFetchNew((current) => !current);
+      setFetchNew((current: any) => !current);
     }, 10000);
     return () => clearInterval(myInterval);
   }, []);
@@ -57,6 +66,7 @@ export default function ChatPage() {
           setFriend={setFriend}
           friendsIsOpen={friendsIsOpen}
           setFriendsIsOpen={setFriendsIsOpen}
+          socket={socket}
           friendsList={friendsList}
         />
       </SideBarWrapper>
@@ -70,6 +80,7 @@ export default function ChatPage() {
             userInfo={user}
             friend={friend}
             pollingInterval={pollingInterval}
+            socket={socket}
           />
         )
       ) : friendsList?.length > 0 ? (

@@ -1,12 +1,14 @@
 // Will Extract This Into Folder Later
 
-export interface PrivateChatMessage {
-  message: string;
-  sentBy: string;
+import { PersonalUserInfo, RecipientUserInfo } from "Types/models";
+
+export interface ActiveFriendsProps {
+  friendsList: RecipientUserInfo[];
 }
 
 export interface SideBarProps {
   friend: string;
+  socket: any;
   setFriend: (friend: string) => any;
   userInfo: PersonalUserInfo;
   recipientIsTyping: boolean;
@@ -15,8 +17,8 @@ export interface SideBarProps {
   friendsList: any;
 }
 
-export interface FriendProps {
-  friendsList: any[];
+export interface FriendsProps {
+  friendsList: RecipientUserInfo[];
   setFriend: (friend: string) => any;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   recipientIsTyping: boolean;
@@ -25,26 +27,15 @@ export interface FriendProps {
 
 export interface ChatProps {
   friend: string;
+  socket: any;
   userInfo: PersonalUserInfo;
   setRecipientIsTyping: (recipientIsTyping: boolean) => any;
   recipientIsTyping: boolean;
   pollingInterval: any;
 }
 
-export interface PersonalUserInfo {
-  userId: string;
-  username: string;
-  friends: string[];
-  sentFriendRequests: string[];
-  recievedFriendRequests: string[];
-}
-
-export interface UserContext {
-  user: PersonalUserInfo | null | undefined;
-  setFetchNew: any;
-}
-
-export interface UserContextNotNull {
-  user: PersonalUserInfo;
-  setFetchNew: any;
+export interface FriendButtonProps {
+  recipientId: string;
+  relation: RecipientUserInfo["relation"];
+  fetchUser: () => void;
 }
