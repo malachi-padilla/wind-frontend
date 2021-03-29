@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 const theme: DefaultTheme = {
   mainGrey: "#36393f",
   secondaryDarkGrey: "#2f3136",
+  tertiaryDarkGrey: "#202225",
   tertiaryGrey: "#40444b",
   mediumGray: "#72767d5d",
   fontColors: {

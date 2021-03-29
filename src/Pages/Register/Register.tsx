@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -9,6 +8,7 @@ import {
   FormTitle,
   StyledMainContainer,
 } from "Pages/Login/Login-css";
+import { registerRequest } from "Api/user";
 import { Logo } from "Theme/Misc";
 
 export default function Register() {
@@ -16,15 +16,7 @@ export default function Register() {
   const [registerPassword, setRegisterPassword] = useState<string>("");
 
   const register = () => {
-    axios({
-      method: "POST",
-      data: {
-        username: registerUsername,
-        password: registerPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:4000/auth/register",
-    }).then((res) => {
+    registerRequest(registerUsername, registerPassword).then((res) => {
       if (res.status === 200) {
         window.location.href = "/";
       }

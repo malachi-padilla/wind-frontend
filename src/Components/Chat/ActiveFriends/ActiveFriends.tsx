@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "../../../util/utilFunctions";
+import { getMinutesLastOnline } from "Util/utilFunctions";
 import {
   ActiveUsersContainer,
   ActiveUsersList,

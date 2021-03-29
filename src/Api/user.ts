@@ -44,3 +44,22 @@ export function loginRequest(username, password) {
     }
   );
 }
+
+export function getLoggedInUserRequest() {
+  return axios.get(`${API_URL}/auth/user`, {
+    withCredentials: true,
+  });
+}
+
+export function registerRequest(username, password) {
+  return axios.post(
+    `${API_URL}/auth/register`,
+    {
+      username,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+}

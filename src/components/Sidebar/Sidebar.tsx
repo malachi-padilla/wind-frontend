@@ -1,5 +1,4 @@
 import { logoutRequest } from "Api/user";
-import axios from "axios";
 import { SideBarProps } from "Components/types";
 import React, { useEffect, useState } from "react";
 import {
@@ -19,6 +18,7 @@ import {
   StyledFriendInput,
   StyledMainContainer,
 } from "./Sidebar-css";
+import { getUserByUsernameRequest } from "Api/user";
 
 export default function SideBar({
   friend,
@@ -41,19 +41,12 @@ export default function SideBar({
     });
   };
 
-  const findUserByUsername = async (username: string) => {
-    return axios
-      .get(`http://localhost:4000/user?username=${username}`, {
-        withCredentials: true,
-      })
-      .then((res) => res.data)
-      .catch(() => "Not Found");
-  };
-
   const addFriend = async () => {
     // Perform Check To See If User Exists First!
     if (friendInput.length > 0 && friendInput !== userInfo.username) {
-      const userResult = await findUserByUsername(friendInput);
+      const userResult = await getUserByUsernameRequest(friendInput)
+        .then((res) => res)
+        .catch(() => "Not Found");
       if (
         userResult !== "Not Found" &&
         recentlyMessaged.indexOf(friendInput) === -1

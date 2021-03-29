@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 import { PrimaryButton, SecondaryButton } from "Theme/Buttons";
 import {
-  FlexColCenterCenter,
   FlexColCenterStart,
   FlexRowCenterBetween,
   FlexRowCenterCenter,
-  FlexRowCenterStart,
 } from "Theme/Containers";
 
 export const ActionBar = styled.div`

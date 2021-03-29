@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import Chat from "../../Components/Chat/Chat";
 import SideBar from "../../Components/Sidebar/Sidebar";
-import styles from "./ChatPage.module.css";
 import { MyContext } from "Context";
 import ActiveFriends from "../../Components/Chat/ActiveFriends/ActiveFriends";
 import Friends from "../../Components/Chat/Friends/Friends";
 import WelcomePage from "../../Components/Chat/WelcomePage/WelcomePage";
-import axios from "axios";
 import { UserContextNotNull } from "Components/types";
 import LoadingPage from "../../Components/Chat/LoadingPage/LoadingPage";
+import { getFriendsRequest } from "Api/friends";
+import {
+  ChatPageWrapper,
+  Home,
+  NavBar,
+  SideBarWrapper,
+  StyledLogo,
+} from "./ChatPage-css";
 
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
@@ -19,13 +25,9 @@ export default function ChatPage() {
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/friends?user=${user.userId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setFriendsList(res.data);
-      });
+    getFriendsRequest(user.userId).then((res) => {
+      setFriendsList(res.data);
+    });
   }, [pollingInterval]);
 
   useEffect(() => {
@@ -41,13 +43,13 @@ export default function ChatPage() {
   }
 
   return (
-    <div className={styles.ChatPageWrapper}>
-      <div className={styles.SideBarWrapper}>
-        <div className={styles.NavBar}>
-          <div className={styles.Home}>
-            <div className={styles.Logo}></div>
-          </div>
-        </div>
+    <ChatPageWrapper>
+      <SideBarWrapper>
+        <NavBar>
+          <Home>
+            <StyledLogo />
+          </Home>
+        </NavBar>
         <SideBar
           recipientIsTyping={recipientIsTyping}
           userInfo={user}
@@ -57,7 +59,7 @@ export default function ChatPage() {
           setFriendsIsOpen={setFriendsIsOpen}
           friendsList={friendsList}
         />
-      </div>
+      </SideBarWrapper>
       {!friendsIsOpen ? (
         !friend ? (
           <WelcomePage />
@@ -83,6 +85,6 @@ export default function ChatPage() {
       )}
 
       <ActiveFriends friendsList={friendsList} />
-    </div>
+    </ChatPageWrapper>
   );
 }

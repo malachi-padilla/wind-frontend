@@ -20,7 +20,7 @@ export const ActionBar = styled(FlexRowCenterStart)`
 `;
 
 export const ChatBody = styled(FlexColCenterCenter)`
-  height: 85%;
+  height: 75%;
   margin-top: 30px;
 
   @media only screen and (max-width: 800px) {

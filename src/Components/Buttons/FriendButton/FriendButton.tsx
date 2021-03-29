@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext } from "react";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Components/types";

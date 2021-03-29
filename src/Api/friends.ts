@@ -23,3 +23,9 @@ export const removeFriendRequest = async (user1: string, user2: string) => {
     },
   });
 };
+
+export const getFriendsRequest = (userId) => {
+  return axios.get(`${API_URL}/friends?user=${userId}`, {
+    withCredentials: true,
+  });
+};

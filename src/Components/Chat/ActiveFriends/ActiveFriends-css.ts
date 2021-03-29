@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   FlexColCenterCenter,
   FlexColCenterStart,
-  FlexRowCenterStart,
   FriendBarTheme,
 } from "Theme/Containers";
 

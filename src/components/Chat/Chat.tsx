@@ -13,7 +13,6 @@ import {
   FriendLabelText,
 } from "./Chat-css";
 import { MainContainer } from "Theme/Containers";
-import axios from "axios";
 import { animateScroll } from "react-scroll";
 import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";

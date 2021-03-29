@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "../../../util/utilFunctions";
+import { getMinutesLastOnline } from "Util/utilFunctions";
 import { getUsersRequest } from "Api/user";
 import { MainContainer } from "Theme/Containers";
 import {
