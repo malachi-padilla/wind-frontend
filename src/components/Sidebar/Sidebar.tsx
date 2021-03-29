@@ -20,13 +20,14 @@ import {
 } from "./Sidebar-css";
 import { getUserByUsernameRequest } from "Api/user";
 import { SocketIsTypingMessage } from "Components/Types/models";
+import { useDispatch, useSelector } from "react-redux";
+import { setFriendAction } from "Redux/actions";
+import { ReduxStore } from "Redux/types";
 
 interface PeopleTyping {
   [key: string]: boolean;
 }
 export default function SideBar({
-  friend,
-  setFriend,
   userInfo,
   setFriendsIsOpen,
   friendsIsOpen,
@@ -38,6 +39,8 @@ export default function SideBar({
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
+  const friend = useSelector((state: ReduxStore) => state.friend);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
@@ -69,7 +72,7 @@ export default function SideBar({
         recentlyMessaged.indexOf(friendInput) === -1
       ) {
         setNotFoundError(false);
-        setFriend(friendInput);
+        dispatch(setFriendAction(friendInput));
         setFriendsIsOpen(false);
         setRecentlyMessaged((current) => [...current, friendInput]);
         setFriendInput("");
@@ -119,7 +122,7 @@ export default function SideBar({
                   }}
                   key={index}
                   onClick={() => {
-                    setFriend(item);
+                    dispatch(setFriendAction(item));
                     setFriendsIsOpen(false);
                   }}
                 >

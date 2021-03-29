@@ -21,9 +21,10 @@ import {
   SocketIsTypingMessage,
 } from "Components/Types/models";
 import { RecipientUserInfo } from "Types/models";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "Redux/types";
 
 export default function ChatPage({
-  friend,
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
@@ -36,9 +37,8 @@ export default function ChatPage({
   const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
     true
   );
+  const friend = useSelector((state: ReduxStore) => state.friend);
   const name = userInfo.username;
-
-  console.log(messages);
 
   useEffect(() => {
     socket.emit("join", { name, friend });

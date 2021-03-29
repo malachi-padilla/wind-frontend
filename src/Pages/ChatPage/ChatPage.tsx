@@ -16,16 +16,18 @@ import {
   StyledLogo,
 } from "./ChatPage-css";
 import { UserContextNotNull } from "Types/types";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "Redux/types";
 
 const ENDPOINT = "http://localhost:4000";
 let socket: any;
 export default function ChatPage() {
-  const [friend, setFriend] = useState<string>("");
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
+  const friend = useSelector((state: ReduxStore) => state.friend);
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -62,8 +64,6 @@ export default function ChatPage() {
         <SideBar
           recipientIsTyping={recipientIsTyping}
           userInfo={user}
-          friend={friend}
-          setFriend={setFriend}
           friendsIsOpen={friendsIsOpen}
           setFriendsIsOpen={setFriendsIsOpen}
           socket={socket}
@@ -78,7 +78,6 @@ export default function ChatPage() {
             recipientIsTyping={recipientIsTyping}
             setRecipientIsTyping={setRecipientIsTyping}
             userInfo={user}
-            friend={friend}
             pollingInterval={pollingInterval}
             socket={socket}
           />
@@ -87,7 +86,6 @@ export default function ChatPage() {
         <Friends
           userInfo={user}
           friendsList={friendsList}
-          setFriend={setFriend}
           setFriendsIsOpen={setFriendsIsOpen}
           recipientIsTyping={recipientIsTyping}
         />

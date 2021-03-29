@@ -7,9 +7,7 @@ export interface ActiveFriendsProps {
 }
 
 export interface SideBarProps {
-  friend: string;
   socket: any;
-  setFriend: (friend: string) => any;
   userInfo: PersonalUserInfo;
   recipientIsTyping: boolean;
   friendsIsOpen: boolean;
@@ -19,14 +17,12 @@ export interface SideBarProps {
 
 export interface FriendsProps {
   friendsList: RecipientUserInfo[];
-  setFriend: (friend: string) => any;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   recipientIsTyping: boolean;
   userInfo: PersonalUserInfo;
 }
 
 export interface ChatProps {
-  friend: string;
   socket: any;
   userInfo: PersonalUserInfo;
   setRecipientIsTyping: (recipientIsTyping: boolean) => any;

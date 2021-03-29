@@ -27,10 +27,11 @@ import {
 } from "./Friends-css";
 import { RecipientUserInfo } from "Types/models";
 import { FriendsProps } from "Components/Types/props";
+import { useDispatch } from "react-redux";
+import { setFriendAction } from "Redux/actions";
 
 export default function Friends({
   friendsList,
-  setFriend,
   setFriendsIsOpen,
   userInfo,
 }: FriendsProps) {
@@ -39,6 +40,7 @@ export default function Friends({
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
   const [addFriendOpen, setAddFriendOpen] = useState<boolean>(false);
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!requestedFilter && !requestsFilter && !onlineFilter) {
@@ -169,7 +171,7 @@ export default function Friends({
                     <>
                       <ChatBtn
                         onClick={() => {
-                          setFriend(item.username);
+                          dispatch(setFriendAction(item.username));
                           setFriendsIsOpen(false);
                         }}
                       >
