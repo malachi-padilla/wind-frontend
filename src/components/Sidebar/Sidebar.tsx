@@ -1,5 +1,5 @@
 import { logoutRequest } from "Api/user";
-import { SideBarProps } from "Components/types";
+import { SideBarProps } from "Components/Types/props";
 import React, { useEffect, useState } from "react";
 import {
   DirectMessageTab,
@@ -19,12 +19,15 @@ import {
   StyledMainContainer,
 } from "./Sidebar-css";
 import { getUserByUsernameRequest } from "Api/user";
+import { SocketIsTypingMessage } from "Components/Types/models";
 
+interface PeopleTyping {
+  [key: string]: boolean;
+}
 export default function SideBar({
   friend,
   setFriend,
   userInfo,
-  recipientIsTyping,
   setFriendsIsOpen,
   friendsIsOpen,
   socket,
@@ -34,11 +37,10 @@ export default function SideBar({
   const [friendInput, setFriendInput] = useState<string>("");
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
-  const [peopleTyping, setPeopleTyping] = useState<any>({});
+  const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
 
-  console.log(peopleTyping);
   useEffect(() => {
-    socket.on("typing", ({ personTyping, isTyping }) => {
+    socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
       if (personTyping) {
         setPeopleTyping((current) => {
           return {

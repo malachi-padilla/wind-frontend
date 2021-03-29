@@ -5,7 +5,6 @@ import { MyContext } from "Context";
 import ActiveFriends from "../../Components/Chat/ActiveFriends/ActiveFriends";
 import Friends from "../../Components/Chat/Friends/Friends";
 import WelcomePage from "../../Components/Chat/WelcomePage/WelcomePage";
-import { UserContextNotNull } from "Components/types";
 import io from "socket.io-client";
 import LoadingPage from "../../Components/Chat/LoadingPage/LoadingPage";
 import { getFriendsRequest } from "Api/friends";
@@ -16,9 +15,10 @@ import {
   SideBarWrapper,
   StyledLogo,
 } from "./ChatPage-css";
+import { UserContextNotNull } from "Types/types";
 
 const ENDPOINT = "http://localhost:4000";
-let socket;
+let socket: any;
 export default function ChatPage() {
   const [friend, setFriend] = useState<string>("");
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
@@ -42,7 +42,7 @@ export default function ChatPage() {
   useEffect(() => {
     const myInterval = setInterval(() => {
       setPollingInterval((current) => !current);
-      setFetchNew((current) => !current);
+      setFetchNew((current: any) => !current);
     }, 10000);
     return () => clearInterval(myInterval);
   }, []);

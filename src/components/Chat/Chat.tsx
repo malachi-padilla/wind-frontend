@@ -1,4 +1,4 @@
-import { ChatProps, PrivateChatMessage } from "Components/types";
+import { ChatProps } from "Components/Types/props";
 import React, { useEffect, useState } from "react";
 import {
   ActionBar,
@@ -16,6 +16,11 @@ import { animateScroll } from "react-scroll";
 import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
 import { getMessagesRequest, getUserByUsernameRequest } from "Api/user";
+import {
+  SocketPrivateChatMessage,
+  SocketIsTypingMessage,
+} from "Components/Types/models";
+import { RecipientUserInfo } from "Types/models";
 
 export default function ChatPage({
   friend,
@@ -26,16 +31,18 @@ export default function ChatPage({
   socket,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
-  const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
-  const [recipientData, setRecipientData] = useState<any>();
+  const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
+  const [recipientData, setRecipientData] = useState<RecipientUserInfo>();
   const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
     true
   );
   const name = userInfo.username;
 
+  console.log(messages);
+
   useEffect(() => {
     socket.emit("join", { name, friend });
-    socket.on("message", (message: PrivateChatMessage) => {
+    socket.on("message", (message: SocketPrivateChatMessage) => {
       setMessages((currentMessages) => [...currentMessages, message]);
     });
   }, []);
@@ -65,7 +72,7 @@ export default function ChatPage({
       }
     });
 
-    socket.on("typing", ({ personTyping, isTyping }) => {
+    socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
       if (personTyping === friend) {
         setRecipientIsTyping(isTyping);
       }
@@ -107,8 +114,8 @@ export default function ChatPage({
           <FriendLabelText>{friend}</FriendLabelText>
           <FriendButton
             fetchUser={fetchUser}
-            recipientId={recipientData.userId}
-            relation={recipientData.relation}
+            recipientId={recipientData!.userId}
+            relation={recipientData!.relation}
           />
         </FriendLabel>
       </ActionBar>

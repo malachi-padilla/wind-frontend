@@ -1,12 +1,6 @@
 {
-  "include": [
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    ".vscode"
-  ],
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", ".vscode"],
   "compilerOptions": {
     "target": "es6",
     "module": "esnext",
@@ -16,15 +10,11 @@
     "baseUrl": "./src/",
     "jsx": "react-jsx",
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,

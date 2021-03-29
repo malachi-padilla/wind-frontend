@@ -1,15 +1,10 @@
 import React, { useContext } from "react";
 import { MyContext } from "Context";
-import { UserContextNotNull } from "Components/types";
+import { UserContextNotNull } from "Types/types";
 import { addFriendRequest, removeFriendRequest } from "Api/friends";
 import { PrimaryButton } from "Theme/buttons";
 import styled from "styled-components";
-
-export interface FriendButtonProps {
-  recipientId: string;
-  relation: string;
-  fetchUser: () => void;
-}
+import { FriendButtonProps } from "Components/Types/props";
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   margin-left: 10px;
