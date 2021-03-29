@@ -15,9 +15,11 @@ declare module "styled-components" {
       defaultMediumGrey: string;
       importantRed: string;
       actionGreen: string;
+      offWhite: string;
     };
     defaultBoxShadow: string;
     defaultBorderBottom: string;
+    inputBackground: string;
     inputBorder: string;
     primaryBlue: string;
     messaging: {

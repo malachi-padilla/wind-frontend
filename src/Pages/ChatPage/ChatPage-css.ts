@@ -32,7 +32,7 @@ export const StyledLogo = styled(Logo)`
 export const Home = styled(FlexColCenterCenter)`
   height: 48px;
   width: 48px;
-  color: #fff;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   background-color: ${(props) => props.theme.messaging.primaryBlue};
   border-radius: 15px;
   padding: 5px;

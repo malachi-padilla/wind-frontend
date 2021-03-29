@@ -4,7 +4,11 @@ import { Logo } from "Theme/misc";
 
 export const StyledMainContainer = styled(MainContainer)`
   @media only screen and (min-width: 1025px) {
-    background: linear-gradient(to right, #7289da, #1b1b1b);
+    background: linear-gradient(
+      to right,
+      ${(props) => props.theme.messaging.primaryBlue},
+      #1b1b1b
+    );
   }
 `;
 
@@ -18,7 +22,7 @@ export const FormContainer = styled(FlexColCenterCenter)`
   width: 90%;
   height: unset;
   background-color: ${(props) => props.theme.mainGrey};
-  color: #72767d;
+  color: ${(props) => props.theme.messaging.secondaryGrey};
   border-radius: 5px;
   padding: 2rem;
   box-sizing: border-box;
@@ -32,7 +36,7 @@ export const FormTitle = styled(FlexColCenterCenter)`
   height: unset;
   width: unset;
   h1 {
-    color: white;
+    color: ${(props) => props.theme.fontColors.defaultWhite};
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
@@ -47,7 +51,7 @@ export const FormTitle = styled(FlexColCenterCenter)`
 export const FormInputs = styled.div`
   margin-top: 20px;
   input {
-    background-color: #31333a;
+    background-color: ${(props) => props.theme.inputBackground};
     width: 100%;
     height: 40px;
     padding: 10px;
@@ -57,7 +61,7 @@ export const FormInputs = styled.div`
     border: ${(props) => props.theme.inputBorder};
     margin-top: 8px;
     margin-bottom: 20px;
-    color: #dcddde;
+    color: ${(props) => props.theme.fontColors.offWhite};
     font-size: 16px;
     &:hover {
       transition: ease-in 200ms;
@@ -82,7 +86,7 @@ export const FormBtns = styled.div`
     background-color: ${(props) => props.theme.messaging.primaryBlue};
     outline: none;
     border: none;
-    color: white;
+    color: ${(props) => props.theme.fontColors.defaultWhite};
     border-radius: 3px;
     font-size: 16px;
     &:hover {

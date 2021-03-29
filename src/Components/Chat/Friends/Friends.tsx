@@ -23,15 +23,16 @@ import {
   ButtonContainer,
   AddFriendContainer,
   Title,
+  MoreBtn,
 } from "./Friends-css";
+import { FriendProps } from "Components/types";
 
 export default function Friends({
   friendsList,
   setFriend,
   setFriendsIsOpen,
-  recipientIsTyping,
   userInfo,
-}) {
+}: FriendProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
@@ -164,14 +165,19 @@ export default function Friends({
                 </UserInfo>
                 <Actions>
                   {!requestsFilter ? (
-                    <ChatBtn
-                      onClick={() => {
-                        setFriend(item.username);
-                        setFriendsIsOpen(false);
-                      }}
-                    >
-                      <i className="fas fa-comment-alt"></i>
-                    </ChatBtn>
+                    <>
+                      <ChatBtn
+                        onClick={() => {
+                          setFriend(item.username);
+                          setFriendsIsOpen(false);
+                        }}
+                      >
+                        <i className="fas fa-comment-alt"></i>
+                      </ChatBtn>
+                      <MoreBtn>
+                        <i className="fas fa-ellipsis-v"></i>
+                      </MoreBtn>
+                    </>
                   ) : (
                     <>
                       <AcceptBtn>

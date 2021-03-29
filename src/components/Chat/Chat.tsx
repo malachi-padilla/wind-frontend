@@ -1,4 +1,4 @@
-import { PrivateChatMessage } from "Components/types";
+import { ChatProps, PrivateChatMessage } from "Components/types";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import {
@@ -26,7 +26,7 @@ export default function ChatPage({
   setRecipientIsTyping,
   recipientIsTyping,
   pollingInterval,
-}) {
+}: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const [recipientData, setRecipientData] = useState<any>();

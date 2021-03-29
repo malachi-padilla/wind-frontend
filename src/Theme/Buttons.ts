@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 export const defaultCSS = css`
   height: 28px;
   min-width: 90px;
-  color: #fff;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   padding: 5px;
   font-size: 14px;
   border-radius: 4px;
@@ -16,5 +16,5 @@ export const PrimaryButton = styled.button`
 
 export const SecondaryButton = styled.button`
   ${defaultCSS};
-  background-color: #40444b;
+  background-color: ${(props) => props.theme.tertiaryGrey};
 `;

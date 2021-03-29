@@ -25,6 +25,7 @@ export const FriendsTab = styled.div`
   align-items: center;
   gap: 10px;
   padding-right: 1rem;
+  color: ${(props) => props.theme.messaging.secondaryGrey};
   border-right: 1px solid ${(props) => props.theme.mediumGray};
 `;
 
@@ -38,12 +39,13 @@ export const Notification = styled(FlexRowCenterCenter)`
   padding: 2px;
   height: 20px;
   width: 20px;
+  box-shadow: ${(props) => props.theme.defaultBoxShadow};
   border-radius: 50%;
   background-color: ${(props) => props.theme.fontColors.importantRed};
-  color: #fff;
+  color: ${(props) => props.theme.fontColors.defaultWhite};
   position: absolute;
   top: -10px;
-  right: -10%;
+  right: -15%;
 `;
 
 export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
@@ -89,8 +91,7 @@ export const UserInfo = styled.div`
 
 export const Actions = styled.div`
   display: flex;
-  margin-right: 10%;
-  gap: 20px;
+  gap: 5px;
 `;
 
 export const ButtonStyles = css`
@@ -98,10 +99,14 @@ export const ButtonStyles = css`
   width: 36px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.secondaryDarkGrey};
-  color: #aab0bd;
+  color: ${(props) => props.theme.fontColors.offWhite};
 `;
 
 export const ChatBtn = styled.button`
+  ${ButtonStyles}
+`;
+
+export const MoreBtn = styled.button`
   ${ButtonStyles}
 `;
 
