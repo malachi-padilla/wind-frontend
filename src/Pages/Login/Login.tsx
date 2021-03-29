@@ -1,23 +1,22 @@
 import React from "react";
-import styles from "../../components/Login/Login.module.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
+import { Logo } from "Theme/misc";
+import {
+  FormBtns,
+  FormContainer,
+  FormInputs,
+  FormTitle,
+  StyledMainContainer,
+} from "./Login-css";
+import { loginRequest } from "Api/user";
 
 export default function App() {
   const [loginUsername, setLoginUsername] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
 
   const login = () => {
-    axios({
-      method: "POST",
-      data: {
-        username: loginUsername,
-        password: loginPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:4000/auth/login",
-    }).then((res) => {
+    loginRequest(loginUsername, loginPassword).then((res) => {
       if (res.status === 200) {
         window.location.href = "/chat";
       }
@@ -25,36 +24,33 @@ export default function App() {
   };
 
   return (
-    <div className={styles.MainContainer}>
-      <div className={styles.Logo}></div>
-      <div className={styles.FormContainer}>
-        <div className={styles.Form}>
-          <div className={styles.FormTitle}>
+    <StyledMainContainer>
+      <Logo />
+      <FormContainer>
+        <div>
+          <FormTitle>
             <h1 style={{ marginBottom: "2rem" }}>Welcome Back!</h1>
 
             <h3>We're so excited to see you again!</h3>
-          </div>
-          <div className={styles.FormInputs}>
-            <label style={{ fontWeight: 600, fontSize: "12px" }}>
-              USERNAME
-            </label>
+          </FormTitle>
+          <FormInputs>
+            <label>USERNAME</label>
             <input
               onChange={(e) => setLoginUsername(e.target.value)}
               type="text"
               required
             ></input>
-            <label style={{ fontWeight: 600, fontSize: "12px" }}>
-              PASSWORD
-            </label>
+            <label>PASSWORD</label>
             <input
               onKeyDown={(e) => (e.key === "Enter" ? login() : null)}
               onChange={(e) => setLoginPassword(e.target.value)}
               type="password"
               required
             ></input>
-          </div>
-          <div className={styles.FormBtns}>
-            <button onClick={login} className={styles.LoginBtn} type="submit">
+          </FormInputs>
+
+          <FormBtns>
+            <button onClick={login} type="submit">
               Login
             </button>
             <p>
@@ -62,10 +58,10 @@ export default function App() {
                 don't have an acount?
               </Link>
             </p>
-          </div>
+          </FormBtns>
         </div>
-      </div>
-      <div className={styles.BackgroundShape}></div>
-    </div>
+      </FormContainer>
+      <div></div>
+    </StyledMainContainer>
   );
 }

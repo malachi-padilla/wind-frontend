@@ -1,11 +1,22 @@
-import { PrivateChatMessage } from "components/types";
+import { ChatProps, PrivateChatMessage } from "Components/types";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import styles from "./Chat.module.css";
-import axios from "axios";
+import {
+  ActionBar,
+  ChatBody,
+  ChatMessages,
+  IsTypingMessage,
+  InputContent,
+  InputWrapper,
+  MainMessage,
+  FriendLabel,
+  FriendLabelText,
+} from "./Chat-css";
+import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
-import FriendButton from "components/Buttons/FriendButton";
+import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
+import { getMessagesRequest, getUserByUsernameRequest } from "Api/user";
 
 const ENDPOINT = "http://localhost:4000";
 let socket;
@@ -15,7 +26,7 @@ export default function ChatPage({
   setRecipientIsTyping,
   recipientIsTyping,
   pollingInterval,
-}) {
+}: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<PrivateChatMessage[]>([]);
   const [recipientData, setRecipientData] = useState<any>();
@@ -34,17 +45,14 @@ export default function ChatPage({
   }, []);
 
   const fetchUser = () => {
-    axios
-      .get(`http://localhost:4000/user?username=${friend}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setRecipientData(res.data);
-        setLoadingRecipientData(false);
-      });
+    return getUserByUsernameRequest(friend).then((res) => {
+      setRecipientData(res.data);
+      setLoadingRecipientData(false);
+    });
   };
 
   useEffect(() => {
+    setRecipientIsTyping(false);
     setLoadingRecipientData(true);
     fetchUser();
   }, [friend]);
@@ -55,16 +63,11 @@ export default function ChatPage({
   }, [pollingInterval]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:4000/messages/getMessages?user1=${name}&user2=${friend}`,
-        { withCredentials: true }
-      )
-      .then((res) => {
-        if (res.data) {
-          setMessages(res.data);
-        }
-      });
+    getMessagesRequest(name, friend).then((res) => {
+      if (res.data) {
+        setMessages(res.data);
+      }
+    });
 
     socket.on("typing", ({ personTyping, isTyping }) => {
       if (personTyping === friend) {
@@ -101,51 +104,50 @@ export default function ChatPage({
   };
 
   return (
-    <div className={styles.MainContainer}>
-      <div className={styles.ActionBar}>
-        <h3 style={{ color: "#72767d", marginRight: "10px" }}>@</h3>
-        <h3 style={{ color: "#fff" }}>{friend}</h3>
-        <FriendButton
-          fetchUser={fetchUser}
-          recipientId={recipientData.userId}
-          relation={recipientData.relation}
-        />
-      </div>
-      <div className={styles.ChatBody}>
-        <div className={styles.ChatMessages} id="ContainerElementID">
+    <MainContainer>
+      <ActionBar>
+        <FriendLabel>
+          <h3>@</h3>
+          <FriendLabelText>{friend}</FriendLabelText>
+          <FriendButton
+            fetchUser={fetchUser}
+            recipientId={recipientData.userId}
+            relation={recipientData.relation}
+          />
+        </FriendLabel>
+      </ActionBar>
+
+      <ChatBody>
+        <ChatMessages id="ContainerElementID">
           {messages.map((item) => (
             <>
-              <div
-                className={
-                  item.sentBy === name
-                    ? styles.MainMessage
-                    : styles.SecondaryMessage
-                }
+              <MainMessage
+                secondaryMessage={item.sentBy === name ? false : true}
               >
                 {item.message}
-              </div>
+              </MainMessage>
             </>
           ))}
           {recipientIsTyping ? (
-            <div className={`${styles.IsTyping} && ${styles.SecondaryMessage}`}>
+            <IsTypingMessage secondaryMessage>
               <span></span>
               <span></span>
               <span></span>
-            </div>
+            </IsTypingMessage>
           ) : null}
-        </div>
-      </div>
+        </ChatMessages>
+      </ChatBody>
 
-      <div className={styles.InputWrapper}>
-        <div className={styles.InputContent}>
+      <InputWrapper>
+        <InputContent>
           <input
             value={currentMessage}
             onKeyDown={(e) => (e.key === "Enter" ? sendMessage() : null)}
             placeholder={`message @${friend}`}
             onChange={(e: any) => setCurrentMessage(e.target.value)}
           ></input>
-        </div>
-      </div>
-    </div>
+        </InputContent>
+      </InputWrapper>
+    </MainContainer>
   );
 }

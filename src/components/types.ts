@@ -15,6 +15,22 @@ export interface SideBarProps {
   friendsList: any;
 }
 
+export interface FriendProps {
+  friendsList: any[];
+  setFriend: (friend: string) => any;
+  setFriendsIsOpen: (friendsIsOpen: boolean) => any;
+  recipientIsTyping: boolean;
+  userInfo: PersonalUserInfo;
+}
+
+export interface ChatProps {
+  friend: string;
+  userInfo: PersonalUserInfo;
+  setRecipientIsTyping: (recipientIsTyping: boolean) => any;
+  recipientIsTyping: boolean;
+  pollingInterval: any;
+}
+
 export interface PersonalUserInfo {
   userId: string;
   username: string;
