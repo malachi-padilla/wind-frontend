@@ -31,12 +31,13 @@ export default function SideBar({
   userInfo,
   setFriendsIsOpen,
   friendsIsOpen,
+  recentlyMessaged,
+  setRecentlyMessaged,
   socket,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
-  const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
@@ -54,7 +55,6 @@ export default function SideBar({
       }
     });
   }, []);
-
   const logout = () => {
     logoutRequest().then(() => {
       window.location.href = "/";
@@ -74,7 +74,6 @@ export default function SideBar({
         setNotFoundError(false);
         dispatch(setFriendAction(friendInput));
         setFriendsIsOpen(false);
-        setRecentlyMessaged((current) => [...current, friendInput]);
         setFriendInput("");
       } else {
         setNotFoundError(true);
@@ -113,38 +112,36 @@ export default function SideBar({
             <p>DIRECT MESSAGES</p>
             <button>+</button>
           </DirectMessageTab>
-          {!friend ? null : (
-            <RecentlyMessagedList>
-              {recentlyMessaged.map((item, index) => (
-                <FriendBar
-                  style={{
-                    backgroundColor: friend === item ? "#36393f" : "#2f3136",
-                  }}
-                  key={index}
-                  onClick={() => {
-                    dispatch(setFriendAction(item));
-                    setFriendsIsOpen(false);
-                  }}
+          <RecentlyMessagedList>
+            {recentlyMessaged.map((item, index) => (
+              <FriendBar
+                style={{
+                  backgroundColor: friend === item ? "#36393f" : "#2f3136",
+                }}
+                key={index}
+                onClick={() => {
+                  dispatch(setFriendAction(item));
+                  setFriendsIsOpen(false);
+                }}
+              >
+                {peopleTyping[item] ? (
+                  <IsTyping>
+                    <span></span>
+                  </IsTyping>
+                ) : null}
+                <p>{item}</p>
+                <RemoveFriendButton
+                  onClick={() =>
+                    setRecentlyMessaged((current) =>
+                      current.filter((node) => item !== node)
+                    )
+                  }
                 >
-                  {peopleTyping[item] ? (
-                    <IsTyping>
-                      <span></span>
-                    </IsTyping>
-                  ) : null}
-                  <p>{item}</p>
-                  <RemoveFriendButton
-                    onClick={() =>
-                      setRecentlyMessaged((current) =>
-                        current.filter((node) => item !== node)
-                      )
-                    }
-                  >
-                    <i className="fas fa-times"></i>
-                  </RemoveFriendButton>
-                </FriendBar>
-              ))}
-            </RecentlyMessagedList>
-          )}
+                  <i className="fas fa-times"></i>
+                </RemoveFriendButton>
+              </FriendBar>
+            ))}
+          </RecentlyMessagedList>
         </RecentFriendsWrapper>
       </SideBarContents>
       <ProfileBar>

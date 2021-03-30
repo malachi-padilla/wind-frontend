@@ -30,6 +30,8 @@ export default function ChatPage({
   recipientIsTyping,
   pollingInterval,
   socket,
+  recentlyMessaged,
+  setRecentlyMessaged,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
@@ -41,9 +43,11 @@ export default function ChatPage({
   const name = userInfo.username;
 
   useEffect(() => {
-    socket.emit("join", { name, friend });
+    socket.emit("joinPrivateMessage", { name, friend });
     socket.on("message", (message: SocketPrivateChatMessage) => {
-      setMessages((currentMessages) => [...currentMessages, message]);
+      if (message.sentBy === friend || message.sentBy === name) {
+        setMessages((currentMessages) => [...currentMessages, message]);
+      }
     });
   }, []);
 
@@ -102,6 +106,13 @@ export default function ChatPage({
   }
 
   const sendMessage = () => {
+    setRecentlyMessaged((current) => {
+      const index = current.indexOf(friend);
+      if (index !== -1) {
+        current.splice(index, 1);
+      }
+      return [friend, ...current];
+    });
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
