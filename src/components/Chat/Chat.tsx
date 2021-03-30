@@ -30,7 +30,6 @@ export default function ChatPage({
   recipientIsTyping,
   pollingInterval,
   socket,
-  recentlyMessaged,
   setRecentlyMessaged,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
