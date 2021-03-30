@@ -16,21 +16,58 @@ import {
   StyledLogo,
 } from "./ChatPage-css";
 import { UserContextNotNull } from "Types/types";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "Redux/types";
+import axios, { AxiosResponse } from "axios";
+import { SocketPrivateChatMessage } from "Components/Types/models";
 
 const ENDPOINT = "http://localhost:4000";
 let socket: any;
 export default function ChatPage() {
-  const [friend, setFriend] = useState<string>("");
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
+  const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
+  const friend = useSelector((state: ReduxStore) => state.friend);
 
   useEffect(() => {
     socket = io(ENDPOINT);
-
+    socket.emit("join", { name: user.username });
     return () => socket.emit("end");
+  }, []);
+
+  const pushIfNotExist = function (item: string) {
+    setRecentlyMessaged((current) => {
+      if (item !== user.username) {
+        const index = current.indexOf(item);
+        if (index !== -1) {
+          current.splice(index, 1);
+          return [item, ...current];
+        } else {
+          return [item, ...current];
+        }
+      } else {
+        return current;
+      }
+    });
+  };
+
+  useEffect(() => {
+    socket.on("message", (message: SocketPrivateChatMessage) => {
+      pushIfNotExist(message.sentBy);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:4000/messages/recentlyMessaged?user=${user.username}`
+      )
+      .then((res: AxiosResponse<string[]>) => {
+        setRecentlyMessaged(res.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -60,10 +97,10 @@ export default function ChatPage() {
           </Home>
         </NavBar>
         <SideBar
+          recentlyMessaged={recentlyMessaged}
+          setRecentlyMessaged={setRecentlyMessaged}
           recipientIsTyping={recipientIsTyping}
           userInfo={user}
-          friend={friend}
-          setFriend={setFriend}
           friendsIsOpen={friendsIsOpen}
           setFriendsIsOpen={setFriendsIsOpen}
           socket={socket}
@@ -75,10 +112,11 @@ export default function ChatPage() {
           <WelcomePage />
         ) : (
           <Chat
+            recentlyMessaged={recentlyMessaged}
+            setRecentlyMessaged={setRecentlyMessaged}
             recipientIsTyping={recipientIsTyping}
             setRecipientIsTyping={setRecipientIsTyping}
             userInfo={user}
-            friend={friend}
             pollingInterval={pollingInterval}
             socket={socket}
           />
@@ -87,7 +125,6 @@ export default function ChatPage() {
         <Friends
           userInfo={user}
           friendsList={friendsList}
-          setFriend={setFriend}
           setFriendsIsOpen={setFriendsIsOpen}
           recipientIsTyping={recipientIsTyping}
         />

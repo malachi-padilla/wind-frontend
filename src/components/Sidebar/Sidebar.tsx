@@ -20,24 +20,28 @@ import {
 } from "./Sidebar-css";
 import { getUserByUsernameRequest } from "Api/user";
 import { SocketIsTypingMessage } from "Components/Types/models";
+import { useDispatch, useSelector } from "react-redux";
+import { setFriendAction } from "Redux/actions";
+import { ReduxStore } from "Redux/types";
 
 interface PeopleTyping {
   [key: string]: boolean;
 }
 export default function SideBar({
-  friend,
-  setFriend,
   userInfo,
   setFriendsIsOpen,
   friendsIsOpen,
+  recentlyMessaged,
+  setRecentlyMessaged,
   socket,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
   const [friendInput, setFriendInput] = useState<string>("");
-  const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
+  const friend = useSelector((state: ReduxStore) => state.friend);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
@@ -51,7 +55,6 @@ export default function SideBar({
       }
     });
   }, []);
-
   const logout = () => {
     logoutRequest().then(() => {
       window.location.href = "/";
@@ -69,9 +72,8 @@ export default function SideBar({
         recentlyMessaged.indexOf(friendInput) === -1
       ) {
         setNotFoundError(false);
-        setFriend(friendInput);
+        dispatch(setFriendAction(friendInput));
         setFriendsIsOpen(false);
-        setRecentlyMessaged((current) => [...current, friendInput]);
         setFriendInput("");
       } else {
         setNotFoundError(true);
@@ -110,38 +112,36 @@ export default function SideBar({
             <p>DIRECT MESSAGES</p>
             <button>+</button>
           </DirectMessageTab>
-          {!friend ? null : (
-            <RecentlyMessagedList>
-              {recentlyMessaged.map((item, index) => (
-                <FriendBar
-                  style={{
-                    backgroundColor: friend === item ? "#36393f" : "#2f3136",
-                  }}
-                  key={index}
-                  onClick={() => {
-                    setFriend(item);
-                    setFriendsIsOpen(false);
-                  }}
+          <RecentlyMessagedList>
+            {recentlyMessaged.map((item, index) => (
+              <FriendBar
+                style={{
+                  backgroundColor: friend === item ? "#36393f" : "#2f3136",
+                }}
+                key={index}
+                onClick={() => {
+                  dispatch(setFriendAction(item));
+                  setFriendsIsOpen(false);
+                }}
+              >
+                {peopleTyping[item] ? (
+                  <IsTyping>
+                    <span></span>
+                  </IsTyping>
+                ) : null}
+                <p>{item}</p>
+                <RemoveFriendButton
+                  onClick={() =>
+                    setRecentlyMessaged((current) =>
+                      current.filter((node) => item !== node)
+                    )
+                  }
                 >
-                  {peopleTyping[item] ? (
-                    <IsTyping>
-                      <span></span>
-                    </IsTyping>
-                  ) : null}
-                  <p>{item}</p>
-                  <RemoveFriendButton
-                    onClick={() =>
-                      setRecentlyMessaged((current) =>
-                        current.filter((node) => item !== node)
-                      )
-                    }
-                  >
-                    <i className="fas fa-times"></i>
-                  </RemoveFriendButton>
-                </FriendBar>
-              ))}
-            </RecentlyMessagedList>
-          )}
+                  <i className="fas fa-times"></i>
+                </RemoveFriendButton>
+              </FriendBar>
+            ))}
+          </RecentlyMessagedList>
         </RecentFriendsWrapper>
       </SideBarContents>
       <ProfileBar>

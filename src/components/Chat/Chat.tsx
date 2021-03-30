@@ -21,14 +21,16 @@ import {
   SocketIsTypingMessage,
 } from "Components/Types/models";
 import { RecipientUserInfo } from "Types/models";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "Redux/types";
 
 export default function ChatPage({
-  friend,
   userInfo,
   setRecipientIsTyping,
   recipientIsTyping,
   pollingInterval,
   socket,
+  setRecentlyMessaged,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
@@ -36,14 +38,15 @@ export default function ChatPage({
   const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
     true
   );
+  const friend = useSelector((state: ReduxStore) => state.friend);
   const name = userInfo.username;
 
-  console.log(messages);
-
   useEffect(() => {
-    socket.emit("join", { name, friend });
+    socket.emit("joinPrivateMessage", { name, friend });
     socket.on("message", (message: SocketPrivateChatMessage) => {
-      setMessages((currentMessages) => [...currentMessages, message]);
+      if (message.sentBy === friend || message.sentBy === name) {
+        setMessages((currentMessages) => [...currentMessages, message]);
+      }
     });
   }, []);
 
@@ -102,6 +105,13 @@ export default function ChatPage({
   }
 
   const sendMessage = () => {
+    setRecentlyMessaged((current) => {
+      const index = current.indexOf(friend);
+      if (index !== -1) {
+        current.splice(index, 1);
+      }
+      return [friend, ...current];
+    });
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };

@@ -7,10 +7,10 @@ export interface ActiveFriendsProps {
 }
 
 export interface SideBarProps {
-  friend: string;
   socket: any;
-  setFriend: (friend: string) => any;
   userInfo: PersonalUserInfo;
+  recentlyMessaged: string[];
+  setRecentlyMessaged: React.Dispatch<React.SetStateAction<string[]>>;
   recipientIsTyping: boolean;
   friendsIsOpen: boolean;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
@@ -19,15 +19,15 @@ export interface SideBarProps {
 
 export interface FriendsProps {
   friendsList: RecipientUserInfo[];
-  setFriend: (friend: string) => any;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   recipientIsTyping: boolean;
   userInfo: PersonalUserInfo;
 }
 
 export interface ChatProps {
-  friend: string;
   socket: any;
+  recentlyMessaged: string[];
+  setRecentlyMessaged: React.Dispatch<React.SetStateAction<string[]>>;
   userInfo: PersonalUserInfo;
   setRecipientIsTyping: (recipientIsTyping: boolean) => any;
   recipientIsTyping: boolean;
