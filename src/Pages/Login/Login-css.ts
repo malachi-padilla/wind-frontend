@@ -50,30 +50,33 @@ export const FormTitle = styled(FlexColCenterCenter)`
 
 export const FormInputs = styled.div`
   margin-top: 20px;
-  input {
-    background-color: ${(props) => props.theme.inputBackground};
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 3px;
-    border: ${(props) => props.theme.inputBorder};
-    margin-top: 8px;
-    margin-bottom: 20px;
-    color: ${(props) => props.theme.fontColors.offWhite};
-    font-size: 16px;
-    &:hover {
-      transition: ease-in 200ms;
-      border: 1px solid #1b1b1b;
-    }
-    &:focus {
-      border: 1px solid ${(props) => props.theme.messaging.primaryBlue};
-    }
-  }
   label {
     font-weight: 600;
     font-size: 12px;
+  }
+`;
+
+export const LoginInput = styled.input<{ error: boolean }>`
+  background-color: ${(props) => props.theme.inputBackground};
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: ${(props) => props.theme.inputBorder};
+  border-color: ${(props) =>
+    props.error ? props.theme.fontColors.importantRed : null};
+  margin-top: 8px;
+  margin-bottom: 20px;
+  color: ${(props) => props.theme.fontColors.offWhite};
+  font-size: 16px;
+  :hover {
+    transition: ease-in 200ms;
+    border: 1px solid #1b1b1b;
+  }
+  :focus {
+    border: 1px solid ${(props) => props.theme.messaging.primaryBlue};
   }
 `;
 

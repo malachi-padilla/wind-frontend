@@ -7,6 +7,7 @@ import {
   FormContainer,
   FormInputs,
   FormTitle,
+  LoginInput,
   StyledMainContainer,
 } from "./Login-css";
 import { loginRequest } from "Api/user";
@@ -14,6 +15,7 @@ import { loginRequest } from "Api/user";
 export default function App() {
   const [loginUsername, setLoginUsername] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const login = () => {
     loginRequest(loginUsername, loginPassword).then((res) => {
@@ -35,20 +37,21 @@ export default function App() {
           </FormTitle>
           <FormInputs>
             <label>USERNAME</label>
-            <input
+            <LoginInput
+              error={error}
               onChange={(e) => setLoginUsername(e.target.value)}
               type="text"
               required
-            ></input>
+            />
             <label>PASSWORD</label>
-            <input
+            <LoginInput
+              error={error}
               onKeyDown={(e) => (e.key === "Enter" ? login() : null)}
               onChange={(e) => setLoginPassword(e.target.value)}
               type="password"
               required
-            ></input>
+            />
           </FormInputs>
-
           <FormBtns>
             <button onClick={login} type="submit">
               Login

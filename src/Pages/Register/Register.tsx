@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
   FormContainer,
   FormInputs,
   FormTitle,
+  LoginInput,
   StyledMainContainer,
 } from "Pages/Login/Login-css";
 import { registerRequest } from "Api/user";
@@ -14,14 +15,24 @@ import { Logo } from "Theme/misc";
 export default function Register() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerPassword, setRegisterPassword] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const register = () => {
-    registerRequest(registerUsername, registerPassword).then((res) => {
-      if (res.status === 200) {
-        window.location.href = "/";
-      }
-    });
+    if (registerUsername.length > 2 && registerPassword.length >= 4) {
+      registerRequest(registerUsername, registerPassword).then((res) => {
+        if (res.status === 200) {
+          window.location.href = "/";
+        }
+      });
+    } else {
+      setError(true);
+    }
   };
+
+  useEffect(() => {
+    setError(false);
+  }, []);
+
   return (
     <StyledMainContainer>
       <Logo />
@@ -34,18 +45,22 @@ export default function Register() {
           </FormTitle>
           <FormInputs>
             <label>CREATE A USERNAME</label>
-            <input
+            <LoginInput
+              error={error}
               onKeyDown={(e) => (e.key === "Enter" ? register() : null)}
               onChange={(e) => setRegisterUsername(e.target.value)}
               type="text"
               required
-            ></input>
+            />
+
             <label>CREATE A PASSWORD</label>
-            <input
+            <LoginInput
+              error={error}
               onChange={(e) => setRegisterPassword(e.target.value)}
               type="password"
               required
-            ></input>
+              style={error ? { borderColor: "red" } : undefined}
+            />
           </FormInputs>
           <FormBtns>
             <button onClick={register} type="submit">

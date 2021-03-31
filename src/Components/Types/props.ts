@@ -22,6 +22,11 @@ export interface FriendsProps {
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   recipientIsTyping: boolean;
   userInfo: PersonalUserInfo;
+  pollingInterval: any;
+  fetchUser: () => void;
+  recipientData: any;
+  loadingRecipientData: boolean;
+  setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }
 
 export interface ChatProps {
@@ -32,6 +37,10 @@ export interface ChatProps {
   setRecipientIsTyping: (recipientIsTyping: boolean) => any;
   recipientIsTyping: boolean;
   pollingInterval: any;
+  fetchUser: () => void;
+  recipientData: any;
+  loadingRecipientData: boolean;
+  setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }
 
 export interface FriendButtonProps {

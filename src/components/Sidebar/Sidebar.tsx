@@ -81,9 +81,9 @@ export default function SideBar({
     }
   };
 
-  useEffect(() => {
-    setNotFoundError(false);
-  }, [friendInput]);
+  // useEffect(() => {
+  //   setNotFoundError(false);
+  // }, [friendInput]);
 
   return (
     <StyledMainContainer>
