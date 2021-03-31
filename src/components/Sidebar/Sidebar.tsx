@@ -21,7 +21,7 @@ import {
 import { getUserByUsernameRequest } from "Api/user";
 import { SocketIsTypingMessage } from "Components/Types/models";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriendAction } from "Redux/actions";
+import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
 
 interface PeopleTyping {
@@ -31,8 +31,6 @@ export default function SideBar({
   userInfo,
   setFriendsIsOpen,
   friendsIsOpen,
-  recentlyMessaged,
-  setRecentlyMessaged,
   socket,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +39,9 @@ export default function SideBar({
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
+  const recentlyMessaged = useSelector(
+    (state: ReduxStore) => state.recentlyMessaged
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,6 +60,11 @@ export default function SideBar({
     logoutRequest().then(() => {
       window.location.href = "/";
     });
+  };
+
+  const removeRecentlyMessaged = (item: string) => {
+    const newList = recentlyMessaged.filter((node) => item !== node);
+    dispatch(setRecentlyMessagedAction(newList));
   };
 
   const addFriend = async () => {
@@ -131,11 +137,7 @@ export default function SideBar({
                 ) : null}
                 <p>{item}</p>
                 <RemoveFriendButton
-                  onClick={() =>
-                    setRecentlyMessaged((current) =>
-                      current.filter((node) => item !== node)
-                    )
-                  }
+                  onClick={() => removeRecentlyMessaged(item)}
                 >
                   <i className="fas fa-times"></i>
                 </RemoveFriendButton>
