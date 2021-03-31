@@ -20,6 +20,8 @@ import { useSelector } from "react-redux";
 import { ReduxStore } from "Redux/types";
 import axios, { AxiosResponse } from "axios";
 import { SocketPrivateChatMessage } from "Components/Types/models";
+import { getUserByUsernameRequest } from "Api/user";
+import { RecipientUserInfo } from "Types/models";
 
 const ENDPOINT = "http://localhost:4000";
 let socket: any;
@@ -30,6 +32,10 @@ export default function ChatPage() {
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
   const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
+  const [recipientData, setRecipientData] = useState<RecipientUserInfo>();
+  const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
+    true
+  );
   const friend = useSelector((state: ReduxStore) => state.friend);
 
   useEffect(() => {
@@ -80,9 +86,16 @@ export default function ChatPage() {
     const myInterval = setInterval(() => {
       setPollingInterval((current) => !current);
       setFetchNew((current: any) => !current);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(myInterval);
   }, []);
+
+  const fetchUser = () => {
+    return getUserByUsernameRequest(friend).then((res) => {
+      setRecipientData(res.data);
+      setLoadingRecipientData(false);
+    });
+  };
 
   if (friendsList === undefined) {
     return <LoadingPage propStyles={{ width: "100vw" }} />;
@@ -119,6 +132,10 @@ export default function ChatPage() {
             userInfo={user}
             pollingInterval={pollingInterval}
             socket={socket}
+            fetchUser={fetchUser}
+            recipientData={recipientData}
+            loadingRecipientData={loadingRecipientData}
+            setLoadingRecipientData={setLoadingRecipientData}
           />
         )
       ) : friendsList?.length > 0 ? (
@@ -127,6 +144,11 @@ export default function ChatPage() {
           friendsList={friendsList}
           setFriendsIsOpen={setFriendsIsOpen}
           recipientIsTyping={recipientIsTyping}
+          pollingInterval={pollingInterval}
+          fetchUser={fetchUser}
+          recipientData={recipientData}
+          loadingRecipientData={loadingRecipientData}
+          setLoadingRecipientData={setLoadingRecipientData}
         />
       ) : (
         <LoadingPage />

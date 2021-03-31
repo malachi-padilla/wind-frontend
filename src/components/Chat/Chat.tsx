@@ -31,13 +31,13 @@ export default function ChatPage({
   pollingInterval,
   socket,
   setRecentlyMessaged,
+  fetchUser,
+  recipientData,
+  loadingRecipientData,
+  setLoadingRecipientData,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
-  const [recipientData, setRecipientData] = useState<RecipientUserInfo>();
-  const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
-    true
-  );
   const friend = useSelector((state: ReduxStore) => state.friend);
   const name = userInfo.username;
 
@@ -49,13 +49,6 @@ export default function ChatPage({
       }
     });
   }, []);
-
-  const fetchUser = () => {
-    return getUserByUsernameRequest(friend).then((res) => {
-      setRecipientData(res.data);
-      setLoadingRecipientData(false);
-    });
-  };
 
   useEffect(() => {
     setRecipientIsTyping(false);

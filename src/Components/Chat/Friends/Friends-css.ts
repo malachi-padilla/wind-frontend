@@ -136,24 +136,26 @@ export const Title = styled.p`
   font-size: 16px;
 `;
 
-export const InputContent = styled(FlexRowCenterCenter)`
+export const InputContent = styled(FlexRowCenterCenter)<{ error: boolean }>`
   align-items: flex-start;
   height: 25%;
   width: 80%;
   border-bottom: 1px solid ${(props) => props.theme.secondaryDarkGrey};
-  input {
-    background-color: ${(props) => props.theme.tertiaryGrey};
-    width: 70%;
-    height: 52px;
-    padding: 10px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 8px 0 0 8px;
-    border: ${(props) => props.theme.inputBorder};
-    border-right: none;
-    color: ${(props) => props.theme.fontColors.defaultLightGrey};
-    font-size: 16px;
-  }
+  opacity: ${(props) => (props.error ? "0.5" : "1")};
+`;
+
+export const AddFriendInput = styled.input`
+  background-color: ${(props) => props.theme.tertiaryGrey};
+  width: 70%;
+  height: 52px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 8px 0 0 8px;
+  border: ${(props) => props.theme.inputBorder};
+  border-right: none;
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
+  font-size: 16px;
 `;
 
 export const ButtonContainer = styled(FlexRowCenterCenter)`
@@ -167,11 +169,12 @@ export const ButtonContainer = styled(FlexRowCenterCenter)`
   padding: 15px;
 `;
 
-export const SendRequestBtn = styled(PrimaryButton)`
+export const SendRequestBtn = styled(PrimaryButton)<{ error: boolean }>`
   height: 32px;
   width: 70%;
   border-radius: 4px;
   background-color: ${(props) => props.theme.messaging.primaryBlue};
   font-size: 12px;
   padding: 2px;
+  cursor: ${(props) => (props.error ? "not-allowed" : "pointer")};
 `;
