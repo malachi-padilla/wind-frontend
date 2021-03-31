@@ -8,6 +8,7 @@ import WelcomePage from "../../Components/Chat/WelcomePage/WelcomePage";
 import io from "socket.io-client";
 import LoadingPage from "../../Components/Chat/LoadingPage/LoadingPage";
 import { getFriendsRequest } from "Api/friends";
+import { getRecentlyMessagedRequest } from "Api/messages";
 import {
   ChatPageWrapper,
   Home,
@@ -16,27 +17,30 @@ import {
   StyledLogo,
 } from "./ChatPage-css";
 import { UserContextNotNull } from "Types/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxStore } from "Redux/types";
 import axios, { AxiosResponse } from "axios";
 import { SocketPrivateChatMessage } from "Components/Types/models";
 import { getUserByUsernameRequest } from "Api/user";
 import { RecipientUserInfo } from "Types/models";
+import { setRecentlyMessagedAction } from "Redux/actions";
 
 const ENDPOINT = "http://localhost:4000";
 let socket: any;
 export default function ChatPage() {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
-  const [recipientIsTyping, setRecipientIsTyping] = useState<boolean>(false);
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
-  const [recentlyMessaged, setRecentlyMessaged] = useState<string[]>([]);
   const [recipientData, setRecipientData] = useState<RecipientUserInfo>();
   const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
     true
   );
   const friend = useSelector((state: ReduxStore) => state.friend);
+  const recentlyMessaged = useSelector(
+    (state: ReduxStore) => state.recentlyMessaged
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -44,36 +48,18 @@ export default function ChatPage() {
     return () => socket.emit("end");
   }, []);
 
-  const pushIfNotExist = function (item: string) {
-    setRecentlyMessaged((current) => {
-      if (item !== user.username) {
-        const index = current.indexOf(item);
-        if (index !== -1) {
-          current.splice(index, 1);
-          return [item, ...current];
-        } else {
-          return [item, ...current];
-        }
-      } else {
-        return current;
-      }
-    });
-  };
-
   useEffect(() => {
     socket.on("message", (message: SocketPrivateChatMessage) => {
       pushIfNotExist(message.sentBy);
     });
-  }, []);
+  }, [recentlyMessaged]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:4000/messages/recentlyMessaged?user=${user.username}`
-      )
-      .then((res: AxiosResponse<string[]>) => {
-        setRecentlyMessaged(res.data);
-      });
+    getRecentlyMessagedRequest(user.username).then(
+      (res: AxiosResponse<string[]>) => {
+        dispatch(setRecentlyMessagedAction(res.data));
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -97,6 +83,18 @@ export default function ChatPage() {
     });
   };
 
+  function pushIfNotExist(item: string) {
+    if (item !== user.username) {
+      let newRecentlyMessaged = recentlyMessaged;
+      const index = newRecentlyMessaged.indexOf(item);
+      if (index !== -1) {
+        newRecentlyMessaged.splice(index, 1);
+      }
+      newRecentlyMessaged = [item, ...newRecentlyMessaged];
+      dispatch(setRecentlyMessagedAction(newRecentlyMessaged));
+    }
+  }
+
   if (friendsList === undefined) {
     return <LoadingPage propStyles={{ width: "100vw" }} />;
   }
@@ -110,9 +108,6 @@ export default function ChatPage() {
           </Home>
         </NavBar>
         <SideBar
-          recentlyMessaged={recentlyMessaged}
-          setRecentlyMessaged={setRecentlyMessaged}
-          recipientIsTyping={recipientIsTyping}
           userInfo={user}
           friendsIsOpen={friendsIsOpen}
           setFriendsIsOpen={setFriendsIsOpen}
@@ -125,10 +120,6 @@ export default function ChatPage() {
           <WelcomePage />
         ) : (
           <Chat
-            recentlyMessaged={recentlyMessaged}
-            setRecentlyMessaged={setRecentlyMessaged}
-            recipientIsTyping={recipientIsTyping}
-            setRecipientIsTyping={setRecipientIsTyping}
             userInfo={user}
             pollingInterval={pollingInterval}
             socket={socket}
@@ -143,7 +134,6 @@ export default function ChatPage() {
           userInfo={user}
           friendsList={friendsList}
           setFriendsIsOpen={setFriendsIsOpen}
-          recipientIsTyping={recipientIsTyping}
           pollingInterval={pollingInterval}
           fetchUser={fetchUser}
           recipientData={recipientData}

@@ -21,16 +21,17 @@ import {
   SocketIsTypingMessage,
 } from "Components/Types/models";
 import { RecipientUserInfo } from "Types/models";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxStore } from "Redux/types";
+import {
+  setRecentlyMessagedAction,
+  setRecipientIsTypingAction,
+} from "Redux/actions";
 
 export default function ChatPage({
   userInfo,
-  setRecipientIsTyping,
-  recipientIsTyping,
   pollingInterval,
   socket,
-  setRecentlyMessaged,
   fetchUser,
   recipientData,
   loadingRecipientData,
@@ -38,8 +39,11 @@ export default function ChatPage({
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
-  const friend = useSelector((state: ReduxStore) => state.friend);
   const name = userInfo.username;
+  const dispatch = useDispatch();
+  const { recentlyMessaged, friend, recipientIsTyping } = useSelector(
+    (state: ReduxStore) => state
+  );
 
   useEffect(() => {
     socket.emit("joinPrivateMessage", { name, friend });
@@ -51,7 +55,7 @@ export default function ChatPage({
   }, []);
 
   useEffect(() => {
-    setRecipientIsTyping(false);
+    dispatch(setRecipientIsTypingAction(false));
     setLoadingRecipientData(true);
     fetchUser();
   }, [friend]);
@@ -70,7 +74,7 @@ export default function ChatPage({
 
     socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
       if (personTyping === friend) {
-        setRecipientIsTyping(isTyping);
+        dispatch(setRecipientIsTypingAction(isTyping));
       }
     });
   }, [friend]);
@@ -98,13 +102,19 @@ export default function ChatPage({
   }
 
   const sendMessage = () => {
-    setRecentlyMessaged((current) => {
-      const index = current.indexOf(friend);
-      if (index !== -1) {
-        current.splice(index, 1);
-      }
-      return [friend, ...current];
-    });
+    const indexOfFriend = recentlyMessaged.indexOf(friend);
+    // New variable so we dont modify previous state
+    let newRecentlyMessagedList = recentlyMessaged;
+    // If this user is already in our recently messaged, splice first
+    if (indexOfFriend !== -1) {
+      newRecentlyMessagedList.splice(indexOfFriend, 1);
+    }
+    // Push user to top of stack
+    newRecentlyMessagedList = [friend, ...newRecentlyMessagedList];
+
+    // Dispatch new array
+    dispatch(setRecentlyMessagedAction(newRecentlyMessagedList));
+
     socket.emit("message", { friend, message: currentMessage });
     setCurrentMessage("");
   };
