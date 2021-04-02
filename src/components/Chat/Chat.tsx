@@ -15,12 +15,11 @@ import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
 import FriendButton from "../Buttons/FriendButton/FriendButton";
 import LoadingPage from "./LoadingPage/LoadingPage";
-import { getMessagesRequest, getUserByUsernameRequest } from "Api/user";
+import { getMessagesRequest } from "Api/user";
 import {
   SocketPrivateChatMessage,
   SocketIsTypingMessage,
 } from "Components/Types/models";
-import { RecipientUserInfo } from "Types/models";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStore } from "Redux/types";
 import {
@@ -36,6 +35,7 @@ export default function ChatPage({
   recipientData,
   loadingRecipientData,
   setLoadingRecipientData,
+  pushIfNotExist,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
@@ -47,10 +47,15 @@ export default function ChatPage({
 
   useEffect(() => {
     socket.emit("joinPrivateMessage", { name, friend });
+    return () => socket.emit("disconnectPrivateMessage");
+  }, []);
+
+  useEffect(() => {
     socket.on("message", (message: SocketPrivateChatMessage) => {
       if (message.sentBy === friend || message.sentBy === name) {
         setMessages((currentMessages) => [...currentMessages, message]);
       }
+      pushIfNotExist(message.sentBy);
     });
   }, []);
 

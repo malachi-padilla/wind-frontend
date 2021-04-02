@@ -19,7 +19,7 @@ import {
 import { UserContextNotNull } from "Types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStore } from "Redux/types";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { SocketPrivateChatMessage } from "Components/Types/models";
 import { getUserByUsernameRequest } from "Api/user";
 import { RecipientUserInfo } from "Types/models";
@@ -83,6 +83,7 @@ export default function ChatPage() {
     });
   };
 
+  // This function pushes to our RecentlyMessaged list, if it doesn't exist and keeps order.
   function pushIfNotExist(item: string) {
     if (item !== user.username) {
       let newRecentlyMessaged = recentlyMessaged;
@@ -124,6 +125,7 @@ export default function ChatPage() {
             pollingInterval={pollingInterval}
             socket={socket}
             fetchUser={fetchUser}
+            pushIfNotExist={pushIfNotExist}
             recipientData={recipientData}
             loadingRecipientData={loadingRecipientData}
             setLoadingRecipientData={setLoadingRecipientData}
@@ -138,7 +140,6 @@ export default function ChatPage() {
           fetchUser={fetchUser}
           recipientData={recipientData}
           loadingRecipientData={loadingRecipientData}
-          setLoadingRecipientData={setLoadingRecipientData}
         />
       ) : (
         <LoadingPage />

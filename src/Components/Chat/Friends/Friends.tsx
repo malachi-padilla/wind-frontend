@@ -42,7 +42,6 @@ export default function Friends({
   fetchUser,
   recipientData,
   loadingRecipientData,
-  setLoadingRecipientData,
 }: FriendsProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);

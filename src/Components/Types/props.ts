@@ -22,7 +22,6 @@ export interface FriendsProps {
   fetchUser: () => void;
   recipientData: any;
   loadingRecipientData: boolean;
-  setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }
 
 export interface ChatProps {
@@ -31,6 +30,7 @@ export interface ChatProps {
   pollingInterval: any;
   fetchUser: () => void;
   recipientData: any;
+  pushIfNotExist: (friendName: string) => void;
   loadingRecipientData: boolean;
   setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }

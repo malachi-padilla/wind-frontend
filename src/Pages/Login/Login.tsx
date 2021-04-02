@@ -8,21 +8,25 @@ import {
   FormInputs,
   FormTitle,
   LoginInput,
+  PasswordInput,
   StyledMainContainer,
 } from "./Login-css";
 import { loginRequest } from "Api/user";
+import { AxiosError } from "axios";
 
 export default function App() {
   const [loginUsername, setLoginUsername] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const login = () => {
-    loginRequest(loginUsername, loginPassword).then((res) => {
-      if (res.status === 200) {
-        window.location.href = "/chat";
-      }
-    });
+    loginRequest(loginUsername, loginPassword)
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.href = "/chat";
+        }
+      })
+      .catch((err: AxiosError) => setError(err!.response!.data));
   };
 
   return (
@@ -44,7 +48,7 @@ export default function App() {
               required
             />
             <label>PASSWORD</label>
-            <LoginInput
+            <PasswordInput
               error={error}
               onKeyDown={(e) => (e.key === "Enter" ? login() : null)}
               onChange={(e) => setLoginPassword(e.target.value)}
@@ -52,6 +56,13 @@ export default function App() {
               required
             />
           </FormInputs>
+          <p>
+            {error === "bad-username"
+              ? "User Doesn't Exist By That Name."
+              : error === "bad-password"
+              ? "Incorrect Password."
+              : null}
+          </p>
           <FormBtns>
             <button onClick={login} type="submit">
               Login

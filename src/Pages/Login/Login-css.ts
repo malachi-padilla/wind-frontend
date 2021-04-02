@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FlexColCenterCenter, MainContainer } from "Theme/containers";
 import { Logo } from "Theme/misc";
 
@@ -56,7 +56,7 @@ export const FormInputs = styled.div`
   }
 `;
 
-export const LoginInput = styled.input<{ error: boolean }>`
+const defaultCSS = css<{ error: string }>`
   background-color: ${(props) => props.theme.inputBackground};
   width: 100%;
   height: 40px;
@@ -65,18 +65,39 @@ export const LoginInput = styled.input<{ error: boolean }>`
   box-sizing: border-box;
   border-radius: 3px;
   border: ${(props) => props.theme.inputBorder};
-  border-color: ${(props) =>
-    props.error ? props.theme.fontColors.importantRed : null};
   margin-top: 8px;
   margin-bottom: 20px;
   color: ${(props) => props.theme.fontColors.offWhite};
   font-size: 16px;
-  :hover {
-    transition: ease-in 200ms;
-    border: 1px solid #1b1b1b;
-  }
+`;
+
+export const LoginInput = styled.input<{ error: string }>`
+  ${defaultCSS}
+  border-color: ${(props) =>
+    props.error === "bad-username"
+      ? props.theme.fontColors.importantRed
+      : null};
   :focus {
-    border: 1px solid ${(props) => props.theme.messaging.primaryBlue};
+    border: 1px solid
+      ${(props) =>
+        props.error === "bad-username"
+          ? props.theme.fontColors.importantRed
+          : props.theme.messaging.primaryBlue};
+  }
+`;
+
+export const PasswordInput = styled(LoginInput)<{ error: string }>`
+  ${defaultCSS}
+  border-color: ${(props) =>
+    props.error === "bad-password"
+      ? props.theme.fontColors.importantRed
+      : null};
+  :focus {
+    border: 1px solid
+      ${(props) =>
+        props.error === "bad-password"
+          ? props.theme.fontColors.importantRed
+          : props.theme.messaging.primaryBlue};
   }
 `;
 
