@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -15,24 +15,23 @@ import { Logo } from "Theme/misc";
 export default function Register() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerPassword, setRegisterPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const register = () => {
-    if (registerUsername.length > 2 && registerPassword.length >= 4) {
-      registerRequest(registerUsername, registerPassword).then((res) => {
-        if (res.status === 200) {
-          window.location.href = "/";
-        }
-      });
+    if (registerUsername.length > 2) {
+      if (registerPassword.length > 3) {
+        registerRequest(registerUsername, registerPassword).then((res) => {
+          if (res.status === 200) {
+            window.location.href = "/";
+          }
+        });
+      } else {
+        setError("bad-password");
+      }
     } else {
-      setError(true);
+      setError("bad-username");
     }
   };
-
-  useEffect(() => {
-    setError(false);
-  }, []);
-
   return (
     <StyledMainContainer>
       <Logo />
@@ -62,6 +61,13 @@ export default function Register() {
               style={error ? { borderColor: "red" } : undefined}
             />
           </FormInputs>
+          <p>
+            {error === "bad-username"
+              ? "Username Must Be Longer Than 2 Characters"
+              : error === "bad-password"
+              ? "Password Must Be Longer Than 3 Characters"
+              : null}
+          </p>
           <FormBtns>
             <button onClick={register} type="submit">
               Sign Up
