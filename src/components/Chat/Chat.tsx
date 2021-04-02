@@ -48,7 +48,7 @@ export default function ChatPage({
   useEffect(() => {
     socket.emit("joinPrivateMessage", { name, friend });
     return () => socket.emit("disconnectPrivateMessage");
-  }, [friend]);
+  }, []);
 
   useEffect(() => {
     socket.on("message", (message: SocketPrivateChatMessage) => {
