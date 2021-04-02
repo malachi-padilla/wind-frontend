@@ -56,6 +56,7 @@ export default function SideBar({
       }
     });
   }, []);
+
   const logout = () => {
     logoutRequest().then(() => {
       window.location.href = "/";
