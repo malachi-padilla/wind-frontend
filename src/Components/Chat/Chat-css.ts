@@ -32,6 +32,7 @@ export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
   word-break: break-all;
   word-wrap: break-word;
   padding: 12px;
+  line-height: 1.5;
   background-color: ${(props) =>
     props.secondaryMessage
       ? props.theme.messaging.secondaryGrey
