@@ -20,9 +20,8 @@ export const ActionBar = styled(FlexRowCenterStart)`
 `;
 
 export const ChatBody = styled(FlexColCenterCenter)`
-  height: 75%;
+  height: 80%;
   margin-top: 30px;
-
   @media only screen and (max-width: 800px) {
     width: 100%;
   }
@@ -32,12 +31,12 @@ export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
   max-width: 50%;
   word-break: break-all;
   word-wrap: break-word;
-  padding: 10px;
+  padding: 12px;
   background-color: ${(props) =>
     props.secondaryMessage
       ? props.theme.messaging.secondaryGrey
       : props.theme.messaging.primaryBlue};
-  border-radius: 30px;
+  border-radius: 20px;
   color: ${(props) => props.theme.fontColors.defaultWhite};
   margin-bottom: ${(props) => (props.secondaryMessage ? "20px" : "8px")};
   align-self: ${(props) =>
@@ -47,20 +46,24 @@ export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
 
 export const InputContent = styled(FlexRowCenterCenter)`
   display: flex;
-  width: 80%;
-  margin-top: 20px;
-  input {
-    background-color: ${(props) => props.theme.tertiaryGrey};
-    width: 100%;
-    height: 48px;
-    padding: 10px;
-    outline: none;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: ${(props) => props.theme.inputBorder};
-    color: ${(props) => props.theme.fontColors.defaultLightGrey};
-    font-size: 16px;
-  }
+  width: 98%;
+  align-items: flex-end;
+`;
+
+export const EnterMessage = styled.textarea<{ showScrollBar: boolean }>`
+  background-color: ${(props) => props.theme.tertiaryGrey};
+  width: 100%;
+  min-height: 48px;
+  line-height: 24px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: ${(props) => props.theme.inputBorder};
+  color: ${(props) => props.theme.fontColors.defaultLightGrey};
+  font-size: 16px;
+  overflow-y: ${(props) => (props.showScrollBar ? "scroll" : "hidden")};
+  resize: none;
 `;
 
 export const FriendLabel = styled(FlexRowCenterCenter)`
@@ -76,14 +79,22 @@ export const FriendLabelText = styled.h3`
 `;
 
 export const InputWrapper = styled(FlexColCenterCenter)`
+  justify-content: flex-end;
   height: 10%;
+  z-index: 1;
+  p {
+    color: ${(props) => props.theme.fontColors.defaultLightGrey};
+    align-self: flex-end;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
 `;
 
 export const ChatMessages = styled(FlexColCenterCenter)`
-  height: 95%;
-  width: 80%;
-  justify-content: unset;
+  height: 100%;
+  width: 98%;
   overflow-y: scroll;
+  justify-content: unset;
 `;
 
 export const loadingFade = keyframes`

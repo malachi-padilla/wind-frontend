@@ -18,19 +18,24 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   &::-webkit-scrollbar {
-    background-color: transparent;
+    background-color: ${(props) => props.theme.secondaryDarkGrey};
+    width: 7px;
+
   }
 
   &::-webkit-scrollbar-button {
     background-color: transparent;
+
   }
 
   &::-webkit-scrollbar-track {
     background-color: transparent;
+
   }
 
   &::-webkit-scrollbar-track-piece {
     background-color: transparent;
+
   }
 
   &::-webkit-scrollbar-thumb {
