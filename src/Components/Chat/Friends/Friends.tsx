@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMinutesLastOnline } from "Util/utilFunctions";
 import { getUserByUsernameRequest, getUsersRequest } from "Api/user";
-import { MainContainer } from "Theme/containers";
+import { FriendBarTheme, MainContainer } from "Theme/containers";
 import {
   AcceptBtn,
   ActionBar,
@@ -19,8 +19,6 @@ import {
   RequestBtnContents,
   UserInfo,
   InputContent,
-  SendRequestBtn,
-  ButtonContainer,
   AddFriendContainer,
   Title,
   MoreBtn,
@@ -31,24 +29,21 @@ import { FriendsProps } from "Components/Types/props";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriendAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
-import { addFriendRequest } from "Api/friends";
-import LoadingPage from "../LoadingPage/LoadingPage";
+import FriendButton from "Components/Buttons/FriendButton/FriendButton";
 
 export default function Friends({
   friendsList,
   setFriendsIsOpen,
   userInfo,
   pollingInterval,
-  fetchUser,
-  recipientData,
-  loadingRecipientData,
 }: FriendsProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
   const [addFriendOpen, setAddFriendOpen] = useState<boolean>(false);
-  const [notFoundError, setNotFoundError] = useState<boolean>(true);
+  const [searchError, setSearchError] = useState<boolean>(true);
   const [friendInput, setFriendInput] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<RecipientUserInfo>();
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
   const friend = useSelector((state: ReduxStore) => state.friend);
   const dispatch = useDispatch();
@@ -99,45 +94,21 @@ export default function Friends({
       }
     }
   };
-  useEffect(() => {
-    fetchUser();
-  }, [friend]);
 
   useEffect(() => {
-    fetchUser();
-  }, [pollingInterval]);
-
-  useEffect(() => {
-    setNotFoundError(false);
+    setSearchError(false);
   }, [friendInput]);
 
-  if (loadingRecipientData) {
-    return <LoadingPage />;
-  }
-
-  const sendRequest = async () => {
-    dispatch(setFriendAction(friendInput));
-    if (friendInput.length > 0 && friendInput !== userInfo.username) {
-      const userResult = await getUserByUsernameRequest(friendInput)
-        .then((res) => res)
-        .catch(() => "Not Found");
-      if (
-        userResult !== "Not Found" &&
-        userInfo.recievedFriendRequests.indexOf(recipientData.userId) === -1 &&
-        userInfo.sentFriendRequests.indexOf(recipientData.userId) === -1 &&
-        userInfo.friends.indexOf(recipientData.userId) === -1 &&
-        friendInput !== userInfo.username
-      ) {
-        setNotFoundError(false);
-        addFriendRequest(userInfo.userId, recipientData.userId).then(() => {
-          fetchUser();
-        });
-        setAddFriendOpen(false);
-        setRequestedFilter(true);
-        setFriendInput("");
-      } else {
-        setNotFoundError(true);
-      }
+  const getRecipientInformation = async () => {
+    const searchResult = await getUserByUsernameRequest(friendInput)
+      .then((res) => {
+        setSearchResults(res.data);
+      })
+      .catch(() => "Bad Request");
+    if (searchResult !== "Bad Request") {
+      setFriendInput("");
+    } else {
+      setSearchError(true);
     }
   };
 
@@ -205,21 +176,38 @@ export default function Friends({
         <FriendsList>
           {addFriendOpen ? (
             <AddFriendContainer>
-              <Title>ADD FRIEND</Title>
-              <InputContent error={notFoundError}>
+              <Title>
+                <h4>ADD FRIEND</h4>
+                {searchError ? (
+                  <p>
+                    Hm, didn't work. Double check that the capitalization and
+                    spelling are correct.
+                  </p>
+                ) : null}
+              </Title>
+              <InputContent>
                 <AddFriendInput
-                  onKeyDown={(e) => (e.key == "Enter" ? sendRequest() : null)}
+                  error={searchError}
+                  onKeyDown={(e: any) =>
+                    e.key === "Enter" && getRecipientInformation()
+                  }
                   onChange={(e: any) => setFriendInput(e.target.value)}
                   value={friendInput}
                   placeholder="Enter a Username"
                   type="text"
                 ></AddFriendInput>
-                <ButtonContainer>
-                  <SendRequestBtn error={notFoundError} onClick={sendRequest}>
-                    Send Friend Request
-                  </SendRequestBtn>
-                </ButtonContainer>
               </InputContent>
+              {searchResults && (
+                <>
+                  <FriendBar>
+                    <p>{searchResults.username}</p>
+                    <FriendButton
+                      recipientId={searchResults.userId}
+                      relation={searchResults.relation}
+                    />
+                  </FriendBar>
+                </>
+              )}
             </AddFriendContainer>
           ) : (
             mappingList &&

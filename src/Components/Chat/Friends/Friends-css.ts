@@ -11,12 +11,14 @@ export const ActionBar = styled.div`
   height: 48px;
   display: flex;
   flex-direction: row;
+  background-color: ${(props) => props.theme.mainGrey};
   border-bottom: ${(props) => props.theme.defaultBorderBottom};
   box-shadow: ${(props) => props.theme.defaultBoxShadow};
   top: 0;
   position: absolute;
   padding: 10px;
   gap: 10px;
+  z-index: 10;
 `;
 
 export const FriendsTab = styled.div`
@@ -127,54 +129,47 @@ export const FriendsTabText = styled.p`
 
 export const AddFriendContainer = styled(FlexColCenterStart)``;
 
-export const Title = styled.p`
-  align-self: flex-start;
+export const Title = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  height: 5%;
+  width: 90%;
   margin-left: 10%;
   margin-bottom: 50px;
   color: ${(props) => props.theme.fontColors.defaultWhite};
   font-weight: 700;
-  font-size: 16px;
+  p {
+    color: ${(props) => props.theme.fontColors.importantRed};
+    font-weight: 300;
+    font-size: 16px;
+  }
 `;
 
-export const InputContent = styled(FlexRowCenterCenter)<{ error: boolean }>`
+export const InputContent = styled(FlexRowCenterCenter)`
   align-items: flex-start;
   height: 25%;
   width: 80%;
-  border-bottom: 1px solid ${(props) => props.theme.secondaryDarkGrey};
-  opacity: ${(props) => (props.error ? "0.5" : "1")};
 `;
 
-export const AddFriendInput = styled.input`
+export const AddFriendInput = styled.input<{ error: boolean }>`
   background-color: ${(props) => props.theme.tertiaryGrey};
-  width: 70%;
+  width: 100%;
   height: 52px;
   padding: 10px;
   outline: none;
   box-sizing: border-box;
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
   border: ${(props) => props.theme.inputBorder};
-  border-right: none;
   color: ${(props) => props.theme.fontColors.defaultLightGrey};
   font-size: 16px;
-`;
-
-export const ButtonContainer = styled(FlexRowCenterCenter)`
-  height: 52px;
-  justify-content: flex-end;
-  background-color: ${(props) => props.theme.tertiaryGrey};
-  border: ${(props) => props.theme.inputBorder};
-  border-left: none;
-  width: 30%;
-  border-radius: 0 8px 8px 0;
-  padding: 15px;
-`;
-
-export const SendRequestBtn = styled(PrimaryButton)<{ error: boolean }>`
-  height: 32px;
-  width: 70%;
-  border-radius: 4px;
-  background-color: ${(props) => props.theme.messaging.primaryBlue};
-  font-size: 12px;
-  padding: 2px;
-  cursor: ${(props) => (props.error ? "not-allowed" : "pointer")};
+  &:hover {
+    transition: ease-in 200ms;
+  }
+  &:focus {
+    border: ${(props) =>
+      props.error ? "1px solid #b92d2d" : "1px solid #7289da"};
+  }
 `;

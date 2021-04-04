@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Types/types";
 import { addFriendRequest, removeFriendRequest } from "Api/friends";
 import { PrimaryButton } from "Theme/buttons";
 import styled from "styled-components";
 import { FriendButtonProps } from "Components/Types/props";
+import axios, { AxiosResponse } from "axios";
+import { RecipientUserInfo } from "Types/models";
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   margin-left: 10px;
@@ -13,8 +15,8 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 export default function FriendButton({
   recipientId,
   relation,
-  fetchUser,
 }: FriendButtonProps) {
+  const [updatedRelation, setUpdatedRelation] = useState<string>(relation);
   const { user: userInfo } = useContext(MyContext) as UserContextNotNull;
 
   const addFriend = async () => {
@@ -29,19 +31,29 @@ export default function FriendButton({
     });
   };
 
+  const fetchUser = () => {
+    axios
+      .get(`http://localhost:4000/user/${recipientId}`, {
+        withCredentials: true,
+      })
+      .then((res: AxiosResponse<RecipientUserInfo>) => {
+        setUpdatedRelation(res.data.relation);
+      });
+  };
+
   return (
     <StyledPrimaryButton
       onClick={
-        relation === "Requested" || relation === "Friends"
+        updatedRelation === "Requested" || updatedRelation === "Friends"
           ? removeFriend
           : addFriend
       }
     >
-      {relation === "Requested"
+      {updatedRelation === "Requested"
         ? "Sent Request"
-        : relation === "Recipient Requested"
+        : updatedRelation === "Recipient Requested"
         ? "Accept Friend"
-        : relation === "Friends"
+        : updatedRelation === "Friends"
         ? "Friends"
         : "Add Friend"}
     </StyledPrimaryButton>

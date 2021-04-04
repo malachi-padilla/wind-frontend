@@ -19,9 +19,6 @@ export interface FriendsProps {
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   userInfo: PersonalUserInfo;
   pollingInterval: any;
-  fetchUser: () => void;
-  recipientData: any;
-  loadingRecipientData: boolean;
 }
 
 export interface ChatProps {
@@ -38,5 +35,4 @@ export interface ChatProps {
 export interface FriendButtonProps {
   recipientId: string;
   relation: RecipientUserInfo["relation"];
-  fetchUser: () => void;
 }

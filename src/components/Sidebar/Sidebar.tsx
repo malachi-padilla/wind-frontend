@@ -117,7 +117,9 @@ export default function SideBar({
           </FriendsTab>
           <DirectMessageTab>
             <p>DIRECT MESSAGES</p>
-            <button>+</button>
+            <button>
+              <i className="fas fa-times"></i>
+            </button>
           </DirectMessageTab>
           <RecentlyMessagedList>
             {recentlyMessaged.map((item, index) => (

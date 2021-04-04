@@ -137,9 +137,6 @@ export default function ChatPage() {
           friendsList={friendsList}
           setFriendsIsOpen={setFriendsIsOpen}
           pollingInterval={pollingInterval}
-          fetchUser={fetchUser}
-          recipientData={recipientData}
-          loadingRecipientData={loadingRecipientData}
         />
       ) : (
         <LoadingPage />

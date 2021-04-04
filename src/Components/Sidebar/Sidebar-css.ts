@@ -85,9 +85,10 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
   }
   button {
     color: #aab0bd;
-    font-size: 25px;
+    font-size: 12px;
     position: absolute;
-    right: 30px;
+    right: 22.5px;
+    transform: rotate(-45deg);
   }
 `;
 
