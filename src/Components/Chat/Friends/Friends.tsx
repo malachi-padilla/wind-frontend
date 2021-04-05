@@ -45,35 +45,31 @@ export default function Friends({
   const [friendInput, setFriendInput] = useState<string>("");
   const [searchResults, setSearchResults] = useState<RecipientUserInfo>();
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const friend = useSelector((state: ReduxStore) => state.friend);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!requestedFilter && !requestsFilter && !onlineFilter) {
+      setLoading(true);
+
       setMappingList(friendsList);
-    }
-    if (onlineFilter) {
-      setMappingList(
-        friendsList.filter((item) => getMinutesLastOnline(item.lastOnline) < 10)
-      );
-    } else if (requestsFilter) {
-      getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
-        setMappingList(res.data);
-      });
-    } else if (requestedFilter) {
-      getUsersRequest(userInfo.sentFriendRequests).then((res) => {
-        setMappingList(res.data);
-      });
+      setLoading(false);
     }
   }, [friendsList, onlineFilter, requestsFilter, requestedFilter, userInfo]);
 
-  const setFilter = (filter: string) => {
+  const setFilter = async (filter: string) => {
     if (filter === "Online") {
       setRequestedFilter(false);
       setRequestsFilter(false);
       if (onlineFilter) {
         setOnlineFilter(false);
       } else {
+        setMappingList(
+          friendsList.filter(
+            (item) => getMinutesLastOnline(item.lastOnline) < 10
+          )
+        );
         setOnlineFilter(true);
       }
     } else if (filter === "Requested") {
@@ -82,6 +78,9 @@ export default function Friends({
       if (requestedFilter) {
         setRequestedFilter(false);
       } else {
+        await getUsersRequest(userInfo.sentFriendRequests).then((res) => {
+          setMappingList(res.data);
+        });
         setRequestedFilter(true);
       }
     } else if (filter === "Requests") {
@@ -90,6 +89,9 @@ export default function Friends({
       if (requestsFilter) {
         setRequestsFilter(false);
       } else {
+        await getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
+          setMappingList(res.data);
+        });
         setRequestsFilter(true);
       }
     }
@@ -109,6 +111,21 @@ export default function Friends({
       setFriendInput("");
     } else {
       setSearchError(true);
+    }
+  };
+
+  const renderNone = () => {
+    if (loading) {
+      return;
+    }
+    if (requestsFilter) {
+      return <h1>No Open Requests At This Time</h1>;
+    } else if (requestedFilter) {
+      return <h1>No Users Requested At This Time</h1>;
+    } else if (onlineFilter) {
+      return <h1>No Users Currently Online</h1>;
+    } else {
+      return <h1>No Friends Yet</h1>;
     }
   };
 
@@ -161,17 +178,7 @@ export default function Friends({
       </ActionBar>
 
       {friendsList.length < 1 || mappingList?.length < 1 ? (
-        <FriendsList>
-          {requestsFilter ? (
-            <h1>No Open Requests At This Time</h1>
-          ) : requestedFilter ? (
-            <h1>No Users Requested At This Time</h1>
-          ) : onlineFilter ? (
-            <h1>No Users Currently Online</h1>
-          ) : (
-            <h1>No Friends Yet</h1>
-          )}
-        </FriendsList>
+        <FriendsList>{renderNone()}</FriendsList>
       ) : (
         <FriendsList>
           {addFriendOpen ? (
