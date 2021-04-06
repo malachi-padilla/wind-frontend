@@ -30,6 +30,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFriendAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
 import FriendButton from "Components/Buttons/FriendButton/FriendButton";
+import LoadingPage from "../LoadingPage/LoadingPage";
+import { addFriendRequest } from "Api/friends";
 
 export default function Friends({
   friendsList,
@@ -51,10 +53,9 @@ export default function Friends({
 
   useEffect(() => {
     if (!requestedFilter && !requestsFilter && !onlineFilter) {
-      setLoading(true);
-
       setMappingList(friendsList);
-      setLoading(false);
+    } else {
+      // setLoading(false);
     }
   }, [friendsList, onlineFilter, requestsFilter, requestedFilter, userInfo]);
 
@@ -116,7 +117,7 @@ export default function Friends({
 
   const renderNone = () => {
     if (loading) {
-      return;
+      return <LoadingPage />;
     }
     if (requestsFilter) {
       return <h1>No Open Requests At This Time</h1>;
@@ -127,6 +128,12 @@ export default function Friends({
     } else {
       return <h1>No Friends Yet</h1>;
     }
+  };
+
+  const acceptRequest = async (userId: string, friendId: string) => {
+    await addFriendRequest(userId, friendId).then(() => {
+      setMappingList(mappingList.filter((item) => item.userId !== friendId));
+    });
   };
 
   return (
@@ -164,14 +171,22 @@ export default function Friends({
           >
             <RequestBtnContents>
               Requests
-              {requestsFilter ? (
+              {requestsFilter && mappingList.length > 0 ? (
                 <Notification>
                   <p>{mappingList?.length}</p>
                 </Notification>
               ) : null}
             </RequestBtnContents>
           </FriendsBtn>
-          <AddBtn onClick={() => setAddFriendOpen(!addFriendOpen)}>
+          <AddBtn
+            addFriendOpen={addFriendOpen}
+            onClick={() => {
+              setAddFriendOpen(!addFriendOpen);
+              setRequestsFilter(false);
+              setRequestedFilter(false);
+              setOnlineFilter(false);
+            }}
+          >
             Add Friend
           </AddBtn>
         </ActionBarBtns>
@@ -240,12 +255,13 @@ export default function Friends({
                     </>
                   ) : (
                     <>
-                      <AcceptBtn>
+                      <AcceptBtn
+                        onClick={() =>
+                          acceptRequest(userInfo.userId, item.userId)
+                        }
+                      >
                         <i className="fas fa-check"></i>
                       </AcceptBtn>
-                      <DenyBtn>
-                        <i className="fas fa-times"></i>
-                      </DenyBtn>
                     </>
                   )}
                 </Actions>

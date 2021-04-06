@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"SET BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "lint": "./node_modules/.bin/eslint --ext .jsx --ext .js --ext .ts --ext .tsx ./src",
     "build": "react-scripts build",
     "test": "react-scripts test",
