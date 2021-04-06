@@ -141,9 +141,7 @@ export default function Friends({
   };
 
   const renderNone = () => {
-    if (loading) {
-      return <LoadingPage />;
-    } else if (requestsFilter) {
+    if (requestsFilter) {
       return <h1>No Open Requests At This Time</h1>;
     } else if (requestedFilter) {
       return <h1>No Users Requested At This Time</h1>;
