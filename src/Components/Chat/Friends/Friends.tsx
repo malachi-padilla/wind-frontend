@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMinutesLastOnline } from "Util/utilFunctions";
 import { getUserByUsernameRequest, getUsersRequest } from "Api/user";
-import { FriendBarTheme, MainContainer } from "Theme/containers";
+import { MainContainer } from "Theme/containers";
 import {
   AcceptBtn,
   ActionBar,
@@ -9,7 +9,6 @@ import {
   Actions,
   AddBtn,
   ChatBtn,
-  DenyBtn,
   FriendBar,
   FriendsBtn,
   FriendsList,
@@ -26,18 +25,15 @@ import {
 } from "./Friends-css";
 import { RecipientUserInfo } from "Types/models";
 import { FriendsProps } from "Components/Types/props";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFriendAction } from "Redux/actions";
-import { ReduxStore } from "Redux/types";
 import FriendButton from "Components/Buttons/FriendButton/FriendButton";
-import LoadingPage from "../LoadingPage/LoadingPage";
 import { addFriendRequest } from "Api/friends";
 
 export default function Friends({
   friendsList,
   setFriendsIsOpen,
   userInfo,
-  pollingInterval,
 }: FriendsProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
@@ -48,7 +44,6 @@ export default function Friends({
   const [searchResults, setSearchResults] = useState<RecipientUserInfo>();
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const friend = useSelector((state: ReduxStore) => state.friend);
   const dispatch = useDispatch();
 
   useEffect(() => {
