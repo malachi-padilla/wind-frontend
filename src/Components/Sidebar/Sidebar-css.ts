@@ -92,7 +92,11 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
   }
 `;
 
-export const FriendBar = styled(FriendBarTheme)``;
+export const FriendBar = styled(FriendBarTheme)`
+  :hover {
+    background-color: ${(props) => props.theme.mainGrey};
+  }
+`;
 
 export const loadingFade = keyframes`
   0% {

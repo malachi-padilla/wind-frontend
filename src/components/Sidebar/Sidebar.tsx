@@ -125,7 +125,7 @@ export default function SideBar({
             {recentlyMessaged.map((item, index) => (
               <FriendBar
                 style={{
-                  backgroundColor: friend === item ? "#36393f" : "#2f3136",
+                  backgroundColor: friend === item ? "#36393f" : undefined,
                 }}
                 key={index}
                 onClick={() => {

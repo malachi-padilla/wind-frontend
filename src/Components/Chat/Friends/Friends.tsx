@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMinutesLastOnline } from "Util/utilFunctions";
 import { getUserByUsernameRequest, getUsersRequest } from "Api/user";
-import { FriendBarTheme, MainContainer } from "Theme/containers";
+import { MainContainer } from "Theme/containers";
 import {
   AcceptBtn,
   ActionBar,
@@ -9,7 +9,6 @@ import {
   Actions,
   AddBtn,
   ChatBtn,
-  DenyBtn,
   FriendBar,
   FriendsBtn,
   FriendsList,
@@ -26,16 +25,15 @@ import {
 } from "./Friends-css";
 import { RecipientUserInfo } from "Types/models";
 import { FriendsProps } from "Components/Types/props";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFriendAction } from "Redux/actions";
-import { ReduxStore } from "Redux/types";
 import FriendButton from "Components/Buttons/FriendButton/FriendButton";
+import { addFriendRequest } from "Api/friends";
 
 export default function Friends({
   friendsList,
   setFriendsIsOpen,
   userInfo,
-  pollingInterval,
 }: FriendsProps) {
   const [onlineFilter, setOnlineFilter] = useState<boolean>(false);
   const [requestsFilter, setRequestsFilter] = useState<boolean>(false);
@@ -45,52 +43,77 @@ export default function Friends({
   const [friendInput, setFriendInput] = useState<string>("");
   const [searchResults, setSearchResults] = useState<RecipientUserInfo>();
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
-  const friend = useSelector((state: ReduxStore) => state.friend);
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!requestedFilter && !requestsFilter && !onlineFilter) {
+    if (
+      !requestedFilter &&
+      !requestsFilter &&
+      !onlineFilter &&
+      mappingList !== friendsList
+    ) {
       setMappingList(friendsList);
-    }
-    if (onlineFilter) {
-      setMappingList(
-        friendsList.filter((item) => getMinutesLastOnline(item.lastOnline) < 10)
-      );
-    } else if (requestsFilter) {
-      getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
-        setMappingList(res.data);
-      });
-    } else if (requestedFilter) {
-      getUsersRequest(userInfo.sentFriendRequests).then((res) => {
-        setMappingList(res.data);
-      });
+      setLoading(false);
     }
   }, [friendsList, onlineFilter, requestsFilter, requestedFilter, userInfo]);
 
-  const setFilter = (filter: string) => {
+  const setFilter = async (filter: string) => {
     if (filter === "Online") {
-      setRequestedFilter(false);
-      setRequestsFilter(false);
       if (onlineFilter) {
         setOnlineFilter(false);
+        if (!requestedFilter && !requestsFilter) {
+          setLoading(true);
+        }
       } else {
+        setMappingList(
+          friendsList.filter(
+            (item) => getMinutesLastOnline(item.lastOnline) < 10
+          )
+        );
         setOnlineFilter(true);
       }
-    } else if (filter === "Requested") {
-      setOnlineFilter(false);
+      setRequestedFilter(false);
       setRequestsFilter(false);
+      setAddFriendOpen(false);
+    } else if (filter === "Requested") {
       if (requestedFilter) {
         setRequestedFilter(false);
+        if (!onlineFilter && !requestsFilter) {
+          setLoading(true);
+        }
       } else {
+        await getUsersRequest(userInfo.sentFriendRequests).then((res) => {
+          setMappingList(res.data);
+        });
         setRequestedFilter(true);
       }
-    } else if (filter === "Requests") {
       setOnlineFilter(false);
-      setRequestedFilter(false);
+      setRequestsFilter(false);
+      setAddFriendOpen(false);
+    } else if (filter === "Requests") {
       if (requestsFilter) {
         setRequestsFilter(false);
+        if (!onlineFilter && !requestedFilter) {
+          setLoading(true);
+        }
       } else {
+        await getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
+          setMappingList(res.data);
+        });
         setRequestsFilter(true);
+      }
+      setOnlineFilter(false);
+      setRequestedFilter(false);
+      setAddFriendOpen(false);
+    } else if (filter === "Add Friend") {
+      if (addFriendOpen) {
+        setAddFriendOpen(false);
+      } else {
+        setAddFriendOpen(true);
+        setOnlineFilter(false);
+        setRequestedFilter(false);
+        setRequestsFilter(false);
       }
     }
   };
@@ -112,6 +135,24 @@ export default function Friends({
     }
   };
 
+  const renderNone = () => {
+    if (requestsFilter) {
+      return <h1>No Open Requests At This Time</h1>;
+    } else if (requestedFilter) {
+      return <h1>No Users Requested At This Time</h1>;
+    } else if (onlineFilter) {
+      return <h1>No Users Currently Online</h1>;
+    } else {
+      return <h1>No Friends Yet</h1>;
+    }
+  };
+
+  const acceptRequest = async (userId: string, friendId: string) => {
+    await addFriendRequest(userId, friendId).then(() => {
+      setMappingList(mappingList.filter((item) => item.userId !== friendId));
+    });
+  };
+
   return (
     <MainContainer>
       <ActionBar>
@@ -124,7 +165,6 @@ export default function Friends({
             selected={onlineFilter}
             onClick={() => {
               setFilter("Online");
-              setAddFriendOpen(false);
             }}
           >
             Online
@@ -133,7 +173,6 @@ export default function Friends({
             selected={requestedFilter}
             onClick={() => {
               setFilter("Requested");
-              setAddFriendOpen(false);
             }}
           >
             Requested
@@ -142,111 +181,108 @@ export default function Friends({
             selected={requestsFilter}
             onClick={() => {
               setFilter("Requests");
-              setAddFriendOpen(false);
             }}
           >
             <RequestBtnContents>
               Requests
-              {requestsFilter ? (
+              {requestsFilter && mappingList.length > 0 ? (
                 <Notification>
                   <p>{mappingList?.length}</p>
                 </Notification>
               ) : null}
             </RequestBtnContents>
           </FriendsBtn>
-          <AddBtn onClick={() => setAddFriendOpen(!addFriendOpen)}>
+          <AddBtn
+            addFriendOpen={addFriendOpen}
+            onClick={() => {
+              setAddFriendOpen(!addFriendOpen);
+              setFilter("Add Friend");
+            }}
+          >
             Add Friend
           </AddBtn>
         </ActionBarBtns>
       </ActionBar>
-
-      {friendsList.length < 1 || mappingList?.length < 1 ? (
-        <FriendsList>
-          {requestsFilter ? (
-            <h1>No Open Requests At This Time</h1>
-          ) : requestedFilter ? (
-            <h1>No Users Requested At This Time</h1>
-          ) : onlineFilter ? (
-            <h1>No Users Currently Online</h1>
-          ) : (
-            <h1>No Friends Yet</h1>
-          )}
-        </FriendsList>
-      ) : (
-        <FriendsList>
-          {addFriendOpen ? (
-            <AddFriendContainer>
-              <Title>
-                <h4>ADD FRIEND</h4>
-                {searchError ? (
-                  <p>
-                    Hm, didn't work. Double check that the capitalization and
-                    spelling are correct.
-                  </p>
-                ) : null}
-              </Title>
-              <InputContent>
-                <AddFriendInput
-                  error={searchError}
-                  onKeyDown={(e: any) =>
-                    e.key === "Enter" && getRecipientInformation()
-                  }
-                  onChange={(e: any) => setFriendInput(e.target.value)}
-                  value={friendInput}
-                  placeholder="Enter a Username"
-                  type="text"
-                ></AddFriendInput>
-              </InputContent>
-              {searchResults && (
-                <>
-                  <FriendBar>
-                    <p>{searchResults.username}</p>
-                    <FriendButton
-                      recipientId={searchResults.userId}
-                      relation={searchResults.relation}
-                    />
-                  </FriendBar>
-                </>
-              )}
-            </AddFriendContainer>
-          ) : (
-            mappingList &&
-            mappingList.map((item, index) => (
-              <FriendBar key={index}>
-                <UserInfo>
-                  <h3>{item.username}</h3>
-                </UserInfo>
-                <Actions>
-                  {!requestsFilter ? (
-                    <>
-                      <ChatBtn
-                        onClick={() => {
-                          dispatch(setFriendAction(item.username));
-                          setFriendsIsOpen(false);
-                        }}
-                      >
-                        <i className="fas fa-comment-alt"></i>
-                      </ChatBtn>
-                      <MoreBtn>
-                        <i className="fas fa-ellipsis-v"></i>
-                      </MoreBtn>
-                    </>
-                  ) : (
-                    <>
-                      <AcceptBtn>
-                        <i className="fas fa-check"></i>
-                      </AcceptBtn>
-                      <DenyBtn>
-                        <i className="fas fa-times"></i>
-                      </DenyBtn>
-                    </>
-                  )}
-                </Actions>
-              </FriendBar>
-            ))
-          )}
-        </FriendsList>
-      )}
+      {!loading ? (
+        friendsList.length < 1 || mappingList?.length < 1 ? (
+          <FriendsList>{renderNone()}</FriendsList>
+        ) : (
+          <FriendsList>
+            {addFriendOpen ? (
+              <AddFriendContainer>
+                <Title>
+                  <h4>ADD FRIEND</h4>
+                  {searchError ? (
+                    <p>
+                      Hm, didn't work. Double check that the capitalization and
+                      spelling are correct.
+                    </p>
+                  ) : null}
+                </Title>
+                <InputContent>
+                  <AddFriendInput
+                    error={searchError}
+                    onKeyDown={(e: any) =>
+                      e.key === "Enter" && getRecipientInformation()
+                    }
+                    onChange={(e: any) => setFriendInput(e.target.value)}
+                    value={friendInput}
+                    placeholder="Enter a Username"
+                    type="text"
+                  ></AddFriendInput>
+                </InputContent>
+                {searchResults && (
+                  <>
+                    <FriendBar>
+                      <p>{searchResults.username}</p>
+                      <FriendButton
+                        recipientId={searchResults.userId}
+                        relation={searchResults.relation}
+                      />
+                    </FriendBar>
+                  </>
+                )}
+              </AddFriendContainer>
+            ) : (
+              mappingList &&
+              mappingList.map((item, index) => (
+                <FriendBar key={index}>
+                  <UserInfo>
+                    <h3>{item.username}</h3>
+                  </UserInfo>
+                  <Actions>
+                    {!requestsFilter ? (
+                      <>
+                        <ChatBtn
+                          onClick={() => {
+                            dispatch(setFriendAction(item.username));
+                            setFriendsIsOpen(false);
+                          }}
+                        >
+                          <i className="fas fa-comment-alt"></i>
+                        </ChatBtn>
+                        <MoreBtn>
+                          <i className="fas fa-ellipsis-v"></i>
+                        </MoreBtn>
+                      </>
+                    ) : (
+                      <>
+                        <AcceptBtn
+                          onClick={() =>
+                            acceptRequest(userInfo.userId, item.userId)
+                          }
+                        >
+                          <i className="fas fa-check"></i>
+                        </AcceptBtn>
+                      </>
+                    )}
+                  </Actions>
+                </FriendBar>
+              ))
+            )}
+          </FriendsList>
+        )
+      ) : null}
     </MainContainer>
   );
 }

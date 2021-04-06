@@ -18,7 +18,6 @@ export interface FriendsProps {
   friendsList: RecipientUserInfo[];
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   userInfo: PersonalUserInfo;
-  pollingInterval: any;
 }
 
 export interface ChatProps {

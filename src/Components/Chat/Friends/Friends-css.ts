@@ -57,7 +57,12 @@ export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
       : props.theme.tertiaryGrey};
 `;
 
-export const AddBtn = styled(PrimaryButton)``;
+export const AddBtn = styled(PrimaryButton)<{ addFriendOpen: boolean }>`
+  background-color: ${(props) =>
+    props.addFriendOpen && "rgba(67, 181, 129, 0.2)"};
+  color: ${(props) =>
+    props.addFriendOpen && props.theme.fontColors.actionGreen};
+`;
 
 export const RequestBtnContents = styled(FlexRowCenterCenter)`
   height: unset;
