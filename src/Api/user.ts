@@ -63,3 +63,9 @@ export function registerRequest(username: string, password: string) {
     }
   );
 }
+
+export function getUserById(userId: string) {
+  return axios.get(`${API_URL}/user/${userId}`, {
+    withCredentials: true,
+  });
+}
