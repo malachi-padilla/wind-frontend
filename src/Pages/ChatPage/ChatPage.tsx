@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Chat from "Components/Chat/ChatComponent";
-import SideBar from "Components/Sidebar/Sidebar";
+import SideBar from "Components/Sidebar/SidebarComponent";
 import { MyContext } from "Context";
 import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
 import Friends from "Components/Chat/Friends/Friends";
