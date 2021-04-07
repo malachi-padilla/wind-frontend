@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import Chat from "Components/Chat/ChatComponent";
+import Chat from "Components/Chat/ChatComp";
 import SideBar from "Components/Sidebar/SidebarComponent";
 import { MyContext } from "Context";
-import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
-import Friends from "Components/Chat/Friends/Friends";
-import WelcomePage from "Components/Chat/WelcomePage/WelcomePage";
+import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriendsComp";
+import Friends from "Components/Chat/Friends/FriendsComp";
+import WelcomePage from "Components/Chat/WelcomePage/WelcomePageComp";
 import io from "socket.io-client";
-import LoadingPage from "Components/Chat/LoadingPage/LoadingPage";
+import LoadingPage from "Components/Chat/LoadingPage/LoadingPageComp";
 import { getFriendsRequest } from "Api/friends";
 import { getRecentlyMessagedRequest } from "Api/messages";
 import {

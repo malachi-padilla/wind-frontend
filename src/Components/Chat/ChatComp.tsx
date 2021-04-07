@@ -15,7 +15,7 @@ import {
 import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
 import FriendButton from "../Buttons/FriendButton/FriendButton";
-import LoadingPage from "./LoadingPage/LoadingPage";
+import LoadingPage from "./LoadingPage/LoadingPageComp";
 import { getMessagesRequest } from "Api/user";
 import {
   SocketPrivateChatMessage,
