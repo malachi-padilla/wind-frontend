@@ -30,7 +30,7 @@ import {
 const minRows = 1;
 const maxRows = 15;
 const maxChar = 2000;
-export default function ChatPage({
+export default function Chat({
   userInfo,
   pollingInterval,
   socket,
