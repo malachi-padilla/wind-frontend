@@ -92,7 +92,9 @@ export const FriendBar = styled(FlexRowCenterBetween)`
 
 export const UserInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
   color: ${(props) => props.theme.fontColors.defaultWhite};
 `;
 

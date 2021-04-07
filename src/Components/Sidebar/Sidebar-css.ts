@@ -141,6 +141,7 @@ export const RemoveFriendButton = styled.button`
 
 export const ProfileBar = styled(FlexRowCenterEvenly)`
   height: 52px;
+  padding: 10px;
   background-color: #292b2f;
   color: ${(props) => props.theme.fontColors.defaultWhite};
   button {
@@ -153,14 +154,15 @@ export const ProfileBtns = styled(FlexRowCenterEnd)`
 `;
 
 export const SettingsBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 8px;
   color: ${(props) => props.theme.fontColors.defaultLightGrey};
-`;
-
-export const LogoutBtn = styled(SecondaryButton)`
-  background-color: transparent;
-  color: ${(props) => props.theme.fontColors.defaultLightGrey};
-  :hover {
+  &:hover {
     transition: ease-in 200ms;
-    color: ${(props) => props.theme.fontColors.importantRed};
+    background-color: ${(props) => props.theme.mainGrey};
   }
 `;
