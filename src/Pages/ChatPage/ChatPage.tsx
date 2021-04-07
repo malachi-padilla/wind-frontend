@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Chat from "Components/Chat/Chat";
+import Chat from "Components/Chat/ChatComponent";
 import SideBar from "Components/Sidebar/Sidebar";
 import { MyContext } from "Context";
 import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
