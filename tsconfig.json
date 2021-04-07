@@ -8,6 +8,9 @@
     "outDir": "dist",
     "sourceMap": true,
     "baseUrl": "src",
+    "paths": {
+      "src/*": ["./src/*"]
+    },
     "jsx": "react-jsx",
     "strict": true,
     "noImplicitAny": true,
