@@ -5,8 +5,9 @@ import { addFriendRequest, removeFriendRequest } from "Api/friends";
 import { PrimaryButton } from "Theme/buttons";
 import styled from "styled-components";
 import { FriendButtonProps } from "Components/Types/props";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { RecipientUserInfo } from "Types/models";
+import { getUserById } from "Api/user";
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   margin-left: 10px;
@@ -32,13 +33,9 @@ export default function FriendButton({
   };
 
   const fetchUser = () => {
-    axios
-      .get(`http://localhost:4000/user/${recipientId}`, {
-        withCredentials: true,
-      })
-      .then((res: AxiosResponse<RecipientUserInfo>) => {
-        setUpdatedRelation(res.data.relation);
-      });
+    getUserById(recipientId).then((res: AxiosResponse<RecipientUserInfo>) => {
+      setUpdatedRelation(res.data.relation);
+    });
   };
 
   return (
