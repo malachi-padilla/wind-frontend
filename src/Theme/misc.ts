@@ -9,3 +9,11 @@ export const Logo = styled.div`
   background-repeat: no-repeat;
   background-position: center;
 `;
+
+export const ProfilePicture = styled.img`
+  height: 35px;
+  width: 35px;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 50%;
+`;

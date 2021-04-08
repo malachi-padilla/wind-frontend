@@ -21,7 +21,7 @@ import { SocketIsTypingMessage } from "Components/Types/models";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
-import { ProfileImg } from "Components/Chat/Profile/Profile-css";
+import { ProfilePicture } from "Theme/misc";
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -132,11 +132,10 @@ export default function SideBar({
                     <span></span>
                   </IsTyping>
                 ) : null}
-                <ProfileImg
-                  style={{ height: "35px", width: "35px", marginRight: "5px" }}
+                <ProfilePicture
                   src="https://source.unsplash.com/random"
                   alt="profilepic"
-                ></ProfileImg>
+                ></ProfilePicture>
                 <p>{item}</p>
                 <RemoveFriendButton
                   onClick={() => removeRecentlyMessaged(item)}
@@ -149,11 +148,10 @@ export default function SideBar({
         </RecentFriendsWrapper>
       </SideBarContents>
       <ProfileBar>
-        <ProfileImg
-          style={{ height: "35px", width: "35px", marginRight: "5px" }}
+        <ProfilePicture
           src="https://source.unsplash.com/random"
           alt="profilepic"
-        ></ProfileImg>
+        ></ProfilePicture>
         <p>{userInfo.username}</p>
         <ProfileBtns>
           <SettingsBtn onClick={() => setProfileOpen(true)}>
