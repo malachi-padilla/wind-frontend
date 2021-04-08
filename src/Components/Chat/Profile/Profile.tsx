@@ -31,7 +31,7 @@ import { Actions, MoreBtn } from "../Friends/Friends-css";
 import { logoutRequest } from "Api/user";
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
-  const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
+  const { user } = useContext(MyContext) as UserContextNotNull;
 
   const logout = () => {
     logoutRequest().then(() => {
