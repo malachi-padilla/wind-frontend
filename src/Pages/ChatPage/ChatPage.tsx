@@ -26,7 +26,7 @@ import { RecipientUserInfo } from "Types/models";
 import { setRecentlyMessagedAction } from "Redux/actions";
 
 const ENDPOINT = "http://localhost:4000";
-let socket: any;
+let socket;
 export default function ChatPage() {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
