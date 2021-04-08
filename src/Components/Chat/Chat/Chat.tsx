@@ -14,8 +14,7 @@ import {
 } from "./Chat-css";
 import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
-import FriendButton from "../Buttons/FriendButton/FriendButton";
-import LoadingPage from "./LoadingPage/LoadingPage";
+import FriendButton from "Components/Buttons/FriendButton/FriendButton";
 import { getMessagesRequest } from "Api/user";
 import {
   SocketPrivateChatMessage,
@@ -39,6 +38,7 @@ export default function ChatPage({
   loadingRecipientData,
   setLoadingRecipientData,
   pushIfNotExist,
+  LoadingPage,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
