@@ -129,7 +129,6 @@ export default function ChatPage() {
             recipientData={recipientData}
             loadingRecipientData={loadingRecipientData}
             setLoadingRecipientData={setLoadingRecipientData}
-            LoadingPage={LoadingPage}
           />
         )
       ) : friendsList?.length > 0 ? (
