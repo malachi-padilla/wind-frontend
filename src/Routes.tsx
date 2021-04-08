@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Login from "./Pages/Login/Login";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Register from "./Pages/Register/Register";
 import ChatPage from "./Pages/ChatPage/ChatPage";
 import { MyContext } from "Context";
@@ -10,6 +10,7 @@ export default function Routes() {
   if (user === null) {
     return null;
   }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -20,10 +21,7 @@ export default function Routes() {
           </>
         ) : (
           <>
-            <Route exact path="/">
-              <Redirect to="/chat" />
-            </Route>
-            <Route path="/chat" component={ChatPage} />
+            <Route path="/" component={ChatPage} />
           </>
         )}
       </Switch>

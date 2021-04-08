@@ -27,6 +27,7 @@ export interface ProfileProps {
 export interface ChatProps {
   socket: any;
   userInfo: PersonalUserInfo;
+  LoadingPage: any;
   pollingInterval: any;
   fetchUser: () => void;
   recipientData: any;

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import Chat from "../../Components/Chat/Chat";
-import SideBar from "../../Components/Sidebar/Sidebar";
+import Chat from "Components/Chat/Chat/Chat";
+import SideBar from "Components/Sidebar/Sidebar";
 import { MyContext } from "Context";
-import ActiveFriends from "../../Components/Chat/ActiveFriends/ActiveFriends";
-import Friends from "../../Components/Chat/Friends/Friends";
-import WelcomePage from "../../Components/Chat/WelcomePage/WelcomePage";
-import io from "socket.io-client";
-import LoadingPage from "../../Components/Chat/LoadingPage/LoadingPage";
+import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
+import Friends from "Components/Chat/Friends/Friends";
+import WelcomePage from "Components/Chat/WelcomePage/WelcomePage";
+import * as io from "socket.io-client";
+import LoadingPage from "Components/Chat/LoadingPage/LoadingPage";
 import { getFriendsRequest } from "Api/friends";
 import { getRecentlyMessagedRequest } from "Api/messages";
 import {
@@ -25,9 +25,9 @@ import { getUserByUsernameRequest } from "Api/user";
 import { RecipientUserInfo } from "Types/models";
 import { setRecentlyMessagedAction } from "Redux/actions";
 import Profile from "Components/Chat/Profile/Profile";
+import { API_URL } from "Config/globalVariables";
 
-const ENDPOINT = "http://localhost:4000";
-let socket: any;
+let socket;
 export default function ChatPage() {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
@@ -45,7 +45,7 @@ export default function ChatPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io.connect(API_URL);
     socket.emit("join", { name: user.username });
     return () => socket.emit("end");
   }, []);
@@ -132,6 +132,7 @@ export default function ChatPage() {
             socket={socket}
             fetchUser={fetchUser}
             pushIfNotExist={pushIfNotExist}
+            LoadingPage={LoadingPage}
             recipientData={recipientData}
             loadingRecipientData={loadingRecipientData}
             setLoadingRecipientData={setLoadingRecipientData}
