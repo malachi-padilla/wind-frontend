@@ -20,9 +20,6 @@ export default function Routes() {
           </>
         ) : (
           <>
-            <Route exact path="/">
-              <Redirect to="/chat" />
-            </Route>
             <Route path="/chat" component={ChatPage} />
           </>
         )}
