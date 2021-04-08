@@ -11,7 +11,7 @@ import {
   FriendLabel,
   FriendLabelText,
   EnterMessage,
-} from "./chat-css";
+} from "./Chat-css";
 import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
 import FriendButton from "../Buttons/FriendButton/FriendButton";
