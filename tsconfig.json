@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "outDir": "build",

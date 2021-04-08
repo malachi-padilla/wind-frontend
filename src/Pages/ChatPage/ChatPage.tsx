@@ -5,7 +5,7 @@ import { MyContext } from "Context";
 import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
 import Friends from "Components/Chat/Friends/Friends";
 import WelcomePage from "Components/Chat/WelcomePage/WelcomePage";
-import io from "socket.io-client";
+import * as io from "socket.io-client";
 import LoadingPage from "Components/Chat/LoadingPage/LoadingPage";
 import { getFriendsRequest } from "Api/friends";
 import { getRecentlyMessagedRequest } from "Api/messages";
@@ -43,7 +43,7 @@ export default function ChatPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io.connect(ENDPOINT);
     socket.emit("join", { name: user.username });
     return () => socket.emit("end");
   }, []);
