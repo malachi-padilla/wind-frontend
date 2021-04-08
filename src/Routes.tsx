@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Login from "./Pages/Login/Login";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Register from "./Pages/Register/Register";
 import ChatPage from "./Pages/ChatPage/ChatPage";
 import { MyContext } from "Context";
