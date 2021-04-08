@@ -10,6 +10,7 @@ export default function Routes() {
   if (user === null) {
     return null;
   }
+
   return (
     <BrowserRouter>
       <Switch>
