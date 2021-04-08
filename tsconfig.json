@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "rootDir": "src",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
