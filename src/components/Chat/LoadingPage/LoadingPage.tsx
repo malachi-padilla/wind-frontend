@@ -1,6 +1,6 @@
 import React from "react";
 import { Logo } from "Theme/misc";
-import { IsTyping } from "../Chat-css";
+import { IsTyping } from "../chat-css";
 import { LoadingContainer, LogoContainer } from "./LoadingPage-css";
 import { MainContainer } from "Theme/containers";
 
