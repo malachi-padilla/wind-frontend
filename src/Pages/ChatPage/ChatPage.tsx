@@ -126,6 +126,7 @@ export default function ChatPage() {
             socket={socket}
             fetchUser={fetchUser}
             pushIfNotExist={pushIfNotExist}
+            LoadingPage={LoadingPage}
             recipientData={recipientData}
             loadingRecipientData={loadingRecipientData}
             setLoadingRecipientData={setLoadingRecipientData}
