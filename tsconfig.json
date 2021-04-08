@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true,
     "baseUrl": "src",
     "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
@@ -17,5 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true
-  }
+  },
+  "include": ["src"]
 }
