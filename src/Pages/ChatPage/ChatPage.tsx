@@ -24,8 +24,8 @@ import { SocketPrivateChatMessage } from "Components/Types/models";
 import { getUserByUsernameRequest } from "Api/user";
 import { RecipientUserInfo } from "Types/models";
 import { setRecentlyMessagedAction } from "Redux/actions";
+import { API_URL } from "Config/globalVariables";
 
-const ENDPOINT = "http://localhost:4000";
 let socket;
 export default function ChatPage() {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
@@ -43,7 +43,7 @@ export default function ChatPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket = io.connect(ENDPOINT);
+    socket = io.connect(API_URL);
     socket.emit("join", { name: user.username });
     return () => socket.emit("end");
   }, []);

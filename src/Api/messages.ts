@@ -1,7 +1,6 @@
 import axios from "axios";
+import { API_URL } from "Config/globalVariables";
 
 export const getRecentlyMessagedRequest = (username: string) => {
-  return axios.get(
-    `http://localhost:4000/messages/recentlyMessaged?user=${username}`
-  );
+  return axios.get(`${API_URL}/messages/recentlyMessaged?user=${username}`);
 };
