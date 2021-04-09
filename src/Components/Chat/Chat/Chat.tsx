@@ -212,7 +212,6 @@ export default function ChatPage({
                 >
                   {getNewlineText(item.message)}
                 </MainMessage>
-                <NameLabel>{item.sentBy}</NameLabel>
               </MessageWrapper>
             </>
           ))}
