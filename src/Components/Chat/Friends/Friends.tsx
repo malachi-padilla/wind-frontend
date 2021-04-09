@@ -29,6 +29,7 @@ import { useDispatch } from "react-redux";
 import { setFriendAction } from "Redux/actions";
 import FriendButton from "Components/Buttons/FriendButton/FriendButton";
 import { addFriendRequest } from "Api/friends";
+import { ProfilePicture } from "Theme/misc";
 
 export default function Friends({
   friendsList,
@@ -234,7 +235,13 @@ export default function Friends({
                 {searchResults && (
                   <>
                     <FriendBar>
-                      <p>{searchResults.username}</p>
+                      <UserInfo>
+                        <ProfilePicture
+                          src="https://source.unsplash.com/random"
+                          alt="profilepic"
+                        ></ProfilePicture>
+                        <p>{searchResults.username}</p>
+                      </UserInfo>
                       <FriendButton
                         recipientId={searchResults.userId}
                         relation={searchResults.relation}
@@ -248,6 +255,10 @@ export default function Friends({
               mappingList.map((item, index) => (
                 <FriendBar key={index}>
                   <UserInfo>
+                    <ProfilePicture
+                      src="https://source.unsplash.com/random"
+                      alt="profilepic"
+                    ></ProfilePicture>
                     <h3>{item.username}</h3>
                   </UserInfo>
                   <Actions>

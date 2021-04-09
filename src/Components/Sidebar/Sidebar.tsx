@@ -1,4 +1,3 @@
-import { logoutRequest } from "Api/user";
 import { SideBarProps } from "Components/Types/props";
 import React, { useEffect, useState } from "react";
 import {
@@ -7,7 +6,6 @@ import {
   FriendBar,
   FriendsTab,
   IsTyping,
-  LogoutBtn,
   ProfileBar,
   ProfileBtns,
   RecentFriendsWrapper,
@@ -23,6 +21,7 @@ import { SocketIsTypingMessage } from "Components/Types/models";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
+import { ProfilePicture } from "Theme/misc";
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -32,6 +31,7 @@ export default function SideBar({
   setFriendsIsOpen,
   friendsIsOpen,
   socket,
+  setProfileOpen,
 }: SideBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false);
@@ -56,12 +56,6 @@ export default function SideBar({
       }
     });
   }, []);
-
-  const logout = () => {
-    logoutRequest().then(() => {
-      window.location.href = "/";
-    });
-  };
 
   const removeRecentlyMessaged = (item: string) => {
     const newList = recentlyMessaged.filter((node) => item !== node);
@@ -138,6 +132,10 @@ export default function SideBar({
                     <span></span>
                   </IsTyping>
                 ) : null}
+                <ProfilePicture
+                  src="https://source.unsplash.com/random"
+                  alt="profilepic"
+                ></ProfilePicture>
                 <p>{item}</p>
                 <RemoveFriendButton
                   onClick={() => removeRecentlyMessaged(item)}
@@ -150,12 +148,15 @@ export default function SideBar({
         </RecentFriendsWrapper>
       </SideBarContents>
       <ProfileBar>
+        <ProfilePicture
+          src="https://source.unsplash.com/random"
+          alt="profilepic"
+        ></ProfilePicture>
         <p>{userInfo.username}</p>
         <ProfileBtns>
-          <SettingsBtn>
+          <SettingsBtn onClick={() => setProfileOpen(true)}>
             <i className="fas fa-cog"></i>
           </SettingsBtn>
-          <LogoutBtn onClick={logout}>Logout</LogoutBtn>
         </ProfileBtns>
       </ProfileBar>
     </StyledMainContainer>

@@ -12,12 +12,16 @@ export interface SideBarProps {
   friendsIsOpen: boolean;
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   friendsList: any;
+  setProfileOpen: (profileOpen: boolean) => any;
 }
 
 export interface FriendsProps {
   friendsList: RecipientUserInfo[];
   setFriendsIsOpen: (friendsIsOpen: boolean) => any;
   userInfo: PersonalUserInfo;
+}
+export interface ProfileProps {
+  setProfileOpen: (profileOpen: boolean) => any;
 }
 
 export interface ChatProps {

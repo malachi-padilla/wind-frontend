@@ -23,7 +23,7 @@ export default function App() {
     loginRequest(loginUsername, loginPassword)
       .then((res) => {
         if (res.status === 200) {
-          window.location.href = "/chat";
+          window.location.href = "/";
         }
       })
       .catch((err: AxiosError) => setError(err!.response!.data));

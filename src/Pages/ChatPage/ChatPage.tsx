@@ -24,12 +24,14 @@ import { SocketPrivateChatMessage } from "Components/Types/models";
 import { getUserByUsernameRequest } from "Api/user";
 import { RecipientUserInfo } from "Types/models";
 import { setRecentlyMessagedAction } from "Redux/actions";
+import Profile from "Components/Chat/Profile/Profile";
 import { API_URL } from "Config/globalVariables";
 
 let socket;
 export default function ChatPage() {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [friendsIsOpen, setFriendsIsOpen] = useState<boolean>(false);
+  const [profileOpen, setProfileOpen] = useState<boolean>(false);
   const [friendsList, setFriendsList] = useState<any>();
   const [pollingInterval, setPollingInterval] = useState<boolean>(false);
   const [recipientData, setRecipientData] = useState<RecipientUserInfo>();
@@ -99,6 +101,9 @@ export default function ChatPage() {
   if (friendsList === undefined) {
     return <LoadingPage propStyles={{ width: "100vw" }} />;
   }
+  if (profileOpen) {
+    return <Profile setProfileOpen={setProfileOpen} />;
+  }
 
   return (
     <ChatPageWrapper>
@@ -114,6 +119,7 @@ export default function ChatPage() {
           setFriendsIsOpen={setFriendsIsOpen}
           socket={socket}
           friendsList={friendsList}
+          setProfileOpen={setProfileOpen}
         />
       </SideBarWrapper>
       {!friendsIsOpen ? (
