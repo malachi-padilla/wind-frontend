@@ -92,9 +92,8 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
 `;
 
 export const FriendBar = styled(FriendBarTheme)`
-  :hover {
-    background-color: ${(props) => props.theme.mainGrey};
-  }
+  justify-content: space-between;
+  padding-right: 10px;
 `;
 
 export const loadingFade = keyframes`
@@ -130,8 +129,6 @@ export const RemoveFriendButton = styled.button`
   font-size: 16px;
   outline: none;
   border: none;
-  position: absolute;
-  right: 10px;
   :hover {
     transition: ease-in 100ms;
     color: ${(props) => props.theme.fontColors.defaultWhite};

@@ -27,22 +27,35 @@ export const ChatBody = styled(FlexColCenterCenter)`
   }
 `;
 
-export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
+export const MessageWrapper = styled.div<{ secondaryMessage: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) =>
+    props.secondaryMessage ? "flex-end" : "flex-start"};
   max-width: 50%;
+  align-self: ${(props) =>
+    props.secondaryMessage ? "flex-start" : "flex-end"};
+  padding: 10px;
+  gap: 2px;
+`;
+
+export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
   word-break: break-all;
   word-wrap: break-word;
-  padding: 12px;
+  padding: 5px 10px 5px 10px;
+  min-height: 20px;
   line-height: 1.5;
   background-color: ${(props) =>
     props.secondaryMessage
       ? props.theme.messaging.secondaryGrey
       : props.theme.messaging.primaryBlue};
-  border-radius: 20px;
+  border-radius: 15px;
   color: ${(props) => props.theme.fontColors.defaultWhite};
-  margin-bottom: ${(props) => (props.secondaryMessage ? "20px" : "8px")};
-  align-self: ${(props) =>
-    props.secondaryMessage ? "flex-start" : "flex-end"};
-  margin-right: 20px;
+`;
+
+export const NameLabel = styled.p`
+  color: ${(props) => props.theme.fontColors.defaultMediumGrey};
+  font-size: 10px;
 `;
 
 export const InputContent = styled(FlexRowCenterCenter)`
@@ -96,6 +109,7 @@ export const ChatMessages = styled(FlexColCenterCenter)`
   width: 98%;
   overflow-y: scroll;
   justify-content: unset;
+  overflow-x: hidden;
 `;
 
 export const loadingFade = keyframes`

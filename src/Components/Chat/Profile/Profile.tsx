@@ -57,13 +57,12 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
             <InfoBox>
               <AvatarBar>
                 <UserInfoWrapper>
-                  <ProfileImg
-                    src="https://source.unsplash.com/random"
-                    alt="profilepic"
-                  ></ProfileImg>
-                  <ImageLabel>
-                    <i className="far fa-images"></i>
-                  </ImageLabel>
+                  <ProfileImg>
+                    <ImageLabel>
+                      <i className="far fa-images"></i>
+                    </ImageLabel>
+                    <span>Change Avatar</span>
+                  </ProfileImg>
                   <h3>{user.username}</h3>
                 </UserInfoWrapper>
                 <Actions>
@@ -94,8 +93,8 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
         <EscapeBarContents>
           <ButtonContainer>
             <EscapeBtn
-              onKeyDown={(e) =>
-                e.key === "Escape" ? setProfileOpen(false) : null
+              onKeyDown={(event) =>
+                event.key === "Escape" ? setProfileOpen(false) : null
               }
               onClick={() => setProfileOpen(false)}
             >

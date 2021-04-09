@@ -11,6 +11,8 @@ import {
   FriendLabel,
   FriendLabelText,
   EnterMessage,
+  NameLabel,
+  MessageWrapper,
 } from "./Chat-css";
 import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
@@ -199,13 +201,19 @@ export default function ChatPage({
 
       <ChatBody>
         <ChatMessages id="ContainerElementID">
-          {messages.map((item) => (
+          {messages.map((item, index) => (
             <>
-              <MainMessage
+              <MessageWrapper
+                key={index}
                 secondaryMessage={item.sentBy === name ? false : true}
               >
-                {getNewlineText(item.message)}
-              </MainMessage>
+                <MainMessage
+                  secondaryMessage={item.sentBy === name ? false : true}
+                >
+                  {getNewlineText(item.message)}
+                </MainMessage>
+                <NameLabel>{item.sentBy}</NameLabel>
+              </MessageWrapper>
             </>
           ))}
           {recipientIsTyping ? (

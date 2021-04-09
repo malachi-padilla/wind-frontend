@@ -86,12 +86,12 @@ export const FriendBarTheme = styled.div`
   border-radius: 4px;
   padding-left: 12px;
   height: unset;
-  background-color: #3c3f47;
+  background-color: ${(props) => props.theme.mainGrey};
   color: ${(props) => props.theme.fontColors.defaultWhite};
   cursor: pointer;
   margin-top: 20px;
   position: relative;
   :hover {
-    background-color: ${(props) => props.theme.mainGrey};
+    background-color: #3c3f47;
   }
 `;
