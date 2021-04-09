@@ -8,7 +8,6 @@ import {
   FlexRowCenterEnd,
   FriendBarTheme,
 } from "Theme/containers";
-import { SecondaryButton } from "Theme/buttons";
 
 export const StyledMainContainer = styled(MainContainer)`
   width: 224px;
