@@ -31,6 +31,9 @@ export const NavOpts = styled(FlexColCenterCenter)`
   border-bottom: 2px solid ${(props) => props.theme.fontColors.defaultWhite};
   color: ${(props) => props.theme.fontColors.offWhite};
   font-size: 14px;
+  P {
+    font-weight: 600;
+  }
 `;
 
 export const MutualFriends = styled(FlexColCenterCenter)`
