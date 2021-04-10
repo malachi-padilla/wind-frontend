@@ -1,5 +1,5 @@
 import { ProfileProps } from "Components/Types/props";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Types/types";
 import {
@@ -29,9 +29,11 @@ import {
 } from "./Profile-css";
 import { Actions, MoreBtn } from "../Friends/Friends-css";
 import { logoutRequest } from "Api/user";
+import EditModal from "Components/Modals/EditModal";
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
   const { user } = useContext(MyContext) as UserContextNotNull;
+  const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -41,6 +43,12 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
 
   return (
     <ProfilePageWrapper>
+      {editModalOpen && (
+        <EditModal
+          username={user.username}
+          setEditModalOpen={setEditModalOpen}
+        />
+      )}
       <Sidebar>
         <SettingsWrapper>
           <Heading style={{ marginLeft: "10px" }}>user settings</Heading>
@@ -81,7 +89,9 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                     <p>{user.username}</p>
                   </UserInformation>
                   <Actions>
-                    <EditBtn>Edit</EditBtn>
+                    <EditBtn onClick={() => setEditModalOpen(true)}>
+                      Edit
+                    </EditBtn>
                   </Actions>
                 </InfoBar>
               </InfoCard>

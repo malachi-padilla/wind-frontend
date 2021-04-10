@@ -17,3 +17,27 @@ export const ProfilePicture = styled.img`
   object-fit: cover;
   border-radius: 50%;
 `;
+
+export const DefaultInput = styled.input`
+  background-color: ${(props) => props.theme.inputBackground};
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: ${(props) => props.theme.inputBorder};
+  margin-top: 8px;
+  margin-bottom: 20px;
+  color: ${(props) => props.theme.fontColors.offWhite};
+  font-size: 16px;
+  :hover {
+    border-color: #222;
+  }
+  :focus {
+    border: 1px solid ${(props) => props.theme.messaging.primaryBlue};
+  }
+  ::placeholder {
+    color: ${(props) => props.theme.fontColors.offWhite};
+  }
+`;

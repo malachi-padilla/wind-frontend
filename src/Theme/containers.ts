@@ -95,3 +95,25 @@ export const FriendBarTheme = styled.div`
     background-color: #3c3f47;
   }
 `;
+
+export const ModalContainer = styled(FlexColCenterCenter)`
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: auto;
+  bottom: auto;
+  z-index: 10;
+`;
+
+export const InputBox = styled(FlexColCenterCenter)`
+  justify-content: flex-start;
+  width: 500px;
+  max-height: 350px;
+  background-color: ${(props) => props.theme.mainGrey};
+  color: ${(props) => props.theme.messaging.secondaryGrey};
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 2rem;
+  position: relative;
+`;

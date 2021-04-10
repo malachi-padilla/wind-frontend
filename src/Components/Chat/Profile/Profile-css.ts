@@ -14,6 +14,7 @@ export const ProfilePageWrapper = styled(FlexRowCenterCenter)`
   height: 100vh;
   width: 100vw;
   color: ${(props) => props.theme.tertiaryDarkGrey};
+  position: relative;
 `;
 
 export const Sidebar = styled(MainContainer)`
@@ -116,8 +117,8 @@ export const ProfileImg = styled(FlexColCenterCenter)`
     justify-content: center;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.8);
-    height: 80px;
-    width: 80px;
+    height: 100%;
+    width: 100%;
     border-radius: 50%;
     visibility: hidden;
     font-size: 14px;

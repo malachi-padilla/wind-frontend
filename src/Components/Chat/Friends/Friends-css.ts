@@ -100,6 +100,7 @@ export const UserInfo = styled.div`
 
 export const Actions = styled.div`
   display: flex;
+  align-items: center;
   gap: 5px;
 `;
 

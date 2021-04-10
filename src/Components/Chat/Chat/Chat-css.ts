@@ -85,6 +85,7 @@ export const FriendLabel = styled(FlexRowCenterCenter)`
   justify-content: flex-start;
   color: ${(props) => props.theme.fontColors.defaultLightGrey};
   padding: 5px;
+  cursor: pointer;
 `;
 
 export const FriendLabelText = styled.h3`

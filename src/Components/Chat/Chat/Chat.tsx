@@ -28,6 +28,7 @@ import {
   setRecentlyMessagedAction,
   setRecipientIsTypingAction,
 } from "Redux/actions";
+import FriendModal from "Components/Modals/FriendModal";
 const minRows = 1;
 const maxRows = 15;
 const maxChar = 2000;
@@ -46,6 +47,7 @@ export default function ChatPage({
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
   const [shift, setShift] = useState<boolean>(false);
   const [rows, setRows] = useState<number>(1);
+  const [viewFriend, setViewFriend] = useState<boolean>(false);
 
   const name = userInfo.username;
   const dispatch = useDispatch();
@@ -188,8 +190,16 @@ export default function ChatPage({
 
   return (
     <MainContainer>
+      {viewFriend && (
+        <FriendModal
+          setViewFriend={setViewFriend}
+          friend={friend}
+          recipientData={recipientData}
+          myFriends={userInfo.friends}
+        />
+      )}
       <ActionBar>
-        <FriendLabel>
+        <FriendLabel onClick={() => setViewFriend(true)}>
           <h3>@</h3>
           <FriendLabelText>{friend}</FriendLabelText>
           <FriendButton
