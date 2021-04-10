@@ -199,9 +199,11 @@ export default function ChatPage({
         />
       )}
       <ActionBar>
-        <FriendLabel onClick={() => setViewFriend(true)}>
+        <FriendLabel>
           <h3>@</h3>
-          <FriendLabelText>{friend}</FriendLabelText>
+          <FriendLabelText onClick={() => setViewFriend(true)}>
+            {friend}
+          </FriendLabelText>
           <FriendButton
             recipientId={recipientData!.userId}
             relation={recipientData!.relation}
