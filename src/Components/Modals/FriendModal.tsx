@@ -45,8 +45,8 @@ export default function FriendModal({
   }, []);
 
   return (
-    <ModalContainer>
-      <FriendBox>
+    <ModalContainer onClick={() => setViewFriend(false)}>
+      <FriendBox onClick={(e) => e.stopPropagation()}>
         <FriendBoxTop>
           <UserInfoWrapper>
             <ProfilePicture

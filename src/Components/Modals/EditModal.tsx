@@ -7,8 +7,8 @@ import { ExitBtn, FormFooter, CancelBtn, DoneBtn } from "./EditModal-css";
 
 export default function EditModal({ username, setEditModalOpen }: ModalProps) {
   return (
-    <ModalContainer>
-      <InputBox>
+    <ModalContainer onClick={() => setEditModalOpen(false)}>
+      <InputBox onClick={(e) => e.stopPropagation()}>
         <ExitBtn onClick={() => setEditModalOpen(false)}>
           <i className="fas fa-times"></i>
         </ExitBtn>
