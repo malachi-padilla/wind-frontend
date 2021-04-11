@@ -211,14 +211,19 @@ export default function Friends({
           <FriendsList>
             {addFriendOpen ? (
               <AddFriendContainer>
-                <Title>
+                <Title error={searchError}>
                   <h4>ADD FRIEND</h4>
                   {searchError ? (
                     <p>
                       Hm, didn't work. Double check that the capitalization and
                       spelling are correct.
                     </p>
-                  ) : null}
+                  ) : (
+                    <p>
+                      You can add a friend with their Discord Tag. It's cAsE
+                      sEnSitIvE!
+                    </p>
+                  )}
                 </Title>
                 <InputContent>
                   <AddFriendInput

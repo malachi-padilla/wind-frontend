@@ -137,7 +137,7 @@ export const FriendsTabText = styled.p`
 
 export const AddFriendContainer = styled(FlexColCenterStart)``;
 
-export const Title = styled.div`
+export const Title = styled.div<{ error: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -150,7 +150,10 @@ export const Title = styled.div`
   color: ${(props) => props.theme.fontColors.defaultWhite};
   font-weight: 700;
   p {
-    color: ${(props) => props.theme.fontColors.importantRed};
+    color: ${(props) =>
+      props.error
+        ? props.theme.fontColors.importantRed
+        : props.theme.fontColors.offWhite};
     font-weight: 300;
     font-size: 16px;
   }
