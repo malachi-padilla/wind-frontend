@@ -220,7 +220,7 @@ export default function Friends({
                     </p>
                   ) : (
                     <p>
-                      You can add a friend with their Discord Tag. It's cAsE
+                      You can add a friend with their username. It's cAsE
                       sEnSitIvE!
                     </p>
                   )}
