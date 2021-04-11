@@ -23,6 +23,10 @@ export interface FriendsProps {
 export interface ProfileProps {
   setProfileOpen: (profileOpen: boolean) => any;
 }
+export interface ModalProps {
+  username: string;
+  setEditModalOpen: (editModalOpen: boolean) => any;
+}
 
 export interface ChatProps {
   socket: any;

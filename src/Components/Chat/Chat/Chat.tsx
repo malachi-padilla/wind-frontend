@@ -11,6 +11,7 @@ import {
   FriendLabel,
   FriendLabelText,
   EnterMessage,
+  MessageWrapper,
 } from "./Chat-css";
 import { MainContainer } from "Theme/containers";
 import { animateScroll } from "react-scroll";
@@ -26,6 +27,7 @@ import {
   setRecentlyMessagedAction,
   setRecipientIsTypingAction,
 } from "Redux/actions";
+import FriendModal from "Components/Modals/FriendModal";
 const minRows = 1;
 const maxRows = 15;
 const maxChar = 2000;
@@ -44,6 +46,7 @@ export default function ChatPage({
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
   const [shift, setShift] = useState<boolean>(false);
   const [rows, setRows] = useState<number>(1);
+  const [viewFriend, setViewFriend] = useState<boolean>(false);
 
   const name = userInfo.username;
   const dispatch = useDispatch();
@@ -186,10 +189,20 @@ export default function ChatPage({
 
   return (
     <MainContainer>
+      {viewFriend && (
+        <FriendModal
+          setViewFriend={setViewFriend}
+          friend={friend}
+          recipientData={recipientData}
+          myFriends={userInfo.friends}
+        />
+      )}
       <ActionBar>
         <FriendLabel>
           <h3>@</h3>
-          <FriendLabelText>{friend}</FriendLabelText>
+          <FriendLabelText onClick={() => setViewFriend(true)}>
+            {friend}
+          </FriendLabelText>
           <FriendButton
             recipientId={recipientData!.userId}
             relation={recipientData!.relation}
@@ -199,13 +212,18 @@ export default function ChatPage({
 
       <ChatBody>
         <ChatMessages id="ContainerElementID">
-          {messages.map((item) => (
+          {messages.map((item, index) => (
             <>
-              <MainMessage
+              <MessageWrapper
+                key={index}
                 secondaryMessage={item.sentBy === name ? false : true}
               >
-                {getNewlineText(item.message)}
-              </MainMessage>
+                <MainMessage
+                  secondaryMessage={item.sentBy === name ? false : true}
+                >
+                  {getNewlineText(item.message)}
+                </MainMessage>
+              </MessageWrapper>
             </>
           ))}
           {recipientIsTyping ? (

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
 import { ProfilePicture } from "Theme/misc";
+import { Actions, UserInfo } from "Components/Chat/Friends/Friends-css";
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -119,7 +120,7 @@ export default function SideBar({
             {recentlyMessaged.map((item, index) => (
               <FriendBar
                 style={{
-                  backgroundColor: friend === item ? "#36393f" : undefined,
+                  backgroundColor: friend === item ? "#3c3f47" : undefined,
                 }}
                 key={index}
                 onClick={() => {
@@ -127,32 +128,38 @@ export default function SideBar({
                   setFriendsIsOpen(false);
                 }}
               >
-                {peopleTyping[item] ? (
-                  <IsTyping>
-                    <span></span>
-                  </IsTyping>
-                ) : null}
-                <ProfilePicture
-                  src="https://source.unsplash.com/random"
-                  alt="profilepic"
-                ></ProfilePicture>
-                <p>{item}</p>
-                <RemoveFriendButton
-                  onClick={() => removeRecentlyMessaged(item)}
-                >
-                  <i className="fas fa-times"></i>
-                </RemoveFriendButton>
+                <UserInfo>
+                  {peopleTyping[item] ? (
+                    <IsTyping>
+                      <span></span>
+                    </IsTyping>
+                  ) : null}
+                  <ProfilePicture
+                    src="https://source.unsplash.com/random"
+                    alt="profilepic"
+                  ></ProfilePicture>
+                  <p>{item}</p>
+                </UserInfo>
+                <Actions>
+                  <RemoveFriendButton
+                    onClick={() => removeRecentlyMessaged(item)}
+                  >
+                    <i className="fas fa-times"></i>
+                  </RemoveFriendButton>
+                </Actions>
               </FriendBar>
             ))}
           </RecentlyMessagedList>
         </RecentFriendsWrapper>
       </SideBarContents>
       <ProfileBar>
-        <ProfilePicture
-          src="https://source.unsplash.com/random"
-          alt="profilepic"
-        ></ProfilePicture>
-        <p>{userInfo.username}</p>
+        <UserInfo>
+          <ProfilePicture
+            src="https://source.unsplash.com/random"
+            alt="profilepic"
+          ></ProfilePicture>
+          <p>{userInfo.username}</p>
+        </UserInfo>
         <ProfileBtns>
           <SettingsBtn onClick={() => setProfileOpen(true)}>
             <i className="fas fa-cog"></i>

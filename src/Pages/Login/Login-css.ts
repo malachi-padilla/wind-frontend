@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FlexColCenterCenter, MainContainer } from "Theme/containers";
-import { Logo } from "Theme/misc";
+import { Logo, DefaultInput } from "Theme/misc";
 
 export const StyledMainContainer = styled(MainContainer)`
   @media only screen and (min-width: 1025px) {
@@ -56,49 +56,45 @@ export const FormInputs = styled.div`
   }
 `;
 
-const defaultCSS = css<{ error: string }>`
-  background-color: ${(props) => props.theme.inputBackground};
-  width: 100%;
-  height: 40px;
-  padding: 10px;
-  outline: none;
-  box-sizing: border-box;
-  border-radius: 3px;
-  border: ${(props) => props.theme.inputBorder};
-  margin-top: 8px;
-  margin-bottom: 20px;
-  color: ${(props) => props.theme.fontColors.offWhite};
-  font-size: 16px;
+export const InputLabel = styled.label<{ error: string }>`
+  font-weight: 600;
+  font-size: 12px;
+  color: ${(props) =>
+    props.error === "bad-username" || props.error === "bad-password"
+      ? props.theme.fontColors.importantRed
+      : props.theme.messaging.secondaryGrey};
 `;
 
-export const LoginInput = styled.input<{ error: string }>`
-  ${defaultCSS}
+export const LoginInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-username"
+    props.error === "bad-username" || props.error === "bad-password"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-username"
+        props.error === "bad-username" || props.error === "bad-password"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }
 `;
 
-export const PasswordInput = styled(LoginInput)<{ error: string }>`
-  ${defaultCSS}
+export const PasswordInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-password"
+    props.error === "bad-password" || props.error === "bad-username"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-password"
+        props.error === "bad-password" || props.error === "bad-username"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }
+`;
+
+export const ErrorLabel = styled.p`
+  color: ${(props) => props.theme.fontColors.importantRed};
 `;
 
 export const FormBtns = styled.div`

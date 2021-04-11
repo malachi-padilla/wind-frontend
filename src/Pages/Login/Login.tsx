@@ -7,6 +7,7 @@ import {
   FormContainer,
   FormInputs,
   FormTitle,
+  InputLabel,
   LoginInput,
   PasswordInput,
   StyledMainContainer,
@@ -40,14 +41,22 @@ export default function App() {
             <h3>We're so excited to see you again!</h3>
           </FormTitle>
           <FormInputs>
-            <label>USERNAME</label>
+            <InputLabel error={error}>
+              {error === "bad-username" || error === "bad-password"
+                ? "USERNAME-invalid username or password"
+                : "USERNAME"}
+            </InputLabel>
             <LoginInput
               error={error}
               onChange={(e) => setLoginUsername(e.target.value)}
               type="text"
               required
             />
-            <label>PASSWORD</label>
+            <InputLabel error={error}>
+              {error === "bad-password" || error === "bad-username"
+                ? "PASSWORD-invalid password or username"
+                : "PASSWORD"}
+            </InputLabel>
             <PasswordInput
               error={error}
               onKeyDown={(e) => (e.key === "Enter" ? login() : null)}
@@ -56,13 +65,6 @@ export default function App() {
               required
             />
           </FormInputs>
-          <p>
-            {error === "bad-username"
-              ? "User Doesn't Exist By That Name."
-              : error === "bad-password"
-              ? "Incorrect Password."
-              : null}
-          </p>
           <FormBtns>
             <button onClick={login} type="submit">
               Login

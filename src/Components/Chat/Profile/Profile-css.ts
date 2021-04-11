@@ -14,6 +14,7 @@ export const ProfilePageWrapper = styled(FlexRowCenterCenter)`
   height: 100vh;
   width: 100vw;
   color: ${(props) => props.theme.tertiaryDarkGrey};
+  position: relative;
 `;
 
 export const Sidebar = styled(MainContainer)`
@@ -98,14 +99,34 @@ export const UserInfoWrapper = styled(UserInfo)`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  position: relative;
 `;
-export const ProfileImg = styled.img`
+export const ProfileImg = styled(FlexColCenterCenter)`
+  background-image: url("https://source.unsplash.com/random");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 80px;
   width: 80px;
-  object-position: center;
-  object-fit: cover;
   border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    visibility: hidden;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  :hover span {
+    visibility: visible;
+  }
 `;
 
 export const ImageLabel = styled(FlexColCenterCenter)`

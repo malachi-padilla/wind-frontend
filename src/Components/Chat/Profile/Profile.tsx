@@ -1,5 +1,5 @@
 import { ProfileProps } from "Components/Types/props";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { MyContext } from "Context";
 import { UserContextNotNull } from "Types/types";
 import {
@@ -29,9 +29,13 @@ import {
 } from "./Profile-css";
 import { Actions, MoreBtn } from "../Friends/Friends-css";
 import { logoutRequest } from "Api/user";
+import EditModal from "Components/Modals/EditModal";
+import LogoutModal from "Components/Modals/LogoutModal";
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
   const { user } = useContext(MyContext) as UserContextNotNull;
+  const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -41,13 +45,24 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
 
   return (
     <ProfilePageWrapper>
+      {editModalOpen && (
+        <EditModal
+          username={user.username}
+          setEditModalOpen={setEditModalOpen}
+        />
+      )}
+      {logoutModalOpen && (
+        <LogoutModal logout={logout} open={setLogoutModalOpen} />
+      )}
       <Sidebar>
         <SettingsWrapper>
           <Heading style={{ marginLeft: "10px" }}>user settings</Heading>
           <SettingsBar>
             <p>My Account</p>
           </SettingsBar>
-          <LogoutBtn onClick={logout}>Log Out</LogoutBtn>
+          <LogoutBtn onClick={() => setLogoutModalOpen(true)}>
+            Log Out
+          </LogoutBtn>
         </SettingsWrapper>
       </Sidebar>
       <ProfileBody>
@@ -57,13 +72,12 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
             <InfoBox>
               <AvatarBar>
                 <UserInfoWrapper>
-                  <ProfileImg
-                    src="https://source.unsplash.com/random"
-                    alt="profilepic"
-                  ></ProfileImg>
-                  <ImageLabel>
-                    <i className="far fa-images"></i>
-                  </ImageLabel>
+                  <ProfileImg>
+                    <ImageLabel>
+                      <i className="far fa-images"></i>
+                    </ImageLabel>
+                    <span>Change Avatar</span>
+                  </ProfileImg>
                   <h3>{user.username}</h3>
                 </UserInfoWrapper>
                 <Actions>
@@ -82,7 +96,9 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                     <p>{user.username}</p>
                   </UserInformation>
                   <Actions>
-                    <EditBtn>Edit</EditBtn>
+                    <EditBtn onClick={() => setEditModalOpen(true)}>
+                      Edit
+                    </EditBtn>
                   </Actions>
                 </InfoBar>
               </InfoCard>
@@ -94,8 +110,8 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
         <EscapeBarContents>
           <ButtonContainer>
             <EscapeBtn
-              onKeyDown={(e) =>
-                e.key === "Escape" ? setProfileOpen(false) : null
+              onKeyDown={(event) =>
+                event.key === "Escape" ? setProfileOpen(false) : null
               }
               onClick={() => setProfileOpen(false)}
             >
