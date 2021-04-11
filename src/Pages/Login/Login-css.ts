@@ -67,13 +67,13 @@ export const InputLabel = styled.label<{ error: string }>`
 
 export const LoginInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-username"
+    props.error === "bad-username" || props.error === "bad-password"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-username"
+        props.error === "bad-username" || props.error === "bad-password"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }
@@ -81,16 +81,20 @@ export const LoginInput = styled(DefaultInput)<{ error: string }>`
 
 export const PasswordInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-password"
+    props.error === "bad-password" || props.error === "bad-username"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-password"
+        props.error === "bad-password" || props.error === "bad-username"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }
+`;
+
+export const ErrorLabel = styled.p`
+  color: ${(props) => props.theme.fontColors.importantRed};
 `;
 
 export const FormBtns = styled.div`

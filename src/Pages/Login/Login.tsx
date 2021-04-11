@@ -42,8 +42,8 @@ export default function App() {
           </FormTitle>
           <FormInputs>
             <InputLabel error={error}>
-              {error === "bad-username"
-                ? "USERNAME-invalid username"
+              {error === "bad-username" || error === "bad-password"
+                ? "USERNAME-invalid username or password"
                 : "USERNAME"}
             </InputLabel>
             <LoginInput
@@ -53,8 +53,8 @@ export default function App() {
               required
             />
             <InputLabel error={error}>
-              {error === "bad-password"
-                ? "PASSWORD-invalid password"
+              {error === "bad-password" || error === "bad-username"
+                ? "PASSWORD-invalid password or username"
                 : "PASSWORD"}
             </InputLabel>
             <PasswordInput

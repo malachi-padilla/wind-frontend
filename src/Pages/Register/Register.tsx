@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  ErrorLabel,
   FormBtns,
   FormContainer,
   FormInputs,
@@ -58,16 +59,15 @@ export default function Register() {
               onChange={(e) => setRegisterPassword(e.target.value)}
               type="password"
               required
-              style={error ? { borderColor: "red" } : undefined}
             />
           </FormInputs>
-          <p>
+          <ErrorLabel>
             {error === "bad-username"
               ? "Username Must Be Longer Than 2 Characters"
               : error === "bad-password"
               ? "Password Must Be Longer Than 3 Characters"
               : null}
-          </p>
+          </ErrorLabel>
           <FormBtns>
             <button onClick={register} type="submit">
               Sign Up
