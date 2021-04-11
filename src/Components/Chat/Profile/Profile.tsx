@@ -30,10 +30,12 @@ import {
 import { Actions, MoreBtn } from "../Friends/Friends-css";
 import { logoutRequest } from "Api/user";
 import EditModal from "Components/Modals/EditModal";
+import LogoutModal from "Components/Modals/LogoutModal";
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
   const { user } = useContext(MyContext) as UserContextNotNull;
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -49,13 +51,18 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
           setEditModalOpen={setEditModalOpen}
         />
       )}
+      {logoutModalOpen && (
+        <LogoutModal logout={logout} open={setLogoutModalOpen} />
+      )}
       <Sidebar>
         <SettingsWrapper>
           <Heading style={{ marginLeft: "10px" }}>user settings</Heading>
           <SettingsBar>
             <p>My Account</p>
           </SettingsBar>
-          <LogoutBtn onClick={logout}>Log Out</LogoutBtn>
+          <LogoutBtn onClick={() => setLogoutModalOpen(true)}>
+            Log Out
+          </LogoutBtn>
         </SettingsWrapper>
       </Sidebar>
       <ProfileBody>

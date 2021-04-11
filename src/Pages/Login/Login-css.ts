@@ -50,10 +50,15 @@ export const FormTitle = styled(FlexColCenterCenter)`
 
 export const FormInputs = styled.div`
   margin-top: 20px;
-  label {
-    font-weight: 600;
-    font-size: 12px;
-  }
+`;
+
+export const InputLabel = styled.label<{ error: string }>`
+  font-weight: 600;
+  font-size: 12px;
+  color: ${(props) =>
+    props.error === "bad-username" || props.error === "bad-password"
+      ? props.theme.fontColors.importantRed
+      : props.theme.messaging.secondaryGrey};
 `;
 
 export const LoginInput = styled(DefaultInput)<{ error: string }>`
