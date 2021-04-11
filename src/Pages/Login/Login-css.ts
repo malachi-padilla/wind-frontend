@@ -50,6 +50,10 @@ export const FormTitle = styled(FlexColCenterCenter)`
 
 export const FormInputs = styled.div`
   margin-top: 20px;
+  label {
+    font-weight: 600;
+    font-size: 12px;
+  }
 `;
 
 export const InputLabel = styled.label<{ error: string }>`
