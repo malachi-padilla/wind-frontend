@@ -142,7 +142,7 @@ export const Title = styled.div<{ error: boolean }>`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 5px;
+  gap: 10px;
   height: 5%;
   width: 90%;
   margin-left: 10%;
@@ -155,7 +155,7 @@ export const Title = styled.div<{ error: boolean }>`
         ? props.theme.fontColors.importantRed
         : props.theme.fontColors.offWhite};
     font-weight: 300;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
