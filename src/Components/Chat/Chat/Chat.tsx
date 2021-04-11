@@ -11,7 +11,6 @@ import {
   FriendLabel,
   FriendLabelText,
   EnterMessage,
-  NameLabel,
   MessageWrapper,
 } from "./Chat-css";
 import { MainContainer } from "Theme/containers";
