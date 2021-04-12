@@ -1,5 +1,4 @@
 import { getMutualFriendsRequest } from "Api/friends";
-import { getUserById } from "Api/user";
 import { IsTyping } from "Components/Chat/Chat/Chat-css";
 import {
   Actions,

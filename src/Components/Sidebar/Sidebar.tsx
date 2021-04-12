@@ -53,7 +53,7 @@ export default function SideBar({
   useEffect(() => {
     // On change of Recently Messaged we want to get the profile picture of each user in list
     (async () => {
-      const promises = recentlyMessaged.map(async (item, index) => {
+      const promises = recentlyMessaged.map(async (item) => {
         const profilePictureLink = await getProfilePictureByUsernameRequest(
           item
         );
