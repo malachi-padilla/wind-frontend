@@ -1,5 +1,5 @@
 export interface ReduxStore {
   friend: string;
-  recentlyMessaged: string[];
+  recentlyMessaged: any[];
   recipientIsTyping: boolean;
 }

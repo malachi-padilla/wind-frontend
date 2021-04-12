@@ -194,7 +194,7 @@ export default function ChatPage({
           setViewFriend={setViewFriend}
           friend={friend}
           recipientData={recipientData}
-          myFriends={userInfo.friends}
+          userInfo={userInfo}
         />
       )}
       <ActionBar>

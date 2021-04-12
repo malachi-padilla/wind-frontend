@@ -100,8 +100,8 @@ export const UserInfoWrapper = styled(UserInfo)`
   align-items: center;
   gap: 1rem;
 `;
-export const ProfileImg = styled(FlexColCenterCenter)`
-  background-image: url("https://source.unsplash.com/random");
+export const ProfileImg = styled(FlexColCenterCenter)<{ image: string }>`
+  background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

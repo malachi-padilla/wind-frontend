@@ -1,4 +1,4 @@
-import { getUserById } from "Api/user";
+import { getMutualFriendsRequest } from "Api/friends";
 import { IsTyping } from "Components/Chat/Chat/Chat-css";
 import {
   Actions,
@@ -14,6 +14,7 @@ import { setFriendAction } from "Redux/actions";
 import { PrimaryButton } from "Theme/buttons";
 import { ModalContainer } from "Theme/containers";
 import { ProfilePicture } from "Theme/misc";
+import { RecipientUserInfo } from "Types/models";
 import {
   FriendBox,
   FriendBoxTop,
@@ -26,22 +27,17 @@ export default function FriendModal({
   setViewFriend,
   friend,
   recipientData,
-  myFriends,
+  userInfo,
 }) {
-  const [mutualFriends, setMutualFriends] = useState<any[]>([]);
+  const [mutualFriends, setMutualFriends] = useState<RecipientUserInfo[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const matchedFriends = recipientData.friends.filter((item) =>
-      myFriends.includes(item)
+    getMutualFriendsRequest(recipientData.userId, userInfo.userId).then(
+      (res) => {
+        setMutualFriends(res.data);
+      }
     );
-    const usernames: string[] = [];
-    for (const id of matchedFriends) {
-      getUserById(id).then((res) => {
-        usernames.push(res.data.username);
-      });
-    }
-    setMutualFriends(usernames);
   }, []);
 
   return (
@@ -51,7 +47,7 @@ export default function FriendModal({
           <UserInfoWrapper>
             <ProfilePicture
               style={{ height: "80px", width: "80px" }}
-              src="https://source.unsplash.com/random"
+              src={recipientData.profilePicture}
               alt="profilepic"
             ></ProfilePicture>
             <h3>{friend}</h3>
@@ -72,17 +68,17 @@ export default function FriendModal({
         </FriendNav>
         <MutualFriends>
           {mutualFriends!.length > 0 ? (
-            mutualFriends!.map((item, index) => (
+            mutualFriends!.map((item) => (
               <FriendBar
-                onClick={() => dispatch(setFriendAction(item))}
-                key={index}
+                onClick={() => dispatch(setFriendAction(item.username))}
+                key={item.userId}
               >
                 <UserInfo>
                   <ProfilePicture
-                    src="https://source.unsplash.com/random"
+                    src={item.profilePicture}
                     alt="profilepic"
                   ></ProfilePicture>
-                  <p>{item}</p>
+                  <p>{item.username}</p>
                 </UserInfo>
               </FriendBar>
             ))

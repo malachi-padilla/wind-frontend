@@ -23,6 +23,7 @@ import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
 import { ReduxStore } from "Redux/types";
 import { ProfilePicture } from "Theme/misc";
 import { Actions, UserInfo } from "Components/Chat/Friends/Friends-css";
+import { getProfilePictureByUsernameRequest } from "Api/friends";
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -40,10 +41,33 @@ export default function SideBar({
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
+  const [usersWithPicture, setUsersWithPicture] = useState<
+    { username: string; profilePicture: string }[]
+  >([]);
   const recentlyMessaged = useSelector(
     (state: ReduxStore) => state.recentlyMessaged
   );
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // On change of Recently Messaged we want to get the profile picture of each user in list
+    (async () => {
+      const promises = recentlyMessaged.map(async (item) => {
+        const profilePictureLink = await getProfilePictureByUsernameRequest(
+          item
+        );
+        return {
+          username: item,
+          profilePicture: profilePictureLink.data,
+        };
+      });
+
+      const total = await Promise.all(promises);
+      // Save this new array of usernames and profile pictures to an array called usersWithPicture
+      setUsersWithPicture(total);
+    })();
+  }, [recentlyMessaged]);
 
   useEffect(() => {
     socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
@@ -83,9 +107,10 @@ export default function SideBar({
     }
   };
 
-  // useEffect(() => {
-  //   setNotFoundError(false);
-  // }, [friendInput]);
+  console.log(usersWithPicture);
+  if (usersWithPicture && usersWithPicture.length === 0) {
+    return null;
+  }
 
   return (
     <StyledMainContainer>
@@ -117,32 +142,33 @@ export default function SideBar({
             </button>
           </DirectMessageTab>
           <RecentlyMessagedList>
-            {recentlyMessaged.map((item, index) => (
+            {usersWithPicture.map((item, index) => (
               <FriendBar
                 style={{
-                  backgroundColor: friend === item ? "#3c3f47" : undefined,
+                  backgroundColor:
+                    friend === item.username ? "#3c3f47" : undefined,
                 }}
                 key={index}
                 onClick={() => {
-                  dispatch(setFriendAction(item));
+                  dispatch(setFriendAction(item.username));
                   setFriendsIsOpen(false);
                 }}
               >
                 <UserInfo>
-                  {peopleTyping[item] ? (
+                  {peopleTyping[item.username] ? (
                     <IsTyping>
                       <span></span>
                     </IsTyping>
                   ) : null}
                   <ProfilePicture
-                    src="https://source.unsplash.com/random"
+                    src={item.profilePicture}
                     alt="profilepic"
                   ></ProfilePicture>
-                  <p>{item}</p>
+                  <p>{item.username}</p>
                 </UserInfo>
                 <Actions>
                   <RemoveFriendButton
-                    onClick={() => removeRecentlyMessaged(item)}
+                    onClick={() => removeRecentlyMessaged(item.username)}
                   >
                     <i className="fas fa-times"></i>
                   </RemoveFriendButton>
@@ -155,7 +181,7 @@ export default function SideBar({
       <ProfileBar>
         <UserInfo>
           <ProfilePicture
-            src="https://source.unsplash.com/random"
+            src={userInfo.profilePicture}
             alt="profilepic"
           ></ProfilePicture>
           <p>{userInfo.username}</p>

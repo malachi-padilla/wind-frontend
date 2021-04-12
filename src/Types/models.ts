@@ -4,6 +4,7 @@ export interface PersonalUserInfo {
   friends: string[];
   sentFriendRequests: string[];
   recievedFriendRequests: string[];
+  profilePicture: string;
 }
 
 export interface RecipientUserInfo {
@@ -12,4 +13,5 @@ export interface RecipientUserInfo {
   relation: "Friends" | "Requested" | "Recipient Requested" | "None";
   userId: string;
   username: string;
+  profilePicture: string;
 }

@@ -72,7 +72,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
             <InfoBox>
               <AvatarBar>
                 <UserInfoWrapper>
-                  <ProfileImg>
+                  <ProfileImg image={user.profilePicture}>
                     <ImageLabel>
                       <i className="far fa-images"></i>
                     </ImageLabel>
