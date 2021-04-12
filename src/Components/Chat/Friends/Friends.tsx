@@ -242,7 +242,7 @@ export default function Friends({
                     <FriendBar>
                       <UserInfo>
                         <ProfilePicture
-                          src="https://source.unsplash.com/random"
+                          src={searchResults.profilePicture}
                           alt="profilepic"
                         ></ProfilePicture>
                         <p>{searchResults.username}</p>
@@ -261,7 +261,7 @@ export default function Friends({
                 <FriendBar key={index}>
                   <UserInfo>
                     <ProfilePicture
-                      src="https://source.unsplash.com/random"
+                      src={item.profilePicture}
                       alt="profilepic"
                     ></ProfilePicture>
                     <h3>{item.username}</h3>

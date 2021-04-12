@@ -29,3 +29,18 @@ export const getFriendsRequest = (userId: string) => {
     withCredentials: true,
   });
 };
+
+export const getProfilePictureByUsernameRequest = (username: string) => {
+  return axios.get(`${API_URL}/user/getProfilePicture?username=${username}`, {
+    withCredentials: true,
+  });
+};
+
+export const getMutualFriendsRequest = (user1, user2) => {
+  return axios.get(
+    `${API_URL}/friends/getMutualFriends?user1=${user1}&user2=${user2}`,
+    {
+      withCredentials: true,
+    }
+  );
+};
