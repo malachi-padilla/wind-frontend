@@ -37,13 +37,13 @@ export default function EditMediaModal({
             }
             alt="avatar"
           ></Media>
-          <CropCircle></CropCircle>
+          {/* <CropCircle></CropCircle> */}
         </MediaWrapper>
-        <SliderContainer>
+        {/* <SliderContainer>
           <ImageIconSmall className="far fa-file-image"></ImageIconSmall>
           <Slider type="range"></Slider>
           <ImageIconBig className="far fa-file-image"></ImageIconBig>
-        </SliderContainer>
+        </SliderContainer> */}
         <FormFooter style={{ height: "10%" }}>
           <CancelBtn
             onClick={() => {

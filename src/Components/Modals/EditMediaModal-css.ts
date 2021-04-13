@@ -8,16 +8,16 @@ import {
 export const MediaBox = styled(InputBox)`
   max-height: 660px;
   width: 600px;
+  gap: 10px;
 `;
 
 export const MediaWrapper = styled(FlexColCenterCenter)`
-  height: 400px;
-  width: 550px;
+  height: 70%;
+  width: 90%;
   position: relative;
 `;
 
 export const Media = styled.img`
-  margin-top: 10px;
   height: 100%;
   width: 100%;
   object-fit: cover;
