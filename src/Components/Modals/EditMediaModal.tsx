@@ -1,16 +1,7 @@
 import { FormTitle } from "Pages/Login/Login-css";
 import React from "react";
 import { ModalContainer } from "Theme/containers";
-import {
-  MediaBox,
-  Media,
-  SliderContainer,
-  ImageIconSmall,
-  ImageIconBig,
-  Slider,
-  MediaWrapper,
-  CropCircle,
-} from "./EditMediaModal-css";
+import { MediaBox, Media, MediaWrapper } from "./EditMediaModal-css";
 import { CancelBtn, DoneBtn, FormFooter } from "./EditModal-css";
 
 export default function EditMediaModal({
