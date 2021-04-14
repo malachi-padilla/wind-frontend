@@ -107,11 +107,6 @@ export default function SideBar({
     }
   };
 
-  console.log(usersWithPicture);
-  if (usersWithPicture && usersWithPicture.length === 0) {
-    return null;
-  }
-
   return (
     <StyledMainContainer>
       <SideBarContents>
