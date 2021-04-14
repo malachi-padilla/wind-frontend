@@ -9,12 +9,14 @@ export default function EditMediaModal({
   open,
   setAvatar,
   uploadAvatar,
+  setMediaKey,
 }) {
   return (
     <ModalContainer
       onClick={() => {
         setAvatar("");
         open(false);
+        setMediaKey((current) => !current);
       }}
     >
       <MediaBox onClick={(e) => e.stopPropagation()}>
@@ -40,6 +42,7 @@ export default function EditMediaModal({
             onClick={() => {
               setAvatar("");
               open(false);
+              setMediaKey((current) => !current);
             }}
           >
             Cancel

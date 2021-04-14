@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { ProfileProps } from "Components/Types/props";
 import React, { useContext, useState } from "react";
 import { MyContext } from "Context";
@@ -37,11 +38,12 @@ import { API_URL } from "Config/globalVariables";
 import axios from "axios";
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
-  const { user } = useContext(MyContext) as UserContextNotNull;
+  const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
   const [newAvatar, setNewAvatar] = useState<string>("");
   const [editMediaModal, setEditMediaModalOpen] = useState<boolean>(false);
+  const [mediaKey, setMediaKey] = useState<any>(false);
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -58,8 +60,8 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
       .post(`${API_URL}/user/uploadProfilePicture`, formData, {
         withCredentials: true,
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        setFetchNew((current) => !current);
         setEditMediaModalOpen(false);
       });
   };
@@ -79,6 +81,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
         <EditMediaModal
           avatar={newAvatar}
           open={setEditMediaModalOpen}
+          setMediaKey={setMediaKey}
           setAvatar={setNewAvatar}
           uploadAvatar={uploadAvatar}
         />
@@ -109,6 +112,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                       Change Avatar
                       <PhotoUpload
                         id="photoUpload"
+                        key={mediaKey}
                         onChange={(e: any) => {
                           setNewAvatar(e.target.files);
                           setEditMediaModalOpen(true);
