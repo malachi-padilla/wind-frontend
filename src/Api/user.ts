@@ -69,3 +69,16 @@ export function getUserById(userId: string) {
     withCredentials: true,
   });
 }
+
+export function updateUserInfo(key: string, e: any) {
+  const {
+    target: { value },
+  } = e;
+  const shippingData = {};
+  shippingData[key] = value.trim();
+  if (value.length > 0) {
+    return axios.post(`${API_URL}/user/updateUserInfo`, shippingData, {
+      withCredentials: true,
+    });
+  }
+}

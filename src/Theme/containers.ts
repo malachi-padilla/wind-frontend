@@ -108,8 +108,8 @@ export const ModalContainer = styled(FlexColCenterCenter)`
 
 export const InputBox = styled(FlexColCenterCenter)`
   justify-content: flex-start;
-  width: 500px;
-  max-height: 350px;
+  width: 400px;
+  max-height: 250px;
   background-color: ${(props) => props.theme.mainGrey};
   color: ${(props) => props.theme.messaging.secondaryGrey};
   border-radius: 5px;

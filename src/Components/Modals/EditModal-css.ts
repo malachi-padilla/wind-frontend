@@ -3,7 +3,7 @@ import { PrimaryButton, SecondaryButton } from "Theme/buttons";
 import { FlexRowCenterEnd } from "Theme/containers";
 
 export const FormFooter = styled(FlexRowCenterEnd)`
-  height: 20%;
+  height: 25%;
   width: 100%;
   padding: 10px;
   background-color: ${(props) => props.theme.secondaryDarkGrey};
