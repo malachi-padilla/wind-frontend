@@ -150,7 +150,19 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                 <InfoBar>
                   <UserInformation>
                     <Heading>email</Heading>
-                    <p>{user.email}</p>
+                    <p
+                      style={{ cursor: !user.email ? "pointer" : undefined }}
+                      onClick={() => {
+                        if (!user.email) {
+                          setEditModalOpen(true);
+                          setInfoType("email");
+                        } else {
+                          null;
+                        }
+                      }}
+                    >
+                      {user.email ? user.email : "add email"}
+                    </p>
                   </UserInformation>
                   <Actions>
                     <EditBtn
