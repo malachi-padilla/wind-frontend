@@ -1,23 +1,40 @@
-import { updateUserInfo } from "Api/user";
+import { getUserByUsernameRequest, updateUserInfo } from "Api/user";
 import { ModalProps } from "Components/Types/props";
 import { MyContext } from "Context";
 import { FormInputs, FormTitle } from "Pages/Login/Login-css";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { InputBox, ModalContainer } from "Theme/containers";
-import { DefaultInput } from "Theme/misc";
 import { UserContextNotNull } from "Types/types";
-import { ExitBtn, FormFooter, CancelBtn, DoneBtn } from "./EditModal-css";
+import {
+  ExitBtn,
+  FormFooter,
+  CancelBtn,
+  DoneBtn,
+  InputUsername,
+} from "./EditModal-css";
 
 export default function EditModal({ username, setEditModalOpen }: ModalProps) {
   const { setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [userInput, setUserInput] = useState<any>();
+  const [userExistsError, setUserExistsError] = useState<boolean>(false);
 
-  const updateUsername = (key: string, e: any) => {
-    updateUserInfo(key, e)?.then(() => {
-      setFetchNew((current) => !current);
-      setEditModalOpen(false);
-    });
+  const updateUsername = async (key: string, e: any) => {
+    const userFound = await getUserByUsernameRequest(e.target.value)
+      .then((res) => res)
+      .catch(() => "NOT FOUND");
+    if (userFound !== "NOT FOUND") {
+      setUserExistsError(true);
+    } else {
+      updateUserInfo(key, e)?.then(() => {
+        setFetchNew((current) => !current);
+        setEditModalOpen(false);
+      });
+    }
   };
+
+  useEffect(() => {
+    setUserExistsError(false);
+  }, [userInput]);
 
   return (
     <ModalContainer onClick={() => setEditModalOpen(false)}>
@@ -29,11 +46,12 @@ export default function EditModal({ username, setEditModalOpen }: ModalProps) {
           <h1>Change your username</h1>
         </FormTitle>
         <FormInputs>
-          <label>USERNAME</label>
-          <DefaultInput
+          <label>{userExistsError ? "USERNAME TAKEN" : "USERNAME"}</label>
+          <InputUsername
+            error={userExistsError}
             onChange={(e) => setUserInput(e)}
             placeholder={`${username}`}
-          ></DefaultInput>
+          ></InputUsername>
         </FormInputs>
         <FormFooter>
           <CancelBtn onClick={() => setEditModalOpen(false)}>Cancel</CancelBtn>

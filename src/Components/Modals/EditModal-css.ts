@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { PrimaryButton, SecondaryButton } from "Theme/buttons";
 import { FlexRowCenterEnd } from "Theme/containers";
+import { DefaultInput } from "Theme/misc";
 
 export const FormFooter = styled(FlexRowCenterEnd)`
   height: 25%;
@@ -21,6 +22,18 @@ export const ExitBtn = styled(SecondaryButton)`
   :hover {
     transition: ease-in 200ms;
     color: ${(props) => props.theme.fontColors.defaultWhite};
+  }
+`;
+
+export const InputUsername = styled(DefaultInput)<{ error: boolean }>`
+  border-color: ${(props) =>
+    props.error ? props.theme.fontColors.importantRed : null};
+  :focus {
+    border: 1px solid
+      ${(props) =>
+        props.error
+          ? props.theme.fontColors.importantRed
+          : props.theme.messaging.primaryBlue};
   }
 `;
 export const CancelBtn = styled(SecondaryButton)`
