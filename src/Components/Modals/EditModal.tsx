@@ -17,23 +17,29 @@ export default function EditModal({ username, setEditModalOpen }: ModalProps) {
   const { setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [userInput, setUserInput] = useState<any>();
   const [userExistsError, setUserExistsError] = useState<boolean>(false);
+  const [usernameError, setUsernameError] = useState<boolean>(false);
 
   const updateUsername = async (key: string, e: any) => {
-    const userFound = await getUserByUsernameRequest(e.target.value)
-      .then((res) => res)
-      .catch(() => "NOT FOUND");
-    if (userFound !== "NOT FOUND") {
-      setUserExistsError(true);
+    if (e.target.value.length > 2) {
+      const userFound = await getUserByUsernameRequest(e.target.value)
+        .then((res) => res)
+        .catch(() => "NOT FOUND");
+      if (userFound !== "NOT FOUND") {
+        setUserExistsError(true);
+      } else {
+        updateUserInfo(key, e)?.then(() => {
+          setFetchNew((current) => !current);
+          setEditModalOpen(false);
+        });
+      }
     } else {
-      updateUserInfo(key, e)?.then(() => {
-        setFetchNew((current) => !current);
-        setEditModalOpen(false);
-      });
+      setUsernameError(true);
     }
   };
 
   useEffect(() => {
     setUserExistsError(false);
+    setUsernameError(false);
   }, [userInput]);
 
   return (
@@ -46,9 +52,15 @@ export default function EditModal({ username, setEditModalOpen }: ModalProps) {
           <h1>Change your username</h1>
         </FormTitle>
         <FormInputs>
-          <label>{userExistsError ? "USERNAME TAKEN" : "USERNAME"}</label>
+          <label>
+            {userExistsError
+              ? "USERNAME TAKEN"
+              : usernameError
+              ? "USERNAME IS TOO SHORT"
+              : "USERNAME"}
+          </label>
           <InputUsername
-            error={userExistsError}
+            error={userExistsError || usernameError}
             onChange={(e) => setUserInput(e)}
             placeholder={`${username}`}
           ></InputUsername>
