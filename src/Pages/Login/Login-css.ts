@@ -60,20 +60,26 @@ export const InputLabel = styled.label<{ error: string }>`
   font-weight: 600;
   font-size: 12px;
   color: ${(props) =>
-    props.error === "bad-username" || props.error === "bad-password"
+    props.error === "bad-username" ||
+    props.error === "bad-password" ||
+    props.error === "bad-email"
       ? props.theme.fontColors.importantRed
       : props.theme.messaging.secondaryGrey};
 `;
 
 export const LoginInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-username" || props.error === "bad-password"
+    props.error === "bad-username" ||
+    props.error === "bad-password" ||
+    props.error === "bad-email"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-username" || props.error === "bad-password"
+        props.error === "bad-username" ||
+        props.error === "bad-password" ||
+        props.error === "bad-email"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }
@@ -81,13 +87,17 @@ export const LoginInput = styled(DefaultInput)<{ error: string }>`
 
 export const PasswordInput = styled(DefaultInput)<{ error: string }>`
   border-color: ${(props) =>
-    props.error === "bad-password" || props.error === "bad-username"
+    props.error === "bad-password" ||
+    props.error === "bad-username" ||
+    props.error === "bad-email"
       ? props.theme.fontColors.importantRed
       : null};
   :focus {
     border: 1px solid
       ${(props) =>
-        props.error === "bad-password" || props.error === "bad-username"
+        props.error === "bad-password" ||
+        props.error === "bad-username" ||
+        props.error === "bad-email"
           ? props.theme.fontColors.importantRed
           : props.theme.messaging.primaryBlue};
   }

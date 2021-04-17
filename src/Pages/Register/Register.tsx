@@ -22,13 +22,21 @@ export default function Register() {
   const register = () => {
     if (registerUsername.length > 2) {
       if (registerPassword.length > 3) {
-        registerRequest(registerUsername, registerPassword, email).then(
-          (res) => {
-            if (res.status === 200) {
-              window.location.href = "/";
+        if (
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            email
+          )
+        ) {
+          registerRequest(registerUsername, registerPassword, email).then(
+            (res) => {
+              if (res.status === 200) {
+                window.location.href = "/";
+              }
             }
-          }
-        );
+          );
+        } else {
+          setError("bad-email");
+        }
       } else {
         setError("bad-password");
       }
@@ -76,6 +84,8 @@ export default function Register() {
               ? "Username Must Be Longer Than 2 Characters"
               : error === "bad-password"
               ? "Password Must Be Longer Than 3 Characters"
+              : error === "bad-email"
+              ? "Invalid Email"
               : null}
           </ErrorLabel>
           <FormBtns>
