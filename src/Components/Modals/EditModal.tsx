@@ -11,6 +11,7 @@ import {
   CancelBtn,
   DoneBtn,
   InputUsername,
+  InputLabel,
 } from "./EditModal-css";
 
 export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
@@ -71,13 +72,13 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
           <h1>{`Change your ${infoType}`}</h1>
         </FormTitle>
         <FormInputs>
-          <label>
+          <InputLabel error={userExistsError || usernameError || emailError}>
             {userExistsError
               ? "username taken"
               : usernameError || emailError
               ? `${infoType} is invalid`
               : `${infoType}`}
-          </label>
+          </InputLabel>
           <InputUsername
             error={userExistsError || usernameError || emailError}
             onChange={(e) => setUserInput(e)}

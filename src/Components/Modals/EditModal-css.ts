@@ -25,6 +25,12 @@ export const ExitBtn = styled(SecondaryButton)`
   }
 `;
 
+export const InputLabel = styled.label<{ error: boolean }>`
+  text-transform: uppercase;
+  color: ${(props) =>
+    props.error ? props.theme.fontColors.importantRed : undefined};
+`;
+
 export const InputUsername = styled(DefaultInput)<{ error: boolean }>`
   border-color: ${(props) =>
     props.error ? props.theme.fontColors.importantRed : null};
