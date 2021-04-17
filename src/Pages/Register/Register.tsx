@@ -63,19 +63,19 @@ export default function Register() {
               type="text"
               required
             />
+            <label>YOUR EMAIL</label>
+            <LoginInput
+              error={error}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              required
+            />
 
             <label>CREATE A PASSWORD</label>
             <LoginInput
               error={error}
               onChange={(e) => setRegisterPassword(e.target.value)}
               type="password"
-              required
-            />
-            <label>YOUR EMAIL</label>
-            <LoginInput
-              error={error}
-              onChange={(e) => setEmail(e.target.value)}
-              type="text"
               required
             />
           </FormInputs>
