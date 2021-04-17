@@ -51,12 +51,17 @@ export function getLoggedInUserRequest() {
   });
 }
 
-export function registerRequest(username: string, password: string) {
+export function registerRequest(
+  username: string,
+  password: string,
+  email: string
+) {
   return axios.post(
     `${API_URL}/auth/register`,
     {
       username,
       password,
+      email,
     },
     {
       withCredentials: true,

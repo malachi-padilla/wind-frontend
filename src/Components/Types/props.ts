@@ -24,8 +24,8 @@ export interface ProfileProps {
   setProfileOpen: (profileOpen: boolean) => any;
 }
 export interface ModalProps {
-  username: string;
   setEditModalOpen: (editModalOpen: boolean) => any;
+  infoType: string;
 }
 
 export interface ChatProps {

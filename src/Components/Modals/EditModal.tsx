@@ -13,11 +13,12 @@ import {
   InputUsername,
 } from "./EditModal-css";
 
-export default function EditModal({ username, setEditModalOpen }: ModalProps) {
-  const { setFetchNew } = useContext(MyContext) as UserContextNotNull;
+export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
+  const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
   const [userInput, setUserInput] = useState<any>();
   const [userExistsError, setUserExistsError] = useState<boolean>(false);
   const [usernameError, setUsernameError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
 
   const updateUsername = async (key: string, e: any) => {
     if (e.target.value.length > 2) {
@@ -37,10 +38,28 @@ export default function EditModal({ username, setEditModalOpen }: ModalProps) {
     }
   };
 
+  const updateEmail = (key: string, e: any) => {
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        e.target.value
+      )
+    ) {
+      updateUserInfo(key, e)?.then(() => {
+        setFetchNew((current) => !current);
+        setEditModalOpen(false);
+      });
+    } else {
+      setEmailError(true);
+    }
+  };
+
   useEffect(() => {
     setUserExistsError(false);
     setUsernameError(false);
+    setEmailError(false);
   }, [userInput]);
+
+  console.log(user);
 
   return (
     <ModalContainer onClick={() => setEditModalOpen(false)}>
@@ -49,28 +68,36 @@ export default function EditModal({ username, setEditModalOpen }: ModalProps) {
           <i className="fas fa-times"></i>
         </ExitBtn>
         <FormTitle>
-          <h1>Change your username</h1>
+          <h1>{`Change your ${infoType}`}</h1>
         </FormTitle>
         <FormInputs>
           <label>
             {userExistsError
-              ? "USERNAME TAKEN"
-              : usernameError
-              ? "USERNAME IS TOO SHORT"
-              : "USERNAME"}
+              ? "username taken"
+              : usernameError || emailError
+              ? `${infoType} is invalid`
+              : `${infoType}`}
           </label>
           <InputUsername
-            error={userExistsError || usernameError}
+            error={userExistsError || usernameError || emailError}
             onChange={(e) => setUserInput(e)}
-            placeholder={`${username}`}
+            placeholder={
+              infoType === "email"
+                ? user.email
+                : infoType === "username"
+                ? user.username
+                : undefined
+            }
           ></InputUsername>
         </FormInputs>
         <FormFooter>
           <CancelBtn onClick={() => setEditModalOpen(false)}>Cancel</CancelBtn>
           <DoneBtn
-            onClick={() => {
-              updateUsername("username", userInput);
-            }}
+            onClick={() =>
+              infoType === "username"
+                ? updateUsername(infoType, userInput)
+                : updateEmail(infoType, userInput)
+            }
           >
             Done
           </DoneBtn>

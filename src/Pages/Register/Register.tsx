@@ -16,16 +16,19 @@ import { Logo } from "Theme/misc";
 export default function Register() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerPassword, setRegisterPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const register = () => {
     if (registerUsername.length > 2) {
       if (registerPassword.length > 3) {
-        registerRequest(registerUsername, registerPassword).then((res) => {
-          if (res.status === 200) {
-            window.location.href = "/";
+        registerRequest(registerUsername, registerPassword, email).then(
+          (res) => {
+            if (res.status === 200) {
+              window.location.href = "/";
+            }
           }
-        });
+        );
       } else {
         setError("bad-password");
       }
@@ -58,6 +61,13 @@ export default function Register() {
               error={error}
               onChange={(e) => setRegisterPassword(e.target.value)}
               type="password"
+              required
+            />
+            <label>YOUR EMAIL</label>
+            <LoginInput
+              error={error}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
               required
             />
           </FormInputs>

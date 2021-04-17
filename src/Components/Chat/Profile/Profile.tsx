@@ -44,6 +44,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
   const [newAvatar, setNewAvatar] = useState<string>("");
   const [editMediaModal, setEditMediaModalOpen] = useState<boolean>(false);
   const [mediaKey, setMediaKey] = useState<any>(false);
+  const [infoType, setInfoType] = useState<string>("");
 
   const logout = () => {
     logoutRequest().then(() => {
@@ -69,10 +70,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
   return (
     <ProfilePageWrapper>
       {editModalOpen && (
-        <EditModal
-          username={user.username}
-          setEditModalOpen={setEditModalOpen}
-        />
+        <EditModal setEditModalOpen={setEditModalOpen} infoType={infoType} />
       )}
       {logoutModalOpen && (
         <LogoutModal logout={logout} open={setLogoutModalOpen} />
@@ -139,7 +137,28 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                     <p>{user.username}</p>
                   </UserInformation>
                   <Actions>
-                    <EditBtn onClick={() => setEditModalOpen(true)}>
+                    <EditBtn
+                      onClick={() => {
+                        setEditModalOpen(true);
+                        setInfoType("username");
+                      }}
+                    >
+                      Edit
+                    </EditBtn>
+                  </Actions>
+                </InfoBar>
+                <InfoBar>
+                  <UserInformation>
+                    <Heading>email</Heading>
+                    <p>{user.email}</p>
+                  </UserInformation>
+                  <Actions>
+                    <EditBtn
+                      onClick={() => {
+                        setEditModalOpen(true);
+                        setInfoType("email");
+                      }}
+                    >
                       Edit
                     </EditBtn>
                   </Actions>
