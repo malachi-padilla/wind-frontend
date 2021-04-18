@@ -20,7 +20,7 @@ export default function EditMediaModal({
       }}
     >
       <MediaBox onClick={(e) => e.stopPropagation()}>
-        <FormTitle>
+        <FormTitle style={{marginBottom:"1rem"}}>
           <h1>Edit Media</h1>
         </FormTitle>
         <MediaWrapper>

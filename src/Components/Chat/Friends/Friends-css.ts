@@ -17,7 +17,6 @@ export const ActionBar = styled.div`
   top: 0;
   position: absolute;
   padding: 10px;
-  gap: 10px;
   z-index: 10;
 `;
 
@@ -25,16 +24,15 @@ export const FriendsTab = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
   padding-right: 1rem;
   color: ${(props) => props.theme.messaging.secondaryGrey};
   border-right: 1px solid ${(props) => props.theme.mediumGray};
+  margin-right: 1rem;
 `;
 
 export const ActionBarBtns = styled.div`
   display: flex;
   width: 50%;
-  gap: 20px;
 `;
 
 export const Notification = styled(FlexRowCenterCenter)`
@@ -55,6 +53,7 @@ export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
     props.selected
       ? props.theme.messaging.primaryBlue
       : props.theme.tertiaryGrey};
+      margin-right:1rem;
 `;
 
 export const AddBtn = styled(PrimaryButton)<{ addFriendOpen: boolean }>`
@@ -67,14 +66,12 @@ export const AddBtn = styled(PrimaryButton)<{ addFriendOpen: boolean }>`
 export const RequestBtnContents = styled(FlexRowCenterCenter)`
   height: unset;
   width: unset;
-  gap: 10px;
   position: relative;
 `;
 
 export const FriendsList = styled(FlexColCenterStart)`
   height: 80%;
   margin-top: 30px;
-  gap: 20px;
 `;
 
 export const FriendBar = styled(FlexRowCenterBetween)`
@@ -93,7 +90,6 @@ export const FriendBar = styled(FlexRowCenterBetween)`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 5px;
   align-items: center;
   color: ${(props) => props.theme.fontColors.defaultWhite};
 `;
@@ -101,7 +97,6 @@ export const UserInfo = styled.div`
 export const Actions = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
 `;
 
 export const ButtonStyles = css`
@@ -114,6 +109,7 @@ export const ButtonStyles = css`
 
 export const ChatBtn = styled.button`
   ${ButtonStyles}
+  margin-right:5px;
 `;
 
 export const MoreBtn = styled.button`
@@ -133,6 +129,7 @@ export const DenyBtn = styled.button`
 export const FriendsTabText = styled.p`
   color: ${(props) => props.theme.fontColors.defaultWhite};
   font-weight: 700;
+  margin-left: 1rem;
 `;
 
 export const AddFriendContainer = styled(FlexColCenterStart)``;
@@ -142,7 +139,6 @@ export const Title = styled.div<{ error: boolean }>`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
   height: 5%;
   width: 90%;
   margin-left: 10%;
@@ -156,6 +152,7 @@ export const Title = styled.div<{ error: boolean }>`
         : props.theme.fontColors.offWhite};
     font-weight: 300;
     font-size: 14px;
+    margin-top:1rem;
   }
 `;
 

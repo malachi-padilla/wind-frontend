@@ -8,7 +8,7 @@ export default function LogoutModal({ logout, open }) {
   return (
     <ModalContainer onClick={() => open(false)}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <FormTitle>
+        <FormTitle style={{gap:"10px"}}>
           <h1>Log Out</h1>
           <h3>Are you sure you want to logout?</h3>
         </FormTitle>

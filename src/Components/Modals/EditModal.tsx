@@ -22,7 +22,7 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
   const [emailError, setEmailError] = useState<boolean>(false);
 
   const updateUsername = async (key: string, e: any) => {
-    if (e.target.value.length > 2) {
+    if ( e && e.target.value.length > 2) {
       const userFound = await getUserByUsernameRequest(e.target.value)
         .then((res) => res)
         .catch(() => "NOT FOUND");
@@ -40,7 +40,8 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
   };
 
   const updateEmail = (key: string, e: any) => {
-    if (
+
+    if ( e &&
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         e.target.value
       )

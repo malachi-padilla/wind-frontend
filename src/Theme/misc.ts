@@ -16,6 +16,7 @@ export const ProfilePicture = styled.img`
   object-position: center;
   object-fit: cover;
   border-radius: 50%;
+  margin-right: 5px;
 `;
 
 export const DefaultInput = styled.input`

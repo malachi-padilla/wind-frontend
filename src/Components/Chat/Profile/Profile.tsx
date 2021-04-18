@@ -109,6 +109,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                     <span>
                       Change Avatar
                       <PhotoUpload
+                        accept="image/*"
                         id="photoUpload"
                         key={mediaKey}
                         onChange={(e: any) => {
