@@ -40,7 +40,8 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
   };
 
   const updateEmail = (key: string, e: any) => {
-    if (
+
+    if ( e &&
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         e.target.value
       )
