@@ -1,6 +1,7 @@
 export interface PersonalUserInfo {
   userId: string;
   username: string;
+  email: string;
   friends: string[];
   sentFriendRequests: string[];
   recievedFriendRequests: string[];

@@ -51,12 +51,17 @@ export function getLoggedInUserRequest() {
   });
 }
 
-export function registerRequest(username: string, password: string) {
+export function registerRequest(
+  username: string,
+  password: string,
+  email: string
+) {
   return axios.post(
     `${API_URL}/auth/register`,
     {
       username,
       password,
+      email,
     },
     {
       withCredentials: true,
@@ -68,4 +73,17 @@ export function getUserById(userId: string) {
   return axios.get(`${API_URL}/user/${userId}`, {
     withCredentials: true,
   });
+}
+
+export function updateUserInfo(key: string, e: any) {
+  const {
+    target: { value },
+  } = e;
+  const shippingData = {};
+  shippingData[key] = value.trim();
+  if (value.length > 0) {
+    return axios.post(`${API_URL}/user/updateUserInfo`, shippingData, {
+      withCredentials: true,
+    });
+  }
 }

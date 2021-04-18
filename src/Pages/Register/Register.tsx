@@ -16,16 +16,27 @@ import { Logo } from "Theme/misc";
 export default function Register() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerPassword, setRegisterPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const register = () => {
     if (registerUsername.length > 2) {
       if (registerPassword.length > 3) {
-        registerRequest(registerUsername, registerPassword).then((res) => {
-          if (res.status === 200) {
-            window.location.href = "/";
-          }
-        });
+        if (
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            email
+          )
+        ) {
+          registerRequest(registerUsername, registerPassword, email).then(
+            (res) => {
+              if (res.status === 200) {
+                window.location.href = "/";
+              }
+            }
+          );
+        } else {
+          setError("bad-email");
+        }
       } else {
         setError("bad-password");
       }
@@ -52,6 +63,13 @@ export default function Register() {
               type="text"
               required
             />
+            <label>YOUR EMAIL</label>
+            <LoginInput
+              error={error}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              required
+            />
 
             <label>CREATE A PASSWORD</label>
             <LoginInput
@@ -66,6 +84,8 @@ export default function Register() {
               ? "Username Must Be Longer Than 2 Characters"
               : error === "bad-password"
               ? "Password Must Be Longer Than 3 Characters"
+              : error === "bad-email"
+              ? "Invalid Email"
               : null}
           </ErrorLabel>
           <FormBtns>

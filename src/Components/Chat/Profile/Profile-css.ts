@@ -116,17 +116,27 @@ export const ProfileImg = styled(FlexColCenterCenter)<{ image: string }>`
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
     height: 100%;
     width: 100%;
     border-radius: 50%;
     visibility: hidden;
     font-size: 14px;
     font-weight: 600;
+    position: relative;
   }
+
   :hover span {
     visibility: visible;
   }
+`;
+
+export const PhotoUpload = styled.input`
+  position: absolute;
+  opacity: 0;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
 `;
 
 export const ImageLabel = styled(FlexColCenterCenter)`
@@ -138,6 +148,7 @@ export const ImageLabel = styled(FlexColCenterCenter)`
   position: absolute;
   top: -5px;
   left: 45px;
+  z-index: 1;
 `;
 
 export const InfoCard = styled(FlexColCenterCenter)`

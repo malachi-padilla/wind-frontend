@@ -74,7 +74,7 @@ export default function ChatPage() {
     const myInterval = setInterval(() => {
       setPollingInterval((current) => !current);
       setFetchNew((current: any) => !current);
-    }, 5000);
+    }, 20000);
     return () => clearInterval(myInterval);
   }, []);
 
