@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {
   FlexColCenterCenter,
-  FlexRowCenterCenter,
   InputBox,
 } from "Theme/containers";
 
