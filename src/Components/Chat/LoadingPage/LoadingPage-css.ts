@@ -25,6 +25,8 @@ export const LogoContainer = styled(FlexColCenterCenter)`
 export const LoadingContainer = styled(FlexRowCenterCenter)`
   width: auto;
   height: auto;
-  gap: 10px;
   margin-top: 50px;
+  h2 { 
+    margin-left:1rem;
+  }
 `;

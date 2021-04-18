@@ -36,7 +36,6 @@ export const MessageWrapper = styled.div<{ secondaryMessage: boolean }>`
   align-self: ${(props) =>
     props.secondaryMessage ? "flex-start" : "flex-end"};
   padding: 10px;
-  gap: 2px;
 `;
 
 export const MainMessage = styled.div<{ secondaryMessage: boolean }>`

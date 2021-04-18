@@ -53,7 +53,7 @@ export default function FriendModal({
             <h3>{friend}</h3>
           </UserInfoWrapper>
           <Actions>
-            <PrimaryButton onClick={() => setViewFriend(false)}>
+            <PrimaryButton style={{marginRight:"1rem"}} onClick={() => setViewFriend(false)}>
               Send Message
             </PrimaryButton>
             <MoreBtn>

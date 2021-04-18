@@ -89,13 +89,13 @@ export default function SideBar({
 
   const addFriend = async () => {
     // Perform Check To See If User Exists First!
+    console.log(friendInput)
     if (friendInput.length > 0 && friendInput !== userInfo.username) {
       const userResult = await getUserByUsernameRequest(friendInput)
         .then((res) => res)
         .catch(() => "Not Found");
       if (
-        userResult !== "Not Found" &&
-        recentlyMessaged.indexOf(friendInput) === -1
+        userResult !== "Not Found" 
       ) {
         setNotFoundError(false);
         dispatch(setFriendAction(friendInput));
@@ -107,13 +107,17 @@ export default function SideBar({
     }
   };
 
+  useEffect(() => {
+    setNotFoundError(false)
+  },[friendInput])
+
   return (
     <StyledMainContainer>
       <SideBarContents>
         <EnterFriendWrapper>
           <StyledFriendInput
             error={notFoundError}
-            onKeyDown={(e) => (e.key == "Enter" ? addFriend() : null)}
+            onKeyDown={(e) => (e.key === "Enter" ? addFriend() : null)}
             onChange={(e: any) => setFriendInput(e.target.value)}
             value={friendInput}
             type="text"

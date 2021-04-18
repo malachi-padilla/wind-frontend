@@ -89,16 +89,17 @@ export const Title = styled.h3`
 
 export const InfoBox = styled(FlexColCenterCenter)`
   background: ${(props) => props.theme.secondaryDarkGrey};
-  height: 30%;
+  height: fit-content;
   width: 90%;
   border-radius: 8px;
   padding: 1rem;
 `;
-export const AvatarBar = styled(FlexRowCenterBetween)``;
+export const AvatarBar = styled(FlexRowCenterBetween)`
+margin-bottom:1rem;
+`;
 export const UserInfoWrapper = styled(UserInfo)`
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
 `;
 export const ProfileImg = styled(FlexColCenterCenter)<{ image: string }>`
   background-image: url(${(props) => props.image});
@@ -110,6 +111,7 @@ export const ProfileImg = styled(FlexColCenterCenter)<{ image: string }>`
   border-radius: 50%;
   cursor: pointer;
   position: relative;
+  margin-right:1rem;
 
   span {
     display: flex;
@@ -191,10 +193,10 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   height: fit-content;
   width: fit-content;
-  gap: 5px;
   p {
     color: ${(props) => props.theme.messaging.secondaryGrey};
     font-size: 12px;
+    margin-top: 5px;
   }
 `;
 

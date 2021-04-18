@@ -55,7 +55,6 @@ export const StyledFriendInput = styled.input<{ error: boolean }>`
   }
 `;
 export const FriendsTab = styled(FlexRowCenterStart)`
-  gap: 10%;
   background-color: transparent;
   width: 90%;
   height: 42px;
@@ -68,6 +67,9 @@ export const FriendsTab = styled(FlexRowCenterStart)`
   :hover {
     background-color: ${(props) => props.theme.mainGrey};
     color: #fff;
+  }
+  div {
+    margin-right: 1rem;
   }
 `;
 
