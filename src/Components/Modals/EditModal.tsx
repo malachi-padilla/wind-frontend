@@ -1,4 +1,4 @@
-import { getUserByUsernameRequest, updateUserInfo } from 'Api/user';
+import { updateUserInfo } from 'Api/user';
 import { ModalProps } from 'Components/Types/props';
 import { MyContext } from 'Context';
 import { FormInputs, FormTitle } from 'Pages/Login/Login-css';
@@ -21,7 +21,7 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
   const [usernameError, setUsernameError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
 
-  const updateUsername = async (key: string, e: any) => {
+  const updateUsername = () => {
     // if (e && e.target.value.length > 2) {
     //   const userFound = await getUserByUsernameRequest(e.target.value)
     //     .then((res) => res)
@@ -96,7 +96,7 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
           <DoneBtn
             onClick={() =>
               infoType === 'username'
-                ? updateUsername(infoType, userInput)
+                ? updateUsername()
                 : updateEmail(infoType, userInput)
             }
           >
