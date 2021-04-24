@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getMinutesLastOnline } from "Util/utilFunctions";
-import { getUserByUsernameRequest, getUsersRequest } from "Api/user";
-import { MainContainer } from "Theme/containers";
+import React, { useEffect, useState } from 'react';
+import { getMinutesLastOnline } from 'Util/utilFunctions';
+import { getUsersRequest } from 'Api/user';
+import { MainContainer } from 'Theme/containers';
 import {
   AcceptBtn,
   ActionBar,
@@ -22,14 +22,14 @@ import {
   Title,
   MoreBtn,
   AddFriendInput,
-} from "./Friends-css";
-import { RecipientUserInfo } from "Types/models";
-import { FriendsProps } from "Components/Types/props";
-import { useDispatch } from "react-redux";
-import { setFriendAction } from "Redux/actions";
-import FriendButton from "Components/Buttons/FriendButton/FriendButton";
-import { addFriendRequest } from "Api/friends";
-import { ProfilePicture } from "Theme/misc";
+} from './Friends-css';
+import { RecipientUserInfo } from 'Types/models';
+import { FriendsProps } from 'Components/Types/props';
+import { useDispatch } from 'react-redux';
+import { setFriendAction } from 'Redux/actions';
+import FriendButton from 'Components/Buttons/FriendButton/FriendButton';
+import { addFriendRequest, searchUsersRequest } from 'Api/friends';
+import { ProfilePicture } from 'Theme/misc';
 
 export default function Friends({
   friendsList,
@@ -41,8 +41,8 @@ export default function Friends({
   const [requestedFilter, setRequestedFilter] = useState<boolean>(false);
   const [addFriendOpen, setAddFriendOpen] = useState<boolean>(false);
   const [searchError, setSearchError] = useState<boolean>(true);
-  const [friendInput, setFriendInput] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<RecipientUserInfo>();
+  const [friendInput, setFriendInput] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<RecipientUserInfo[]>([]);
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ export default function Friends({
   }, [friendsList, onlineFilter, requestsFilter, requestedFilter, userInfo]);
 
   const setFilter = async (filter: string) => {
-    if (filter === "Online") {
+    if (filter === 'Online') {
       if (onlineFilter) {
         setOnlineFilter(false);
         if (!requestedFilter && !requestsFilter) {
@@ -77,7 +77,7 @@ export default function Friends({
       setRequestedFilter(false);
       setRequestsFilter(false);
       setAddFriendOpen(false);
-    } else if (filter === "Requested") {
+    } else if (filter === 'Requested') {
       if (requestedFilter) {
         setRequestedFilter(false);
         if (!onlineFilter && !requestsFilter) {
@@ -92,7 +92,7 @@ export default function Friends({
       setOnlineFilter(false);
       setRequestsFilter(false);
       setAddFriendOpen(false);
-    } else if (filter === "Requests") {
+    } else if (filter === 'Requests') {
       if (requestsFilter) {
         setRequestsFilter(false);
         if (!onlineFilter && !requestedFilter) {
@@ -107,7 +107,7 @@ export default function Friends({
       setOnlineFilter(false);
       setRequestedFilter(false);
       setAddFriendOpen(false);
-    } else if (filter === "Add Friend") {
+    } else if (filter === 'Add Friend') {
       if (addFriendOpen) {
         setAddFriendOpen(false);
       } else {
@@ -123,17 +123,13 @@ export default function Friends({
     setSearchError(false);
   }, [friendInput]);
 
-  const getRecipientInformation = async () => {
-    const searchResult = await getUserByUsernameRequest(friendInput)
-      .then((res) => {
-        setSearchResults(res.data);
-      })
-      .catch(() => "Bad Request");
-    if (searchResult !== "Bad Request") {
-      setFriendInput("");
-    } else {
-      setSearchError(true);
-    }
+  const searchUsers = async (searchInput) => {
+    await searchUsersRequest(searchInput).then((res) => {
+      setSearchResults(res.data);
+      if (!res.data.length) {
+        setSearchError(true);
+      }
+    });
   };
 
   const renderNone = () => {
@@ -158,14 +154,14 @@ export default function Friends({
     <MainContainer>
       <ActionBar>
         <FriendsTab>
-          <i className="fas fa-user-friends"></i>
+          <i className='fas fa-user-friends'></i>
           <FriendsTabText>Friends</FriendsTabText>
         </FriendsTab>
         <ActionBarBtns>
           <FriendsBtn
             selected={onlineFilter}
             onClick={() => {
-              setFilter("Online");
+              setFilter('Online');
             }}
           >
             Online
@@ -173,7 +169,7 @@ export default function Friends({
           <FriendsBtn
             selected={requestedFilter}
             onClick={() => {
-              setFilter("Requested");
+              setFilter('Requested');
             }}
           >
             Requested
@@ -181,7 +177,7 @@ export default function Friends({
           <FriendsBtn
             selected={requestsFilter}
             onClick={() => {
-              setFilter("Requests");
+              setFilter('Requests');
             }}
           >
             <RequestBtnContents>
@@ -197,7 +193,7 @@ export default function Friends({
             addFriendOpen={addFriendOpen}
             onClick={() => {
               setAddFriendOpen(!addFriendOpen);
-              setFilter("Add Friend");
+              setFilter('Add Friend');
             }}
           >
             Add Friend
@@ -229,31 +225,31 @@ export default function Friends({
                   <AddFriendInput
                     error={searchError}
                     onKeyDown={(e: any) =>
-                      e.key === "Enter" && getRecipientInformation()
+                      e.key === 'Enter' && searchUsers(friendInput)
                     }
                     onChange={(e: any) => setFriendInput(e.target.value)}
                     value={friendInput}
-                    placeholder="Enter a Username"
-                    type="text"
+                    placeholder='Enter a Username'
+                    type='text'
                   ></AddFriendInput>
                 </InputContent>
-                {searchResults && (
+                {searchResults.map((item) => (
                   <>
                     <FriendBar>
                       <UserInfo>
                         <ProfilePicture
-                          src={searchResults.profilePicture}
-                          alt="profilepic"
+                          src={item.profilePicture}
+                          alt='profilepic'
                         ></ProfilePicture>
-                        <p>{searchResults.username}</p>
+                        <p>{item.username}</p>
                       </UserInfo>
                       <FriendButton
-                        recipientId={searchResults.userId}
-                        relation={searchResults.relation}
+                        recipientId={item.userId}
+                        relation={item.relation}
                       />
                     </FriendBar>
                   </>
-                )}
+                ))}
               </AddFriendContainer>
             ) : (
               mappingList &&
@@ -262,7 +258,7 @@ export default function Friends({
                   <UserInfo>
                     <ProfilePicture
                       src={item.profilePicture}
-                      alt="profilepic"
+                      alt='profilepic'
                     ></ProfilePicture>
                     <h3>{item.username}</h3>
                   </UserInfo>
@@ -275,10 +271,10 @@ export default function Friends({
                             setFriendsIsOpen(false);
                           }}
                         >
-                          <i className="fas fa-comment-alt"></i>
+                          <i className='fas fa-comment-alt'></i>
                         </ChatBtn>
                         <MoreBtn>
-                          <i className="fas fa-ellipsis-v"></i>
+                          <i className='fas fa-ellipsis-v'></i>
                         </MoreBtn>
                       </>
                     ) : (
@@ -288,7 +284,7 @@ export default function Friends({
                             acceptRequest(userInfo.userId, item.userId)
                           }
                         >
-                          <i className="fas fa-check"></i>
+                          <i className='fas fa-check'></i>
                         </AcceptBtn>
                       </>
                     )}

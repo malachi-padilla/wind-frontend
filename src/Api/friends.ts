@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_URL } from "Config/globalVariables";
+import axios from 'axios';
+import { API_URL } from 'Config/globalVariables';
 
 export const addFriendRequest = (user1: string, user2: string) => {
   return axios.post(
@@ -43,4 +43,10 @@ export const getMutualFriendsRequest = (user1, user2) => {
       withCredentials: true,
     }
   );
+};
+
+export const searchUsersRequest = (searchInput: string) => {
+  return axios.get(`${API_URL}/friends/search?term=${searchInput}`, {
+    withCredentials: true,
+  });
 };
