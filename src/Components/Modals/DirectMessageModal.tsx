@@ -1,6 +1,5 @@
 import { searchUsersRequest } from 'Api/friends';
 import { UserInfo } from 'Components/Chat/Friends/Friends-css';
-import { StyledFriendInput } from 'Components/Sidebar/Sidebar-css';
 import { MyContext } from 'Context';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,7 +62,7 @@ export default function DirectMessageModal({ open, allFriends }) {
           type='text'
         />
         <FriendsList>
-          {searchResults.map((item, index) => (
+          {searchResults.map((item) => (
             <FriendBar
               onClick={() => addDirectMessage(item.username)}
               key={item.userId}
