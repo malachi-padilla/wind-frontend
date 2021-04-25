@@ -125,7 +125,9 @@ export default function Friends({
 
   const searchUsers = async (searchInput) => {
     await searchUsersRequest(searchInput).then((res) => {
-      setSearchResults(res.data);
+      setSearchResults(
+        res.data.filter((item) => item.username !== userInfo.username)
+      );
       if (!res.data.length) {
         setSearchError(true);
       }
@@ -210,15 +212,9 @@ export default function Friends({
                 <Title error={searchError}>
                   <h4>ADD FRIEND</h4>
                   {searchError ? (
-                    <p>
-                      Hm, didn't work. Double check that the capitalization and
-                      spelling are correct.
-                    </p>
+                    <p>Hm, didn't work. Double check that.</p>
                   ) : (
-                    <p>
-                      You can add a friend with their username. It's cAsE
-                      sEnSitIvE!
-                    </p>
+                    <p>You can add a friend with their username.</p>
                   )}
                 </Title>
                 <InputContent>
