@@ -1,9 +1,9 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 import {
   FlexColCenterCenter,
   FlexRowCenterCenter,
   FlexRowCenterStart,
-} from "Theme/containers";
+} from 'Theme/containers';
 export const Title = styled.div`
   display: flex;
   flex-direction: row;
@@ -31,18 +31,20 @@ export const MessageWrapper = styled.div<{ secondaryMessage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) =>
-    props.secondaryMessage ? "flex-end" : "flex-start"};
+    props.secondaryMessage ? 'flex-end' : 'flex-start'};
   max-width: 50%;
   align-self: ${(props) =>
-    props.secondaryMessage ? "flex-start" : "flex-end"};
+    props.secondaryMessage ? 'flex-start' : 'flex-end'};
   padding: 10px;
 `;
 
 export const MainMessage = styled.div<{ secondaryMessage: boolean }>`
+  display: flex;
+  align-items: center;
   word-break: break-all;
   word-wrap: break-word;
   padding: 5px 10px 5px 10px;
-  min-height: 20px;
+  min-height: 30px;
   line-height: 1.5;
   background-color: ${(props) =>
     props.secondaryMessage
@@ -75,7 +77,7 @@ export const EnterMessage = styled.textarea<{ showScrollBar: boolean }>`
   border: ${(props) => props.theme.inputBorder};
   color: ${(props) => props.theme.fontColors.defaultLightGrey};
   font-size: 16px;
-  overflow-y: ${(props) => (props.showScrollBar ? "scroll" : "hidden")};
+  overflow-y: ${(props) => (props.showScrollBar ? 'scroll' : 'hidden')};
   resize: none;
 `;
 
@@ -152,5 +154,5 @@ export const IsTyping = styled.div`
 `;
 
 export const IsTypingMessage = styled(MainMessage)`
-  ${IsTypingCSS}
+  ${IsTypingCSS};
 `;
