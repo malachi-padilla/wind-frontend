@@ -36,6 +36,7 @@ import LogoutModal from 'Components/Modals/LogoutModal';
 import EditMediaModal from 'Components/Modals/EditMediaModal';
 import { API_URL } from 'Config/globalVariables';
 import axios from 'axios';
+import { hideEmail } from 'Util/utilFunctions';
 
 export default function Profile({ setProfileOpen }: ProfileProps) {
   const { user, setFetchNew } = useContext(MyContext) as UserContextNotNull;
@@ -162,7 +163,7 @@ export default function Profile({ setProfileOpen }: ProfileProps) {
                         }
                       }}
                     >
-                      {user.email ? user.email : 'add email'}
+                      {user.email ? hideEmail(user.email) : 'add email'}
                     </p>
                   </UserInformation>
                   <Actions>
