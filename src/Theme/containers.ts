@@ -101,8 +101,8 @@ export const ModalContainer = styled(FlexColCenterCenter)`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
-  top: auto;
-  bottom: auto;
+  top: 0;
+  bottom: 0;
   z-index: 10;
 `;
 

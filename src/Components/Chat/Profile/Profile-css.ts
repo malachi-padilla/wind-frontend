@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { SecondaryButton } from "Theme/buttons";
-import { UserInfo } from "../Friends/Friends-css";
+import styled from 'styled-components';
+import { SecondaryButton } from 'Theme/buttons';
+import { UserInfo } from '../Friends/Friends-css';
 import {
   FlexColCenterCenter,
   FlexRowCenterBetween,
   FlexRowCenterCenter,
   FriendBarTheme,
   MainContainer,
-} from "Theme/containers";
+} from 'Theme/containers';
 
 export const ProfilePageWrapper = styled(FlexRowCenterCenter)`
   overflow: hidden;
@@ -95,7 +95,7 @@ export const InfoBox = styled(FlexColCenterCenter)`
   padding: 1rem;
 `;
 export const AvatarBar = styled(FlexRowCenterBetween)`
-margin-bottom:1rem;
+  margin-bottom: 1rem;
 `;
 export const UserInfoWrapper = styled(UserInfo)`
   flex-direction: row;
@@ -111,7 +111,7 @@ export const ProfileImg = styled(FlexColCenterCenter)<{ image: string }>`
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  margin-right:1rem;
+  margin-right: 1rem;
 
   span {
     display: flex;

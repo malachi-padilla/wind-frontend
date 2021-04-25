@@ -45,6 +45,7 @@ export const SearchInput = styled.input`
   color: ${(props) => props.theme.fontColors.offWhite};
   font-size: 14px;
   font-weight: 500px;
+  margin-bottom: 10px;
   &:hover {
     transition: ease-in 200ms;
   }
@@ -56,6 +57,8 @@ export const SearchInput = styled.input`
 export const FriendsList = styled(FlexColCenterCenter)`
   justify-content: flex-start;
   width: 95%;
+  height: 70%;
+  overflow: auto;
 `;
 
 export const FriendBar = styled(FriendBarTheme)`
