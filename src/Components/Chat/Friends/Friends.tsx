@@ -26,7 +26,7 @@ import {
 import { RecipientUserInfo } from 'Types/models';
 import { FriendsProps } from 'Components/Types/props';
 import { useDispatch } from 'react-redux';
-import { setFriendAction } from 'Redux/actions';
+import { setFriendAction, setPopOverMessage } from 'Redux/actions';
 import FriendButton from 'Components/Buttons/FriendButton/FriendButton';
 import { addFriendRequest, searchUsersRequest } from 'Api/friends';
 import { ProfilePicture } from 'Theme/misc';

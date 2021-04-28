@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import WindLogo from "Assets/WindLogo/logo_2.png";
+import styled from 'styled-components';
+import WindLogo from 'Assets/WindLogo/logo_2.png';
+import { FlexColCenterCenter } from './containers';
 
 export const Logo = styled.div`
   height: 100px;
@@ -41,4 +42,16 @@ export const DefaultInput = styled.input`
   ::placeholder {
     color: ${(props) => props.theme.fontColors.offWhite};
   }
+`;
+
+export const DefaultPopOver = styled(FlexColCenterCenter)`
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  background-color: ${(props) => props.theme.defaultBlack};
+  color: ${(props) => props.theme.fontColors.defaultWhite};
+  position: absolute;
+  border-radius: 4px;
+  font-size: 11px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 `;

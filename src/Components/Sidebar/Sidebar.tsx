@@ -19,12 +19,17 @@ import {
 import { getUserByUsernameRequest } from 'Api/user';
 import { SocketIsTypingMessage } from 'Components/Types/models';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFriendAction, setRecentlyMessagedAction } from 'Redux/actions';
+import {
+  setFriendAction,
+  setPopOverMessage,
+  setRecentlyMessagedAction,
+} from 'Redux/actions';
 import { ReduxStore } from 'Redux/types';
 import { ProfilePicture } from 'Theme/misc';
 import { Actions, UserInfo } from 'Components/Chat/Friends/Friends-css';
 import { getProfilePictureByUsernameRequest } from 'Api/friends';
 import DirectMessageModal from 'Components/Modals/DirectMessageModal';
+import PopOver from 'Components/PopOver/PopOver';
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -43,6 +48,7 @@ export default function SideBar({
   const [directMessageModalOpen, setDirectMessageModalOpen] = useState<boolean>(
     false
   );
+  const [popOver, setPopOver] = useState<boolean>(false);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
@@ -145,7 +151,15 @@ export default function SideBar({
           </FriendsTab>
           <DirectMessageTab>
             <p>DIRECT MESSAGES</p>
-            <button onClick={() => setDirectMessageModalOpen(true)}>
+            {popOver && <PopOver />}
+            <button
+              onClick={() => setDirectMessageModalOpen(true)}
+              onMouseOver={() => {
+                setPopOver(true);
+                dispatch(setPopOverMessage('Direct DM'));
+              }}
+              onMouseLeave={() => setPopOver(false)}
+            >
               <i className='fas fa-times'></i>
             </button>
           </DirectMessageTab>
