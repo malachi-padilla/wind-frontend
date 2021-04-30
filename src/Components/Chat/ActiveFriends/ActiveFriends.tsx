@@ -2,7 +2,7 @@ import { ActiveFriendsProps } from 'Components/Types/props';
 import React, { useEffect, useState } from 'react';
 import { ProfilePicture } from 'Theme/misc';
 import { RecipientUserInfo } from 'Types/models';
-import { getMinutesLastOnline } from 'Util/utilFunctions';
+import { isOnline } from 'Util/utilFunctions';
 import {
   ActiveUsersContainer,
   ActiveUsersList,
@@ -17,11 +17,11 @@ import {
 
 export default function ActiveFriends({ friendsList }: ActiveFriendsProps) {
   const [activeUsers, setActiveUsers] = useState<RecipientUserInfo[]>([]);
-  const isOnline = true;
+
   useEffect(() => {
     setActiveUsers(
       friendsList.filter((item) => {
-        return getMinutesLastOnline(item.lastOnline) < 10;
+        return isOnline(item.lastOnline);
       })
     );
   }, [friendsList]);
@@ -48,7 +48,7 @@ export default function ActiveFriends({ friendsList }: ActiveFriendsProps) {
                   src={item.profilePicture}
                   alt='profilepic'
                 ></ProfilePicture>
-                <OnlineIndicator online={isOnline}>
+                <OnlineIndicator online={true}>
                   <span></span>
                 </OnlineIndicator>
                 <p>{item.username}</p>

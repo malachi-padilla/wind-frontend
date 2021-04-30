@@ -30,6 +30,8 @@ import { Actions, UserInfo } from 'Components/Chat/Friends/Friends-css';
 import { getProfilePictureByUsernameRequest } from 'Api/friends';
 import DirectMessageModal from 'Components/Modals/DirectMessageModal';
 import PopOver from 'Components/PopOver/PopOver';
+import { isOnline } from 'Util/utilFunctions';
+import { RecipientUserInfo } from 'Types/models';
 
 interface PeopleTyping {
   [key: string]: boolean;
@@ -48,10 +50,10 @@ export default function SideBar({
   const [directMessageModalOpen, setDirectMessageModalOpen] = useState<boolean>(
     false
   );
-  const [isOnline, setIsOnline] = useState<boolean>(false);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
+  const [friendsOnline, setFriendsOnline] = useState<RecipientUserInfo[]>([]);
   const [usersWithPicture, setUsersWithPicture] = useState<
     { username: string; profilePicture: string }[]
   >([]);
@@ -123,6 +125,12 @@ export default function SideBar({
     setNotFoundError(false);
   }, [friendInput]);
 
+  useEffect(() => {
+    setFriendsOnline(friendsList.filter((item) => isOnline(item.lastOnline)));
+  }, [friendsList]);
+
+  console.log(friendsOnline);
+
   return (
     <StyledMainContainer>
       {directMessageModalOpen && (
@@ -183,7 +191,11 @@ export default function SideBar({
                     src={item.profilePicture}
                     alt='profilepic'
                   ></ProfilePicture>
-                  <DefaultStatusIndicator online={isOnline}>
+                  <DefaultStatusIndicator
+                    online={
+                      friendsOnline[0].username === item.username ? true : false
+                    }
+                  >
                     {peopleTyping[item.username] ? (
                       <IsTyping>
                         <span></span>
@@ -212,6 +224,9 @@ export default function SideBar({
             src={userInfo.profilePicture}
             alt='profilepic'
           ></ProfilePicture>
+          <DefaultStatusIndicator online={true}>
+            <span></span>
+          </DefaultStatusIndicator>
           <p>{userInfo.username}</p>
         </UserInfo>
         <ProfileBtns>

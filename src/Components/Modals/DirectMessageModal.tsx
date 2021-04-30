@@ -5,8 +5,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFriendAction, setRecentlyMessagedAction } from 'Redux/actions';
 import { ReduxStore } from 'Redux/types';
-import { ProfilePicture } from 'Theme/misc';
+import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
 import { UserContextNotNull } from 'Types/types';
+import { isOnline } from 'Util/utilFunctions';
 import {
   Container,
   FriendBar,
@@ -72,6 +73,11 @@ export default function DirectMessageModal({ open, allFriends }) {
                   src={item.profilePicture}
                   alt='profilepic'
                 ></ProfilePicture>
+                <DefaultStatusIndicator
+                  online={isOnline(item.lastOnline) ? true : false}
+                >
+                  <span></span>
+                </DefaultStatusIndicator>
                 <p>{item.username}</p>
               </UserInfo>
             </FriendBar>

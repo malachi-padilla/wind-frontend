@@ -12,8 +12,9 @@ import { useDispatch } from 'react-redux';
 import { setFriendAction } from 'Redux/actions';
 import { PrimaryButton } from 'Theme/buttons';
 import { FriendBarTheme } from 'Theme/containers';
-import { ProfilePicture } from 'Theme/misc';
+import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
 import { RecipientUserInfo } from 'Types/models';
+import { isOnline } from 'Util/utilFunctions';
 import {
   FriendBox,
   FriendBoxTop,
@@ -82,6 +83,11 @@ export default function FriendModal({
                     alt='profilepic'
                   ></ProfilePicture>
                   <p>{item.username}</p>
+                  <DefaultStatusIndicator
+                    online={isOnline(item.lastOnline) ? true : false}
+                  >
+                    <span></span>
+                  </DefaultStatusIndicator>
                 </UserInfo>
               </FriendBarTheme>
             ))
