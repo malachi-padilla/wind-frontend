@@ -17,7 +17,7 @@ import {
 
 export default function ActiveFriends({ friendsList }: ActiveFriendsProps) {
   const [activeUsers, setActiveUsers] = useState<RecipientUserInfo[]>([]);
-  const [isOnline, setisOnline] = useState<boolean>(true);
+  const isOnline = true;
   useEffect(() => {
     setActiveUsers(
       friendsList.filter((item) => {
