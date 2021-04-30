@@ -32,6 +32,7 @@ export const FriendNav = styled(FlexRowCenterStart)`
   height: 15%;
   background-color: ${(props) => props.theme.tertiaryDarkGrey};
   padding-left: 10px;
+  margin-bottom: 1rem;
 `;
 
 export const NavOpts = styled(FlexColCenterCenter)`
@@ -50,4 +51,5 @@ export const MutualFriends = styled(FlexColCenterCenter)`
   justify-content: flex-start;
   padding-left: 1rem;
   padding-right: 1rem;
+  gap: 5px;
 `;

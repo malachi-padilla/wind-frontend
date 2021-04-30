@@ -73,7 +73,6 @@ export default function FriendModal({
           {mutualFriends!.length > 0 ? (
             mutualFriends!.map((item) => (
               <FriendBarTheme
-                style={{ height: '50px', marginTop: 'none' }}
                 onClick={() => dispatch(setFriendAction(item.username))}
                 key={item.userId}
               >

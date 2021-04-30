@@ -48,7 +48,6 @@ export default function SideBar({
   const [directMessageModalOpen, setDirectMessageModalOpen] = useState<boolean>(
     false
   );
-  const [popOver, setPopOver] = useState<boolean>(false);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
@@ -59,6 +58,9 @@ export default function SideBar({
     (state: ReduxStore) => state.recentlyMessaged
   );
 
+  const popOverMessage = useSelector(
+    (state: ReduxStore) => state.popOverMessage
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -151,14 +153,13 @@ export default function SideBar({
           </FriendsTab>
           <DirectMessageTab>
             <p>DIRECT MESSAGES</p>
-            {popOver && <PopOver />}
+            {popOverMessage === 'Create DM' ? <PopOver /> : null}
             <button
               onClick={() => setDirectMessageModalOpen(true)}
               onMouseOver={() => {
-                setPopOver(true);
-                dispatch(setPopOverMessage('Direct DM'));
+                dispatch(setPopOverMessage('Create DM'));
               }}
-              onMouseLeave={() => setPopOver(false)}
+              onMouseLeave={() => dispatch(setPopOverMessage(''))}
             >
               <i className='fas fa-times'></i>
             </button>
@@ -209,7 +210,17 @@ export default function SideBar({
           <p>{userInfo.username}</p>
         </UserInfo>
         <ProfileBtns>
-          <SettingsBtn onClick={() => setProfileOpen(true)}>
+          {popOverMessage === 'User Settings' ? <PopOver /> : null}
+          <SettingsBtn
+            onClick={() => {
+              setProfileOpen(true);
+              dispatch(setPopOverMessage(''));
+            }}
+            onMouseOver={() => {
+              dispatch(setPopOverMessage('User Settings'));
+            }}
+            onMouseLeave={() => dispatch(setPopOverMessage(''))}
+          >
             <i className='fas fa-cog'></i>
           </SettingsBtn>
         </ProfileBtns>

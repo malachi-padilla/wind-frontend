@@ -85,11 +85,12 @@ export const FriendBarTheme = styled.div`
   min-height: 40px;
   border-radius: 4px;
   padding-left: 12px;
-  height: unset;
-  background-color: ${(props) => props.theme.mainGrey};
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: inherit;
   color: ${(props) => props.theme.fontColors.defaultWhite};
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 3px;
   position: relative;
   :hover {
     background-color: #3c3f47;

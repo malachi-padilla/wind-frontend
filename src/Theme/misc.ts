@@ -46,12 +46,13 @@ export const DefaultInput = styled.input`
 
 export const DefaultPopOver = styled(FlexColCenterCenter)`
   height: fit-content;
-  width: fit-content;
-  padding: 10px;
+  width: 100px;
+  padding: 8px;
   background-color: ${(props) => props.theme.defaultBlack};
   color: ${(props) => props.theme.fontColors.defaultWhite};
   position: absolute;
-  border-radius: 4px;
-  font-size: 11px;
+  border-radius: 8px;
+  font-size: 14px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  font-weight: 200;
 `;

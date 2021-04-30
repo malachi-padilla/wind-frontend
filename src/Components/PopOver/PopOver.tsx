@@ -7,5 +7,9 @@ export default function PopOver() {
   const popOverMessage = useSelector(
     (state: ReduxStore) => state.popOverMessage
   );
-  return <PopOverContainer>{popOverMessage}</PopOverContainer>;
+  return (
+    <PopOverContainer message={popOverMessage}>
+      {popOverMessage}
+    </PopOverContainer>
+  );
 }

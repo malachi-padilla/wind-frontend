@@ -81,6 +81,7 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
   font-weight: 700;
   color: ${(props) => props.theme.fontColors.defaultMediumGrey};
   position: relative;
+  margin-bottom: 20px;
   :hover {
     color: #fff;
   }
@@ -149,6 +150,7 @@ export const ProfileBar = styled(FlexRowCenterEvenly)`
 
 export const ProfileBtns = styled(FlexRowCenterEnd)`
   width: 60%;
+  position: relative;
 `;
 
 export const SettingsBtn = styled.button`
