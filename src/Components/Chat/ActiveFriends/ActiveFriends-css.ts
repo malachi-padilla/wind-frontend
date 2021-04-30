@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   FlexColCenterCenter,
   FlexColCenterStart,
   FriendBarTheme,
-} from "Theme/containers";
+} from 'Theme/containers';
 
 export const MainContainer = styled(FlexColCenterCenter)`
   width: 20%;
@@ -16,7 +16,7 @@ export const MainContainer = styled(FlexColCenterCenter)`
 
 export const Subheading = styled.h4`
   color: ${(props) => props.theme.fontColors.defaultWhite};
-  margin-bottom: "10px";
+  margin-bottom: '10px';
 `;
 
 export const Text = styled.p`
@@ -62,4 +62,6 @@ export const OnlineIndicator = styled.div`
 `;
 
 export const ActiveUsersList = styled(FlexColCenterStart)``;
-export const ActiveUser = styled(FriendBarTheme)``;
+export const ActiveUser = styled(FriendBarTheme)`
+  background-color: ${(props) => props.theme.mainGrey};
+`;
