@@ -118,7 +118,7 @@ export const IsTyping = styled.div`
     width: 10px;
     float: left;
     margin-right: 5px;
-    background-color: ${(props) => props.theme.fontColors.actionGreen};
+    background-color: ${(props) => props.theme.fontColors.defaultWhite};
     display: block;
     border-radius: 50%;
     opacity: 0.4;

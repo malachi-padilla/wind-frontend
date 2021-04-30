@@ -25,7 +25,7 @@ import {
   setRecentlyMessagedAction,
 } from 'Redux/actions';
 import { ReduxStore } from 'Redux/types';
-import { ProfilePicture } from 'Theme/misc';
+import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
 import { Actions, UserInfo } from 'Components/Chat/Friends/Friends-css';
 import { getProfilePictureByUsernameRequest } from 'Api/friends';
 import DirectMessageModal from 'Components/Modals/DirectMessageModal';
@@ -48,6 +48,7 @@ export default function SideBar({
   const [directMessageModalOpen, setDirectMessageModalOpen] = useState<boolean>(
     false
   );
+  const [isOnline, setIsOnline] = useState<boolean>(false);
   const [notFoundError, setNotFoundError] = useState<boolean>(false);
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
@@ -178,15 +179,19 @@ export default function SideBar({
                 }}
               >
                 <UserInfo>
-                  {peopleTyping[item.username] ? (
-                    <IsTyping>
-                      <span></span>
-                    </IsTyping>
-                  ) : null}
                   <ProfilePicture
                     src={item.profilePicture}
                     alt='profilepic'
                   ></ProfilePicture>
+                  <DefaultStatusIndicator online={isOnline}>
+                    {peopleTyping[item.username] ? (
+                      <IsTyping>
+                        <span></span>
+                      </IsTyping>
+                    ) : (
+                      <span></span>
+                    )}
+                  </DefaultStatusIndicator>
                   <p>{item.username}</p>
                 </UserInfo>
                 <Actions>
