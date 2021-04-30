@@ -51,7 +51,7 @@ export const DefaultPopOver = styled(FlexColCenterCenter)`
   background-color: ${(props) => props.theme.defaultBlack};
   color: ${(props) => props.theme.fontColors.defaultWhite};
   position: absolute;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 14px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   font-weight: 200;
