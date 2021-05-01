@@ -1,6 +1,14 @@
-import { AvatarBar } from "Components/Chat/Profile/Profile-css";
-import styled from "styled-components";
-import { FlexColCenterCenter, FlexRowCenterStart } from "Theme/containers";
+import { AvatarBar } from 'Components/Chat/Profile/Profile-css';
+import styled from 'styled-components';
+import {
+  FlexColCenterCenter,
+  FlexRowCenterStart,
+  ModalContainer,
+} from 'Theme/containers';
+
+export const Container = styled(ModalContainer)`
+  left: -297px;
+`;
 
 export const FriendBox = styled(FlexColCenterCenter)`
   justify-content: flex-start;
@@ -10,7 +18,6 @@ export const FriendBox = styled(FlexColCenterCenter)`
   color: ${(props) => props.theme.messaging.secondaryGrey};
   border-radius: 5px;
   box-sizing: border-box;
-  position: relative;
 `;
 
 export const FriendBoxTop = styled(AvatarBar)`
@@ -18,12 +25,14 @@ export const FriendBoxTop = styled(AvatarBar)`
   background-color: ${(props) => props.theme.tertiaryDarkGrey};
   padding: 10px;
   border-bottom: 1px solid ${(props) => props.theme.mainGrey};
+  margin-bottom: 0;
 `;
 
 export const FriendNav = styled(FlexRowCenterStart)`
-  height: 20%;
+  height: 15%;
   background-color: ${(props) => props.theme.tertiaryDarkGrey};
   padding-left: 10px;
+  margin-bottom: 1rem;
 `;
 
 export const NavOpts = styled(FlexColCenterCenter)`
@@ -38,4 +47,9 @@ export const NavOpts = styled(FlexColCenterCenter)`
 
 export const MutualFriends = styled(FlexColCenterCenter)`
   overflow: auto;
+  height: 55%;
+  justify-content: flex-start;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  gap: 5px;
 `;

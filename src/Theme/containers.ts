@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FlexRowCenterCenter = styled.div`
   display: flex;
@@ -85,11 +85,12 @@ export const FriendBarTheme = styled.div`
   min-height: 40px;
   border-radius: 4px;
   padding-left: 12px;
-  height: unset;
-  background-color: ${(props) => props.theme.mainGrey};
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: inherit;
   color: ${(props) => props.theme.fontColors.defaultWhite};
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 3px;
   position: relative;
   :hover {
     background-color: #3c3f47;
@@ -101,8 +102,8 @@ export const ModalContainer = styled(FlexColCenterCenter)`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
-  top: auto;
-  bottom: auto;
+  top: 0;
+  bottom: 0;
   z-index: 10;
 `;
 

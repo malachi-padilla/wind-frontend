@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import {
   FlexColCenterCenter,
   FlexColCenterStart,
@@ -7,7 +7,7 @@ import {
   FlexRowCenterEvenly,
   FlexRowCenterEnd,
   FriendBarTheme,
-} from "Theme/containers";
+} from 'Theme/containers';
 
 export const StyledMainContainer = styled(MainContainer)`
   width: 224px;
@@ -34,7 +34,7 @@ export const EnterFriendWrapper = styled(FlexColCenterCenter)`
 
 export const StyledFriendInput = styled.input<{ error: boolean }>`
   border: ${(props) =>
-    props.error ? "1px solid #b92d2d" : "1px solid #1b1b1b"};
+    props.error ? '1px solid #b92d2d' : '1px solid #1b1b1b'};
 
   background-color: ${(props) => props.theme.tertiaryDarkGrey};
   width: 90%;
@@ -51,7 +51,7 @@ export const StyledFriendInput = styled.input<{ error: boolean }>`
   }
   &:focus {
     border: ${(props) =>
-      props.error ? "1px solid #b92d2d" : "1px solid #7289da"};
+      props.error ? '1px solid #b92d2d' : '1px solid #7289da'};
   }
 `;
 export const FriendsTab = styled(FlexRowCenterStart)`
@@ -81,6 +81,7 @@ export const DirectMessageTab = styled(FlexRowCenterStart)`
   font-weight: 700;
   color: ${(props) => props.theme.fontColors.defaultMediumGrey};
   position: relative;
+  margin-bottom: 20px;
   :hover {
     color: #fff;
   }
@@ -117,7 +118,7 @@ export const IsTyping = styled.div`
     width: 10px;
     float: left;
     margin-right: 5px;
-    background-color: ${(props) => props.theme.fontColors.actionGreen};
+    background-color: ${(props) => props.theme.fontColors.defaultWhite};
     display: block;
     border-radius: 50%;
     opacity: 0.4;
@@ -149,6 +150,7 @@ export const ProfileBar = styled(FlexRowCenterEvenly)`
 
 export const ProfileBtns = styled(FlexRowCenterEnd)`
   width: 60%;
+  position: relative;
 `;
 
 export const SettingsBtn = styled.button`

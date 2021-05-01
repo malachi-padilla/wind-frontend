@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   FlexColCenterCenter,
   FlexColCenterStart,
   FriendBarTheme,
-} from "Theme/containers";
+} from 'Theme/containers';
+import { DefaultStatusIndicator } from 'Theme/misc';
 
 export const MainContainer = styled(FlexColCenterCenter)`
   width: 20%;
@@ -16,7 +17,7 @@ export const MainContainer = styled(FlexColCenterCenter)`
 
 export const Subheading = styled.h4`
   color: ${(props) => props.theme.fontColors.defaultWhite};
-  margin-bottom: "10px";
+  margin-bottom: '10px';
 `;
 
 export const Text = styled.p`
@@ -49,17 +50,9 @@ export const LonelyWrapper = styled(FlexColCenterCenter)`
   }
 `;
 
-export const OnlineIndicator = styled.div`
-  span {
-    height: 10px;
-    width: 10px;
-    float: left;
-    margin-right: 10px;
-    background-color: ${(props) => props.theme.fontColors.actionGreen};
-    display: block;
-    border-radius: 50%;
-  }
-`;
+export const OnlineIndicator = styled(DefaultStatusIndicator)``;
 
 export const ActiveUsersList = styled(FlexColCenterStart)``;
-export const ActiveUser = styled(FriendBarTheme)``;
+export const ActiveUser = styled(FriendBarTheme)`
+  background-color: ${(props) => props.theme.mainGrey};
+`;

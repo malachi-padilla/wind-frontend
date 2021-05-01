@@ -1,14 +1,15 @@
 // import original module declarations
-import "styled-components";
+import 'styled-components';
 
 // and extend them!
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme {
     mainGrey: string;
     secondaryDarkGrey: string;
     tertiaryDarkGrey: string;
     tertiaryGrey: string;
     mediumGray: string;
+    defaultBlack: string;
     fontColors: {
       defaultWhite: string;
       defaultLightGrey: string;

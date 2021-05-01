@@ -1,11 +1,17 @@
-import { createStore } from "redux";
-import { RECENTLY_MESSAGED, RECIPIENT_IS_TYPING, SET_FRIEND } from "./actions";
-import { ReduxStore } from "./types";
+import { createStore } from 'redux';
+import {
+  RECENTLY_MESSAGED,
+  RECIPIENT_IS_TYPING,
+  SET_FRIEND,
+  POP_OVER_MESSAGE,
+} from './actions';
+import { ReduxStore } from './types';
 
 const initialState: ReduxStore = {
-  friend: "",
+  friend: '',
   recentlyMessaged: [],
   recipientIsTyping: false,
+  popOverMessage: '',
 };
 
 export function mainReducer(state = initialState, action: any) {
@@ -18,6 +24,9 @@ export function mainReducer(state = initialState, action: any) {
     }
     case RECIPIENT_IS_TYPING: {
       return { ...state, recipientIsTyping: action.payload };
+    }
+    case POP_OVER_MESSAGE: {
+      return { ...state, popOverMessage: action.payload };
     }
     default: {
       return state;
