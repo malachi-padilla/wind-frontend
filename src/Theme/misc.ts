@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import WindLogo from 'Assets/WindLogo/logo_2.png';
-import { FlexColCenterCenter } from './containers';
+import styled from "styled-components";
+import WindLogo from "Assets/WindLogo/logo_2.png";
+import { FlexColCenterCenter } from "./containers";
 
 export const Logo = styled.div`
   height: 100px;

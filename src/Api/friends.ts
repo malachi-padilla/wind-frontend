@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { API_URL } from 'Config/globalVariables';
+import axios from "axios";
+import { API_URL } from "Config/globalVariables";
+import { RUST_API_URL } from "Config/globalVariables";
 
 export const addFriendRequest = (user1: string, user2: string) => {
   return axios.post(
@@ -31,7 +32,7 @@ export const getFriendsRequest = (userId: string) => {
 };
 
 export const getProfilePictureByUsernameRequest = (username: string) => {
-  return axios.get(`${API_URL}/user/getProfilePicture?username=${username}`, {
+  return axios.get(`${RUST_API_URL}/getProfilePicture?username=${username}`, {
     withCredentials: true,
   });
 };
