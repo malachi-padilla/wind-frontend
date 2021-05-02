@@ -189,6 +189,20 @@ export default function SideBar({
                     src={item.profilePicture}
                     alt="profilepic"
                   ></ProfilePicture>
+                  <DefaultStatusIndicator
+                    online={
+                      friendsOnline[0] &&
+                      friendsOnline[0].username === item.username
+                    }
+                  >
+                    {peopleTyping[item.username] ? (
+                      <IsTyping>
+                        <span></span>
+                      </IsTyping>
+                    ) : (
+                      <span></span>
+                    )}
+                  </DefaultStatusIndicator>
                   <p>{item.username}</p>
                 </UserInfo>
                 <Actions>
