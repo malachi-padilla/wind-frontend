@@ -33,7 +33,7 @@ export default function FriendButton({
   };
 
   const fetchUser = () => {
-    getUserById(recipientId).then((res: AxiosResponse<RecipientUserInfo>) => {
+    getUserById(recipientId).then((res: any) => {
       setUpdatedRelation(res.data.relation);
     });
   };

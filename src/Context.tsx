@@ -16,7 +16,6 @@ const Context = ({ children }: any) => {
     getLoggedInUserRequest().then((res) => {
       if (res.data !== "no user") {
         setUser(res.data);
-        console.log(res.data);
       } else {
         setUser(undefined);
       }

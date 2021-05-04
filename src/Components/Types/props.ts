@@ -1,6 +1,6 @@
 // Will Extract This Into Folder Later
 
-import { PersonalUserInfo, RecipientUserInfo } from 'Types/models';
+import { PersonalUserInfo, RecipientUserInfo } from "Types/models";
 
 export interface ActiveFriendsProps {
   friendsList: RecipientUserInfo[];
@@ -35,12 +35,12 @@ export interface ChatProps {
   pollingInterval: any;
   fetchUser: () => void;
   recipientData: any;
-  pushIfNotExist: (friendName: string) => void;
+  pushIfNotExist: (username: string) => void;
   loadingRecipientData: boolean;
   setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }
 
 export interface FriendButtonProps {
   recipientId: string;
-  relation: RecipientUserInfo['relation'];
+  relation: RecipientUserInfo["relation"];
 }

@@ -54,9 +54,6 @@ export default function SideBar({
   const [peopleTyping, setPeopleTyping] = useState<PeopleTyping>({});
   const friend = useSelector((state: ReduxStore) => state.friend);
   const [friendsOnline, setFriendsOnline] = useState<RecipientUserInfo[]>([]);
-  const [usersWithPicture, setUsersWithPicture] = useState<
-    { username: string; profilePicture: string }[]
-  >([]);
   const recentlyMessaged = useSelector(
     (state: ReduxStore) => state.recentlyMessaged
   );
@@ -65,25 +62,6 @@ export default function SideBar({
     (state: ReduxStore) => state.popOverMessage
   );
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // On change of Recently Messaged we want to get the profile picture of each user in list
-    (async () => {
-      const promises = recentlyMessaged.map(async (item) => {
-        const profilePictureLink = await getProfilePictureByUsernameRequest(
-          item
-        );
-        return {
-          username: item,
-          profilePicture: profilePictureLink.data,
-        };
-      });
-
-      const total = await Promise.all(promises);
-      // Save this new array of usernames and profile pictures to an array called usersWithPicture
-      setUsersWithPicture(total);
-    })();
-  }, [recentlyMessaged]);
 
   useEffect(() => {
     socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
@@ -99,13 +77,12 @@ export default function SideBar({
   }, []);
 
   const removeRecentlyMessaged = (item: string) => {
-    const newList = recentlyMessaged.filter((node) => item !== node);
+    const newList = recentlyMessaged.filter((node) => item !== node.username);
     dispatch(setRecentlyMessagedAction(newList));
   };
 
   const addFriend = async () => {
     // Perform Check To See If User Exists First!
-    console.log(friendInput);
     if (friendInput.length > 0 && friendInput !== userInfo.username) {
       const userResult = await getUserByUsernameRequest(friendInput)
         .then((res) => res)
@@ -172,7 +149,7 @@ export default function SideBar({
             </button>
           </DirectMessageTab>
           <RecentlyMessagedList>
-            {usersWithPicture.map((item, index) => (
+            {recentlyMessaged.map((item, index) => (
               <FriendBar
                 style={{
                   backgroundColor:
