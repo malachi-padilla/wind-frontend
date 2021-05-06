@@ -1,5 +1,5 @@
-import { ChatProps } from 'Components/Types/props';
-import React, { useEffect, useState } from 'react';
+import { ChatProps } from "Components/Types/props";
+import React, { useEffect, useState } from "react";
 import {
   ActionBar,
   ChatBody,
@@ -12,22 +12,23 @@ import {
   FriendLabelText,
   EnterMessage,
   MessageWrapper,
-} from './Chat-css';
-import { MainContainer } from 'Theme/containers';
-import { animateScroll } from 'react-scroll';
-import FriendButton from 'Components/Buttons/FriendButton/FriendButton';
-import { getMessagesRequest } from 'Api/user';
+} from "./Chat-css";
+import { MainContainer } from "Theme/containers";
+import { animateScroll } from "react-scroll";
+import FriendButton from "Components/Buttons/FriendButton/FriendButton";
+import { getMessagesRequest } from "Api/user";
 import {
   SocketPrivateChatMessage,
   SocketIsTypingMessage,
-} from 'Components/Types/models';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReduxStore } from 'Redux/types';
+} from "Components/Types/models";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxStore } from "Redux/types";
 import {
   setRecentlyMessagedAction,
   setRecipientIsTypingAction,
-} from 'Redux/actions';
-import FriendModal from 'Components/Modals/FriendModal';
+} from "Redux/actions";
+import FriendModal from "Components/Modals/FriendModal";
+import { getProfilePictureByUsernameRequest } from "Api/friends";
 const minRows = 1;
 const maxRows = 15;
 const maxChar = 2000;
@@ -39,10 +40,12 @@ export default function ChatPage({
   recipientData,
   loadingRecipientData,
   setLoadingRecipientData,
+  loadingMessages,
   pushIfNotExist,
+  setLoadingMessages,
   LoadingPage,
 }: ChatProps) {
-  const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [currentMessage, setCurrentMessage] = useState<string>("");
   const [messages, setMessages] = useState<SocketPrivateChatMessage[]>([]);
   const [shift, setShift] = useState<boolean>(false);
   const [rows, setRows] = useState<number>(1);
@@ -55,14 +58,13 @@ export default function ChatPage({
   );
 
   useEffect(() => {
-    socket.emit('joinPrivateMessage', { name, friend });
-    return () => socket.emit('disconnectPrivateMessage');
+    socket.emit("joinPrivateMessage", { name, friend });
+    return () => socket.emit("disconnectPrivateMessage");
   }, []);
 
   useEffect(() => {
-    socket.on('message', (message: SocketPrivateChatMessage) => {
+    socket.on("message", (message: SocketPrivateChatMessage) => {
       if (message.sentBy === friend || message.sentBy === name) {
-        console.log(message);
         setMessages((currentMessages) => [...currentMessages, message]);
       }
       pushIfNotExist(message.sentBy);
@@ -73,6 +75,19 @@ export default function ChatPage({
     dispatch(setRecipientIsTypingAction(false));
     setLoadingRecipientData(true);
     fetchUser();
+    setLoadingMessages(true);
+    getMessagesRequest(name, friend).then((res) => {
+      if (res.data) {
+        setMessages(res.data);
+        setLoadingMessages(false);
+      }
+    });
+
+    socket.on("typing", ({ personTyping, isTyping }: SocketIsTypingMessage) => {
+      if (personTyping === friend) {
+        dispatch(setRecipientIsTypingAction(isTyping));
+      }
+    });
   }, [friend]);
 
   // Poll User Information
@@ -81,30 +96,16 @@ export default function ChatPage({
   }, [pollingInterval]);
 
   useEffect(() => {
-    getMessagesRequest(name, friend).then((res) => {
-      if (res.data) {
-        setMessages(res.data);
-      }
-    });
-
-    socket.on('typing', ({ personTyping, isTyping }: SocketIsTypingMessage) => {
-      if (personTyping === friend) {
-        dispatch(setRecipientIsTypingAction(isTyping));
-      }
-    });
-  }, [friend]);
-
-  useEffect(() => {
     if (currentMessage!.length > 0) {
-      socket.emit('typing', { friend, isTyping: true });
+      socket.emit("typing", { friend, isTyping: true });
     } else {
-      socket.emit('typing', { friend, isTyping: false });
+      socket.emit("typing", { friend, isTyping: false });
     }
   }, [currentMessage]);
 
   const scrollToBottom = () => {
     animateScroll.scrollToBottom({
-      containerId: 'ContainerElementID',
+      containerId: "ContainerElementID",
     });
   };
 
@@ -112,37 +113,50 @@ export default function ChatPage({
     scrollToBottom();
   }, [messages, recipientIsTyping, currentMessage]);
 
-  if (loadingRecipientData) {
+  if (loadingRecipientData || loadingMessages) {
     return <LoadingPage />;
   }
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (currentMessage.trim().length > 0) {
-      const indexOfFriend = recentlyMessaged.indexOf(friend);
+      let indexOfFriend = -1;
+      for (let i = 0; i < recentlyMessaged.length; i++) {
+        if (recentlyMessaged[i].username === friend) {
+          indexOfFriend = i;
+        }
+      }
       // New variable so we dont modify previous state
       let newRecentlyMessagedList = recentlyMessaged;
       // If this user is already in our recently messaged, splice first
+      let profileImage;
       if (indexOfFriend !== -1) {
+        profileImage = recentlyMessaged[indexOfFriend].profilePicture;
         newRecentlyMessagedList.splice(indexOfFriend, 1);
+      } else {
+        const request = await getProfilePictureByUsernameRequest(friend);
+        profileImage = request.data;
       }
       // Push user to top of stack
-      newRecentlyMessagedList = [friend, ...newRecentlyMessagedList];
+      newRecentlyMessagedList = [
+        { username: friend, profilePicture: profileImage },
+        ...newRecentlyMessagedList,
+      ];
 
       // Dispatch new array
       dispatch(setRecentlyMessagedAction(newRecentlyMessagedList));
 
-      socket.emit('message', { friend, message: currentMessage });
-      setCurrentMessage('');
+      socket.emit("message", { friend, message: currentMessage });
+      setCurrentMessage("");
       setRows(1);
     }
   };
 
   const onKeyDown = (e: any) => {
-    if (e.key === 'Shift') {
+    if (e.key === "Shift") {
       setShift(true);
-    } else if (e.key == 'Enter') {
+    } else if (e.key == "Enter") {
       if (shift) {
-        setCurrentMessage((current) => current + '\r\n');
+        setCurrentMessage((current) => current + "\r\n");
       } else {
         if (currentMessage.trim().length > 0) {
           sendMessage();
@@ -153,11 +167,11 @@ export default function ChatPage({
   };
 
   const onKeyUp = (e: any) => {
-    e.key === 'Shift' && setShift(false);
+    e.key === "Shift" && setShift(false);
   };
 
   const getNewlineText = (message: string) => {
-    return message.split('\n').map((str, i) => <p key={i}>{str}</p>);
+    return message.split("\n").map((str, i) => <p key={i}>{str}</p>);
   };
 
   const handleChange = async (event: any) => {
@@ -211,7 +225,7 @@ export default function ChatPage({
       </ActionBar>
 
       <ChatBody>
-        <ChatMessages id='ContainerElementID'>
+        <ChatMessages id="ContainerElementID">
           {messages.map((item, index) => (
             <>
               <MessageWrapper

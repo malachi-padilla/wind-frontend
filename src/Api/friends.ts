@@ -1,53 +1,39 @@
-import axios from "axios";
 import { API_URL } from "Config/globalVariables";
 import { RUST_API_URL } from "Config/globalVariables";
+import { sendRequest } from "./api";
 
 export const addFriendRequest = (user1: string, user2: string) => {
-  return axios.post(
-    `${API_URL}/friends/friendRequest`,
-    {
-      user1,
-      user2,
-    },
-    {
-      withCredentials: true,
-    }
-  );
+  return sendRequest(`${API_URL}/friends/friendRequest`, "POST", {
+    user1,
+    user2,
+  });
 };
 
 export const removeFriendRequest = (user1: string, user2: string) => {
-  return axios.delete(`${API_URL}/friends/friendRequest`, {
-    withCredentials: true,
-    data: {
-      user1,
-      user2,
-    },
+  return sendRequest(`${API_URL}/friends/friendRequest`, "DELETE", {
+    user1,
+    user2,
   });
 };
 
 export const getFriendsRequest = (userId: string) => {
-  return axios.get(`${API_URL}/friends?user=${userId}`, {
-    withCredentials: true,
-  });
+  return sendRequest(`${API_URL}/friends?user=${userId}`, "GET");
 };
 
 export const getProfilePictureByUsernameRequest = (username: string) => {
-  return axios.get(`${RUST_API_URL}/getProfilePicture?username=${username}`, {
-    withCredentials: true,
-  });
+  return sendRequest(
+    `${RUST_API_URL}/getProfilePicture?username=${username}`,
+    "GET"
+  );
 };
 
 export const getMutualFriendsRequest = (user1, user2) => {
-  return axios.get(
+  return sendRequest(
     `${API_URL}/friends/getMutualFriends?user1=${user1}&user2=${user2}`,
-    {
-      withCredentials: true,
-    }
+    "GET"
   );
 };
 
 export const searchUsersRequest = (searchInput: string) => {
-  return axios.get(`${API_URL}/friends/search?term=${searchInput}`, {
-    withCredentials: true,
-  });
+  return sendRequest(`${API_URL}/friends/search?term=${searchInput}`, "GET");
 };

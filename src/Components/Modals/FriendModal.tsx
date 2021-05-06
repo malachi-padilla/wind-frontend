@@ -1,20 +1,20 @@
-import { getMutualFriendsRequest } from 'Api/friends';
-import { IsTyping } from 'Components/Chat/Chat/Chat-css';
+import { getMutualFriendsRequest } from "Api/friends";
+import { IsTyping } from "Components/Chat/Chat/Chat-css";
 import {
   Actions,
   MoreBtn,
   UserInfo,
-} from 'Components/Chat/Friends/Friends-css';
-import { LoadingContainer } from 'Components/Chat/LoadingPage/LoadingPage-css';
-import { UserInfoWrapper } from 'Components/Chat/Profile/Profile-css';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setFriendAction } from 'Redux/actions';
-import { PrimaryButton } from 'Theme/buttons';
-import { FriendBarTheme } from 'Theme/containers';
-import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
-import { RecipientUserInfo } from 'Types/models';
-import { isOnline } from 'Util/utilFunctions';
+} from "Components/Chat/Friends/Friends-css";
+import { LoadingContainer } from "Components/Chat/LoadingPage/LoadingPage-css";
+import { UserInfoWrapper } from "Components/Chat/Profile/Profile-css";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFriendAction } from "Redux/actions";
+import { PrimaryButton } from "Theme/buttons";
+import { FriendBarTheme } from "Theme/containers";
+import { DefaultStatusIndicator, ProfilePicture } from "Theme/misc";
+import { RecipientUserInfo } from "Types/models";
+import { isOnline } from "Util/utilFunctions";
 import {
   FriendBox,
   FriendBoxTop,
@@ -22,7 +22,7 @@ import {
   NavOpts,
   MutualFriends,
   Container,
-} from './FriendModal-css';
+} from "./FriendModal-css";
 
 export default function FriendModal({
   setViewFriend,
@@ -35,33 +35,34 @@ export default function FriendModal({
 
   useEffect(() => {
     getMutualFriendsRequest(recipientData.userId, userInfo.userId).then(
-      (res) => {
+      (res: any) => {
         setMutualFriends(res.data);
       }
     );
   }, []);
 
+  console.log("Recipient Info", recipientData);
   return (
     <Container onClick={() => setViewFriend(false)}>
       <FriendBox onClick={(e) => e.stopPropagation()}>
         <FriendBoxTop>
           <UserInfoWrapper>
             <ProfilePicture
-              style={{ height: '80px', width: '80px' }}
+              style={{ height: "80px", width: "80px" }}
               src={recipientData.profilePicture}
-              alt='profilepic'
+              alt="profilepic"
             ></ProfilePicture>
             <h3>{friend}</h3>
           </UserInfoWrapper>
           <Actions>
             <PrimaryButton
-              style={{ marginRight: '1rem' }}
+              style={{ marginRight: "1rem" }}
               onClick={() => setViewFriend(false)}
             >
               Send Message
             </PrimaryButton>
             <MoreBtn>
-              <i className='fas fa-ellipsis-v'></i>
+              <i className="fas fa-ellipsis-v"></i>
             </MoreBtn>
           </Actions>
         </FriendBoxTop>
@@ -80,7 +81,7 @@ export default function FriendModal({
                 <UserInfo>
                   <ProfilePicture
                     src={item.profilePicture}
-                    alt='profilepic'
+                    alt="profilepic"
                   ></ProfilePicture>
                   <p>{item.username}</p>
                   <DefaultStatusIndicator
