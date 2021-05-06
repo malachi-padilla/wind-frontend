@@ -1,4 +1,4 @@
-import { API_URL } from "Config/globalVariables";
+import { API_URL, RUST_API_URL } from "Config/globalVariables";
 import { sendRequest } from "./api";
 
 export function getUsersRequest(users: string[]) {
@@ -8,7 +8,10 @@ export function getUsersRequest(users: string[]) {
 }
 
 export function getUserByUsernameRequest(username: string) {
-  return sendRequest(`${API_URL}/user?username=${username}`, "GET");
+  return sendRequest(
+    `${RUST_API_URL}/getUserByUsername?username=${username}`,
+    "GET"
+  );
 }
 
 export function logoutRequest() {
@@ -30,7 +33,7 @@ export function loginRequest(username: string, password: string) {
 }
 
 export function getLoggedInUserRequest() {
-  return sendRequest(`${API_URL}/auth/user`, "GET");
+  return sendRequest(`${RUST_API_URL}/getPersonalUser`, "GET");
 }
 
 export function registerRequest(

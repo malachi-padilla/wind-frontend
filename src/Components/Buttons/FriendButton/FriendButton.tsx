@@ -21,13 +21,15 @@ export default function FriendButton({
   const { user: userInfo } = useContext(MyContext) as UserContextNotNull;
 
   const addFriend = async () => {
-    addFriendRequest(userInfo.userId, recipientId).then(() => {
+    addFriendRequest(userInfo.userId, recipientId).then((res) => {
+      console.log(res);
       fetchUser();
     });
   };
 
   const removeFriend = async () => {
-    removeFriendRequest(userInfo.userId, recipientId).then(() => {
+    removeFriendRequest(userInfo.userId, recipientId).then((res) => {
+      console.log(res);
       fetchUser();
     });
   };

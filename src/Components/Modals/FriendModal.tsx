@@ -41,6 +41,7 @@ export default function FriendModal({
     );
   }, []);
 
+  console.log("Recipient Info", recipientData);
   return (
     <Container onClick={() => setViewFriend(false)}>
       <FriendBox onClick={(e) => e.stopPropagation()}>

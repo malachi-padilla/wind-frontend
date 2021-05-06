@@ -37,6 +37,8 @@ export interface ChatProps {
   recipientData: any;
   pushIfNotExist: (username: string) => void;
   loadingRecipientData: boolean;
+  loadingMessages: boolean;
+  setLoadingMessages: (bool: boolean) => void;
   setLoadingRecipientData: (loadingRecipientData: boolean) => any;
 }
 

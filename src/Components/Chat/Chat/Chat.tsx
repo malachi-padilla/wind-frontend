@@ -40,7 +40,9 @@ export default function ChatPage({
   recipientData,
   loadingRecipientData,
   setLoadingRecipientData,
+  loadingMessages,
   pushIfNotExist,
+  setLoadingMessages,
   LoadingPage,
 }: ChatProps) {
   const [currentMessage, setCurrentMessage] = useState<string>("");
@@ -73,9 +75,11 @@ export default function ChatPage({
     dispatch(setRecipientIsTypingAction(false));
     setLoadingRecipientData(true);
     fetchUser();
+    setLoadingMessages(true);
     getMessagesRequest(name, friend).then((res) => {
       if (res.data) {
         setMessages(res.data);
+        setLoadingMessages(false);
       }
     });
 
@@ -109,7 +113,7 @@ export default function ChatPage({
     scrollToBottom();
   }, [messages, recipientIsTyping, currentMessage]);
 
-  if (loadingRecipientData) {
+  if (loadingRecipientData || loadingMessages) {
     return <LoadingPage />;
   }
 

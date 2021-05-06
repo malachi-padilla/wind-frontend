@@ -41,6 +41,7 @@ export default function ChatPage() {
   const [loadingRecipientData, setLoadingRecipientData] = useState<boolean>(
     true
   );
+  const [loadingMessages, setLoadingMessages] = useState<boolean>(true);
   const friend = useSelector((state: ReduxStore) => state.friend);
   const recentlyMessaged = useSelector(
     (state: ReduxStore) => state.recentlyMessaged
@@ -146,6 +147,8 @@ export default function ChatPage() {
             pollingInterval={pollingInterval}
             socket={socket}
             fetchUser={fetchUser}
+            loadingMessages={loadingMessages}
+            setLoadingMessages={setLoadingMessages}
             pushIfNotExist={pushIfNotExist}
             LoadingPage={LoadingPage}
             recipientData={recipientData}
