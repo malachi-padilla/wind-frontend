@@ -74,6 +74,7 @@ export default function DirectMessageModal({ open, allFriends }) {
                   alt='profilepic'
                 ></ProfilePicture>
                 <DefaultStatusIndicator
+                  appLocation={'Modal'}
                   online={isOnline(item.lastOnline) ? true : false}
                 >
                   <span></span>

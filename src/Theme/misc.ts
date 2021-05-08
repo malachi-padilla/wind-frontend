@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import WindLogo from "Assets/WindLogo/logo_2.png";
-import { FlexColCenterCenter } from "./containers";
+import styled from 'styled-components';
+import WindLogo from 'Assets/WindLogo/logo_2.png';
+import { FlexColCenterCenter } from './containers';
 
 export const Logo = styled.div`
   height: 100px;
@@ -57,7 +57,10 @@ export const DefaultPopOver = styled(FlexColCenterCenter)`
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   font-weight: 200;
 `;
-export const DefaultStatusIndicator = styled.div<{ online: boolean }>`
+export const DefaultStatusIndicator = styled.div<{
+  online: boolean;
+  appLocation: string;
+}>`
   position: absolute;
   bottom: 7px;
   left: 35px;
@@ -72,6 +75,12 @@ export const DefaultStatusIndicator = styled.div<{ online: boolean }>`
         : props.theme.messaging.secondaryGrey};
     display: block;
     border-radius: 50%;
-    box-shadow: 0 0 0 3px ${(props) => props.theme.mainGrey};
+    box-shadow: 0 0 0 3px
+      ${(props) =>
+        props.appLocation === 'SideBar'
+          ? props.theme.secondaryDarkGrey
+          : props.appLocation === 'Profile'
+          ? '#292b2f'
+          : props.theme.mainGrey};
   }
 `;

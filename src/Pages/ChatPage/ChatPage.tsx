@@ -1,31 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
-import Chat from "Components/Chat/Chat/Chat";
-import SideBar from "Components/Sidebar/Sidebar";
-import { MyContext } from "Context";
-import ActiveFriends from "Components/Chat/ActiveFriends/ActiveFriends";
-import Friends from "Components/Chat/Friends/Friends";
-import WelcomePage from "Components/Chat/WelcomePage/WelcomePage";
-import * as io from "socket.io-client";
-import LoadingPage from "Components/Chat/LoadingPage/LoadingPage";
-import { getFriendsRequest } from "Api/friends";
-import { getRecentlyMessagedRequest } from "Api/messages";
+import React, { useContext, useEffect, useState } from 'react';
+import Chat from 'Components/Chat/Chat/Chat';
+import SideBar from 'Components/Sidebar/Sidebar';
+import { MyContext } from 'Context';
+import ActiveFriends from 'Components/Chat/ActiveFriends/ActiveFriends';
+import Friends from 'Components/Chat/Friends/Friends';
+import WelcomePage from 'Components/Chat/WelcomePage/WelcomePage';
+import * as io from 'socket.io-client';
+import LoadingPage from 'Components/Chat/LoadingPage/LoadingPage';
+import { getFriendsRequest } from 'Api/friends';
+import { getRecentlyMessagedRequest } from 'Api/messages';
 import {
   ChatPageWrapper,
   Home,
   NavBar,
   SideBarWrapper,
   StyledLogo,
-} from "./ChatPage-css";
-import { UserContextNotNull } from "Types/types";
-import { useDispatch, useSelector } from "react-redux";
-import { ReduxStore } from "Redux/types";
-import { AxiosResponse } from "axios";
-import { SocketPrivateChatMessage } from "Components/Types/models";
-import { getUserByUsernameRequest } from "Api/user";
-import { RecipientUserInfo } from "Types/models";
-import { setRecentlyMessagedAction } from "Redux/actions";
-import Profile from "Components/Chat/Profile/Profile";
-import { API_URL } from "Config/globalVariables";
+} from './ChatPage-css';
+import { UserContextNotNull } from 'Types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxStore } from 'Redux/types';
+import { AxiosResponse } from 'axios';
+import { SocketPrivateChatMessage } from 'Components/Types/models';
+import { getUserByUsernameRequest } from 'Api/user';
+import { RecipientUserInfo } from 'Types/models';
+import { setRecentlyMessagedAction } from 'Redux/actions';
+import Profile from 'Components/Chat/Profile/Profile';
+import { API_URL } from 'Config/globalVariables';
 
 let socket;
 export default function ChatPage() {
@@ -46,12 +46,12 @@ export default function ChatPage() {
 
   useEffect(() => {
     socket = io.connect(API_URL);
-    socket.emit("join", { name: user.username });
-    return () => socket.emit("end");
+    socket.emit('join', { name: user.username });
+    return () => socket.emit('end');
   }, []);
 
   useEffect(() => {
-    socket.on("message", (message: SocketPrivateChatMessage) => {
+    socket.on('message', (message: SocketPrivateChatMessage) => {
       pushIfNotExist(message.sentBy);
     });
   }, [recentlyMessaged]);
@@ -99,7 +99,7 @@ export default function ChatPage() {
   }
 
   if (friendsList === undefined) {
-    return <LoadingPage propStyles={{ width: "100vw" }} />;
+    return <LoadingPage propStyles={{ width: '100vw' }} />;
   }
   if (profileOpen) {
     return <Profile setProfileOpen={setProfileOpen} />;
@@ -138,7 +138,7 @@ export default function ChatPage() {
             setLoadingRecipientData={setLoadingRecipientData}
           />
         )
-      ) : friendsList?.length > 0 ? (
+      ) : friendsList ? (
         <Friends
           userInfo={user}
           friendsList={friendsList}

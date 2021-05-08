@@ -48,7 +48,7 @@ export default function ActiveFriends({ friendsList }: ActiveFriendsProps) {
                   src={item.profilePicture}
                   alt='profilepic'
                 ></ProfilePicture>
-                <OnlineIndicator online={true}>
+                <OnlineIndicator appLocation={'ActiveFriends'} online={true}>
                   <span></span>
                 </OnlineIndicator>
                 <p>{item.username}</p>

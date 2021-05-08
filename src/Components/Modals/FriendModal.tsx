@@ -30,16 +30,24 @@ export default function FriendModal({
   recipientData,
   userInfo,
 }) {
-  const [mutualFriends, setMutualFriends] = useState<RecipientUserInfo[]>([]);
+  const [mutualFriends, setMutualFriends] = useState<RecipientUserInfo[]>();
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getMutualFriendsRequest(recipientData.userId, userInfo.userId).then(
       (res) => {
         setMutualFriends(res.data);
+        setLoading(false);
       }
     );
   }, []);
+
+  useEffect(() => {
+    if (mutualFriends === undefined) {
+      setLoading(true);
+    }
+  }, [mutualFriends]);
 
   return (
     <Container onClick={() => setViewFriend(false)}>
@@ -71,7 +79,17 @@ export default function FriendModal({
           </NavOpts>
         </FriendNav>
         <MutualFriends>
-          {mutualFriends!.length > 0 ? (
+          {loading && (
+            <LoadingContainer>
+              <IsTyping>
+                <span></span>
+                <span></span>
+                <span></span>
+              </IsTyping>
+              <h2>Loading</h2>
+            </LoadingContainer>
+          )}
+          {mutualFriends && mutualFriends!.length > 0 ? (
             mutualFriends!.map((item) => (
               <FriendBarTheme
                 onClick={() => dispatch(setFriendAction(item.username))}
@@ -84,6 +102,7 @@ export default function FriendModal({
                   ></ProfilePicture>
                   <p>{item.username}</p>
                   <DefaultStatusIndicator
+                    appLocation={'Modal'}
                     online={isOnline(item.lastOnline) ? true : false}
                   >
                     <span></span>
@@ -91,16 +110,9 @@ export default function FriendModal({
                 </UserInfo>
               </FriendBarTheme>
             ))
-          ) : (
-            <LoadingContainer>
-              <IsTyping>
-                <span></span>
-                <span></span>
-                <span></span>
-              </IsTyping>
-              <h2>Loading</h2>
-            </LoadingContainer>
-          )}
+          ) : !loading ? (
+            <h2>No Friends in Common</h2>
+          ) : null}
         </MutualFriends>
       </FriendBox>
     </Container>

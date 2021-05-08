@@ -182,3 +182,11 @@ export const AddFriendInput = styled.input<{ error: boolean }>`
       props.error ? '1px solid #b92d2d' : '1px solid #7289da'};
   }
 `;
+
+export const NoFriendstext = styled.h1`
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.fontColors.actionGreen};
+  }
+  color: ${(props) => props.theme.messaging.secondaryGrey};
+`;

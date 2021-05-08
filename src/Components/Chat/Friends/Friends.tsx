@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getMinutesLastOnline } from 'Util/utilFunctions';
 import { getUsersRequest } from 'Api/user';
 import { MainContainer } from 'Theme/containers';
@@ -22,6 +22,7 @@ import {
   Title,
   MoreBtn,
   AddFriendInput,
+  NoFriendstext,
 } from './Friends-css';
 import { RecipientUserInfo } from 'Types/models';
 import { FriendsProps } from 'Components/Types/props';
@@ -30,6 +31,8 @@ import { setFriendAction } from 'Redux/actions';
 import FriendButton from 'Components/Buttons/FriendButton/FriendButton';
 import { addFriendRequest, searchUsersRequest } from 'Api/friends';
 import { ProfilePicture } from 'Theme/misc';
+import { MyContext } from 'Context';
+import { UserContextNotNull } from 'Types/types';
 
 export default function Friends({
   friendsList,
@@ -45,7 +48,9 @@ export default function Friends({
   const [searchResults, setSearchResults] = useState<RecipientUserInfo[]>([]);
   const [mappingList, setMappingList] = useState<RecipientUserInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [lonelyText, setLonelyText] = useState<string>('No Friends Yet');
   const dispatch = useDispatch();
+  const { setFetchNew } = useContext(MyContext) as UserContextNotNull;
 
   useEffect(() => {
     if (
@@ -136,18 +141,86 @@ export default function Friends({
 
   const renderNone = () => {
     if (requestsFilter) {
-      return <h1>No Open Requests At This Time</h1>;
+      return (
+        <MainContainer>
+          <NoFriendstext>No Open Requests At This Time</NoFriendstext>
+        </MainContainer>
+      );
     } else if (requestedFilter) {
-      return <h1>No Users Requested At This Time</h1>;
+      return (
+        <MainContainer>
+          <NoFriendstext>No Users Requested At This Time</NoFriendstext>
+        </MainContainer>
+      );
     } else if (onlineFilter) {
-      return <h1>No Users Currently Online</h1>;
+      return (
+        <MainContainer>
+          <NoFriendstext>Looks Like Your're Alone</NoFriendstext>
+        </MainContainer>
+      );
+    } else if (!addFriendOpen && !friendsList.length) {
+      return (
+        <MainContainer>
+          <NoFriendstext
+            onMouseOver={() => setLonelyText('Add a Friend')}
+            onMouseLeave={() => setLonelyText('No Friends Yet')}
+            onClick={() => {
+              setAddFriendOpen(true);
+              setLonelyText('No Friends Yet');
+            }}
+          >
+            {lonelyText}
+          </NoFriendstext>
+        </MainContainer>
+      );
     } else {
-      return <h1>No Friends Yet</h1>;
+      return (
+        <AddFriendContainer>
+          <Title error={searchError}>
+            <h4>ADD FRIEND</h4>
+            {searchError ? (
+              <p>Hm, didn't work. Double check that.</p>
+            ) : (
+              <p>You can add a friend with their username.</p>
+            )}
+          </Title>
+          <InputContent>
+            <AddFriendInput
+              error={searchError}
+              onKeyDown={(e: any) =>
+                e.key === 'Enter' && searchUsers(friendInput)
+              }
+              onChange={(e: any) => setFriendInput(e.target.value)}
+              value={friendInput}
+              placeholder='Enter a Username'
+              type='text'
+            ></AddFriendInput>
+          </InputContent>
+          {searchResults.map((item) => (
+            <>
+              <FriendBar>
+                <UserInfo>
+                  <ProfilePicture
+                    src={item.profilePicture}
+                    alt='profilepic'
+                  ></ProfilePicture>
+                  <p>{item.username}</p>
+                </UserInfo>
+                <FriendButton
+                  recipientId={item.userId}
+                  relation={item.relation}
+                />
+              </FriendBar>
+            </>
+          ))}
+        </AddFriendContainer>
+      );
     }
   };
 
   const acceptRequest = async (userId: string, friendId: string) => {
     await addFriendRequest(userId, friendId).then(() => {
+      setFetchNew((current) => !current);
       setMappingList(mappingList.filter((item) => item.userId !== friendId));
     });
   };
@@ -203,7 +276,7 @@ export default function Friends({
         </ActionBarBtns>
       </ActionBar>
       {!loading ? (
-        friendsList.length < 1 || mappingList?.length < 1 ? (
+        mappingList?.length < 1 ? (
           <FriendsList>{renderNone()}</FriendsList>
         ) : (
           <FriendsList>
