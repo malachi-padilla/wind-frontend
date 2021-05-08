@@ -89,7 +89,7 @@ export default function Friends({
           setLoading(true);
         }
       } else {
-        await getUsersRequest(userInfo.sentFriendRequests).then((res) => {
+        await getUsersRequest(userInfo.sentFriendRequests).then((res: any) => {
           setMappingList(res.data);
         });
         setRequestedFilter(true);
@@ -104,9 +104,11 @@ export default function Friends({
           setLoading(true);
         }
       } else {
-        await getUsersRequest(userInfo.recievedFriendRequests).then((res) => {
-          setMappingList(res.data);
-        });
+        await getUsersRequest(userInfo.recievedFriendRequests).then(
+          (res: any) => {
+            setMappingList(res.data);
+          }
+        );
         setRequestsFilter(true);
       }
       setOnlineFilter(false);
@@ -129,7 +131,7 @@ export default function Friends({
   }, [friendInput]);
 
   const searchUsers = async (searchInput) => {
-    await searchUsersRequest(searchInput).then((res) => {
+    await searchUsersRequest(searchInput).then((res: any) => {
       setSearchResults(
         res.data.filter((item) => item.username !== userInfo.username)
       );

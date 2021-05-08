@@ -1,6 +1,6 @@
 export interface ReduxStore {
   friend: string;
-  recentlyMessaged: any[];
+  recentlyMessaged: { username: string; profilePicture: string }[];
   recipientIsTyping: boolean;
   popOverMessage: string;
 }

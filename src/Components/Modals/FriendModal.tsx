@@ -36,7 +36,7 @@ export default function FriendModal({
 
   useEffect(() => {
     getMutualFriendsRequest(recipientData.userId, userInfo.userId).then(
-      (res) => {
+      (res: any) => {
         setMutualFriends(res.data);
         setLoading(false);
       }

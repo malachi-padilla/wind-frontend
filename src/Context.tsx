@@ -14,9 +14,9 @@ const Context = ({ children }: any) => {
 
   useEffect(() => {
     getLoggedInUserRequest().then((res) => {
+      console.log(res.data);
       if (res.data !== "no user") {
         setUser(res.data);
-        console.log(res.data);
       } else {
         setUser(undefined);
       }
