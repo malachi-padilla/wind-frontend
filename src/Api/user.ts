@@ -20,7 +20,7 @@ export function logoutRequest() {
 
 export function getMessagesRequest(user1: string, user2: string) {
   return sendRequest(
-    `${API_URL}/messages/getMessages?user1=${user1}&user2=${user2}`,
+    `${RUST_API_URL}/messages?user1=${user1}&user2=${user2}`,
     "GET"
   );
 }
