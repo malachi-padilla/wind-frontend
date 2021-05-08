@@ -18,7 +18,7 @@ export async function sendRequest(
     return makeRequest()
       .then((res) => resolve(res))
       .catch((err) => {
-        if (err.response.data === "Expired Token") {
+        if (err.response?.data === "Expired Token") {
           axios
             .post(`${API_URL}/auth/refreshToken`, {}, { withCredentials: true })
             .then(() => {
