@@ -114,7 +114,6 @@ export const ChatBtn = styled.button`
 
 export const MoreBtn = styled.button`
   ${ButtonStyles}
-  postion:relative;
 `;
 
 export const AcceptBtn = styled.button`
