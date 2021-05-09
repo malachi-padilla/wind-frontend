@@ -16,12 +16,15 @@ export default function FriendButton({
   relation,
 }: FriendButtonProps) {
   const [updatedRelation, setUpdatedRelation] = useState<string>(relation);
-  const { user: userInfo } = useContext(MyContext) as UserContextNotNull;
+  const { user: userInfo, setFetchNew } = useContext(
+    MyContext
+  ) as UserContextNotNull;
 
   const addFriend = async () => {
     addFriendRequest(userInfo.userId, recipientId).then((res) => {
       console.log(res);
       fetchUser();
+      setFetchNew((current) => !current);
     });
   };
 
@@ -29,6 +32,7 @@ export default function FriendButton({
     removeFriendRequest(userInfo.userId, recipientId).then((res) => {
       console.log(res);
       fetchUser();
+      setFetchNew((current) => !current);
     });
   };
 

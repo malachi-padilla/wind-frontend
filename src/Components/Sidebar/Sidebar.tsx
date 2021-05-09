@@ -166,6 +166,7 @@ export default function SideBar({
                     alt='profilepic'
                   ></ProfilePicture>
                   <DefaultStatusIndicator
+                    appLocation={'SideBar'}
                     online={
                       friendsOnline[0] &&
                       friendsOnline[0].username === item.username
@@ -199,7 +200,7 @@ export default function SideBar({
             src={userInfo.profilePicture}
             alt='profilepic'
           ></ProfilePicture>
-          <DefaultStatusIndicator online={true}>
+          <DefaultStatusIndicator appLocation={'Profile'} online={true}>
             <span></span>
           </DefaultStatusIndicator>
           <p>{userInfo.username}</p>

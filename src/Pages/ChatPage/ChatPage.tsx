@@ -54,7 +54,7 @@ export default function ChatPage() {
   }, []);
 
   useEffect(() => {
-    socket.on('message', async (message: SocketPrivateChatMessage) => {
+    socket.on('message', (message: SocketPrivateChatMessage) => {
       pushIfNotExist(message.sentBy);
     });
   }, [recentlyMessaged]);
@@ -155,7 +155,7 @@ export default function ChatPage() {
             setLoadingRecipientData={setLoadingRecipientData}
           />
         )
-      ) : friendsList?.length > 0 ? (
+      ) : friendsList ? (
         <Friends
           userInfo={user}
           friendsList={friendsList}
