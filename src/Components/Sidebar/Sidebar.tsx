@@ -27,7 +27,6 @@ import {
 import { ReduxStore } from 'Redux/types';
 import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
 import { Actions, UserInfo } from 'Components/Chat/Friends/Friends-css';
-import { getProfilePictureByUsernameRequest } from 'Api/friends';
 import DirectMessageModal from 'Components/Modals/DirectMessageModal';
 import PopOver from 'Components/PopOver/PopOver';
 import { isOnline } from 'Util/utilFunctions';
@@ -62,25 +61,6 @@ export default function SideBar({
     (state: ReduxStore) => state.popOverMessage
   );
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // On change of Recently Messaged we want to get the profile picture of each user in list
-    (async () => {
-      const promises = recentlyMessaged.map(async (item) => {
-        const profilePictureLink = await getProfilePictureByUsernameRequest(
-          item
-        );
-        return {
-          username: item,
-          profilePicture: profilePictureLink.data,
-        };
-      });
-
-      const total = await Promise.all(promises);
-      // Save this new array of usernames and profile pictures to an array called usersWithPicture
-      setUsersWithPicture(total);
-    })();
-  }, [recentlyMessaged]);
 
   useEffect(() => {
     socket.on('typing', ({ personTyping, isTyping }: SocketIsTypingMessage) => {

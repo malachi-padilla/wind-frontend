@@ -1,16 +1,16 @@
 import {
   getProfilePictureByUsernameRequest,
   searchUsersRequest,
-} from "Api/friends";
-import { UserInfo } from "Components/Chat/Friends/Friends-css";
-import { MyContext } from "Context";
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setFriendAction, setRecentlyMessagedAction } from "Redux/actions";
-import { ReduxStore } from "Redux/types";
-import { DefaultStatusIndicator, ProfilePicture } from "Theme/misc";
-import { UserContextNotNull } from "Types/types";
-import { isOnline } from "Util/utilFunctions";
+} from 'Api/friends';
+import { UserInfo } from 'Components/Chat/Friends/Friends-css';
+import { MyContext } from 'Context';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFriendAction, setRecentlyMessagedAction } from 'Redux/actions';
+import { ReduxStore } from 'Redux/types';
+import { DefaultStatusIndicator, ProfilePicture } from 'Theme/misc';
+import { UserContextNotNull } from 'Types/types';
+import { isOnline } from 'Util/utilFunctions';
 import {
   Container,
   FriendBar,
@@ -18,7 +18,7 @@ import {
   FriendsList,
   SearchInput,
   Title,
-} from "./DirectMessageModal-css";
+} from './DirectMessageModal-css';
 
 export default function DirectMessageModal({ open, allFriends }) {
   const { user } = useContext(MyContext) as UserContextNotNull;
@@ -26,7 +26,7 @@ export default function DirectMessageModal({ open, allFriends }) {
   const { recentlyMessaged } = useSelector((state: ReduxStore) => state);
   const dispatch = useDispatch();
   const [searchResults, setSearchResults] = useState<any>(allFriends);
-  const [friendInput, setFriendInput] = useState<string>("");
+  const [friendInput, setFriendInput] = useState<string>('');
 
   const addDirectMessage = async (friend) => {
     dispatch(setFriendAction(friend));
@@ -76,11 +76,11 @@ export default function DirectMessageModal({ open, allFriends }) {
           <h2>select friend</h2>
         </Title>
         <SearchInput
-          placeholder="Type the username of a friend"
-          onKeyDown={(e: any) => e.key === "Enter" && searchUsers(friendInput)}
+          placeholder='Type the username of a friend'
+          onKeyDown={(e: any) => e.key === 'Enter' && searchUsers(friendInput)}
           onChange={(e: any) => setFriendInput(e.target.value)}
           value={friendInput}
-          type="text"
+          type='text'
         />
         <FriendsList>
           {searchResults.map((item) => (
@@ -91,7 +91,7 @@ export default function DirectMessageModal({ open, allFriends }) {
               <UserInfo>
                 <ProfilePicture
                   src={item.profilePicture}
-                  alt="profilepic"
+                  alt='profilepic'
                 ></ProfilePicture>
                 <DefaultStatusIndicator
                   appLocation={'Modal'}
