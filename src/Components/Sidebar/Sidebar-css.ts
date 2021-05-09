@@ -26,7 +26,7 @@ export const RecentlyMessagedList = styled(FlexColCenterStart)`
 `;
 
 export const EnterFriendWrapper = styled(FlexColCenterCenter)`
-  height: 48px;
+  height: 49px;
   line-height: 24px;
   border-bottom: ${(props) => props.theme.defaultBorderBottom};
   box-shadow: ${(props) => props.theme.defaultBoxShadow};

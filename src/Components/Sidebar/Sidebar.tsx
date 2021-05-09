@@ -124,29 +124,29 @@ export default function SideBar({
             placeholder='Find or start a conversation'
           ></StyledFriendInput>
         </EnterFriendWrapper>
-        <RecentFriendsWrapper>
-          <FriendsTab
-            onClick={() => setFriendsIsOpen(true)}
-            style={{ backgroundColor: friendsIsOpen ? '#36393f' : undefined }}
+        <FriendsTab
+          onClick={() => setFriendsIsOpen(true)}
+          style={{ backgroundColor: friendsIsOpen ? '#36393f' : undefined }}
+        >
+          <div>
+            <i className='fas fa-user-friends'></i>
+          </div>
+          <p>Friends</p>
+        </FriendsTab>
+        <DirectMessageTab>
+          <p>DIRECT MESSAGES</p>
+          {popOverMessage === 'Create DM' ? <PopOver /> : null}
+          <button
+            onClick={() => setDirectMessageModalOpen(true)}
+            onMouseOver={() => {
+              dispatch(setPopOverMessage('Create DM'));
+            }}
+            onMouseLeave={() => dispatch(setPopOverMessage(''))}
           >
-            <div>
-              <i className='fas fa-user-friends'></i>
-            </div>
-            <p>Friends</p>
-          </FriendsTab>
-          <DirectMessageTab>
-            <p>DIRECT MESSAGES</p>
-            {popOverMessage === 'Create DM' ? <PopOver /> : null}
-            <button
-              onClick={() => setDirectMessageModalOpen(true)}
-              onMouseOver={() => {
-                dispatch(setPopOverMessage('Create DM'));
-              }}
-              onMouseLeave={() => dispatch(setPopOverMessage(''))}
-            >
-              <i className='fas fa-times'></i>
-            </button>
-          </DirectMessageTab>
+            <i className='fas fa-times'></i>
+          </button>
+        </DirectMessageTab>
+        <RecentFriendsWrapper>
           <RecentlyMessagedList>
             {recentlyMessaged.map((item, index) => (
               <FriendBar
@@ -193,34 +193,34 @@ export default function SideBar({
             ))}
           </RecentlyMessagedList>
         </RecentFriendsWrapper>
+        <ProfileBar>
+          <UserInfo>
+            <ProfilePicture
+              src={userInfo.profilePicture}
+              alt='profilepic'
+            ></ProfilePicture>
+            <DefaultStatusIndicator appLocation={'Profile'} online={true}>
+              <span></span>
+            </DefaultStatusIndicator>
+            <p>{userInfo.username}</p>
+          </UserInfo>
+          <ProfileBtns>
+            {popOverMessage === 'User Settings' ? <PopOver /> : null}
+            <SettingsBtn
+              onClick={() => {
+                setProfileOpen(true);
+                dispatch(setPopOverMessage(''));
+              }}
+              onMouseOver={() => {
+                dispatch(setPopOverMessage('User Settings'));
+              }}
+              onMouseLeave={() => dispatch(setPopOverMessage(''))}
+            >
+              <i className='fas fa-cog'></i>
+            </SettingsBtn>
+          </ProfileBtns>
+        </ProfileBar>
       </SideBarContents>
-      <ProfileBar>
-        <UserInfo>
-          <ProfilePicture
-            src={userInfo.profilePicture}
-            alt='profilepic'
-          ></ProfilePicture>
-          <DefaultStatusIndicator appLocation={'Profile'} online={true}>
-            <span></span>
-          </DefaultStatusIndicator>
-          <p>{userInfo.username}</p>
-        </UserInfo>
-        <ProfileBtns>
-          {popOverMessage === 'User Settings' ? <PopOver /> : null}
-          <SettingsBtn
-            onClick={() => {
-              setProfileOpen(true);
-              dispatch(setPopOverMessage(''));
-            }}
-            onMouseOver={() => {
-              dispatch(setPopOverMessage('User Settings'));
-            }}
-            onMouseLeave={() => dispatch(setPopOverMessage(''))}
-          >
-            <i className='fas fa-cog'></i>
-          </SettingsBtn>
-        </ProfileBtns>
-      </ProfileBar>
     </StyledMainContainer>
   );
 }
