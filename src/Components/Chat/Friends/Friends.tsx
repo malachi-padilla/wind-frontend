@@ -23,6 +23,7 @@ import {
   MoreBtn,
   AddFriendInput,
   NoFriendstext,
+  FriendsContent,
 } from './Friends-css';
 import { RecipientUserInfo } from 'Types/models';
 import { FriendsProps } from 'Components/Types/props';
@@ -157,7 +158,7 @@ export default function Friends({
     } else if (onlineFilter) {
       return (
         <MainContainer>
-          <NoFriendstext>Looks Like Your're Alone</NoFriendstext>
+          <NoFriendstext>Looks Like You're Alone</NoFriendstext>
         </MainContainer>
       );
     } else if (!addFriendOpen && !friendsList.length) {
@@ -169,8 +170,7 @@ export default function Friends({
             onClick={() => {
               setAddFriendOpen(true);
               setLonelyText('No Friends Yet');
-            }}
-          >
+            }}>
             {lonelyText}
           </NoFriendstext>
         </MainContainer>
@@ -195,8 +195,7 @@ export default function Friends({
               onChange={(e: any) => setFriendInput(e.target.value)}
               value={friendInput}
               placeholder='Enter a Username'
-              type='text'
-            ></AddFriendInput>
+              type='text'></AddFriendInput>
           </InputContent>
           {searchResults.map((item) => (
             <>
@@ -204,8 +203,7 @@ export default function Friends({
                 <UserInfo>
                   <ProfilePicture
                     src={item.profilePicture}
-                    alt='profilepic'
-                  ></ProfilePicture>
+                    alt='profilepic'></ProfilePicture>
                   <p>{item.username}</p>
                 </UserInfo>
                 <FriendButton
@@ -239,24 +237,21 @@ export default function Friends({
             selected={onlineFilter}
             onClick={() => {
               setFilter('Online');
-            }}
-          >
+            }}>
             Online
           </FriendsBtn>
           <FriendsBtn
             selected={requestedFilter}
             onClick={() => {
               setFilter('Requested');
-            }}
-          >
+            }}>
             Requested
           </FriendsBtn>
           <FriendsBtn
             selected={requestsFilter}
             onClick={() => {
               setFilter('Requests');
-            }}
-          >
+            }}>
             <RequestBtnContents>
               Requests
               {requestsFilter && mappingList.length > 0 ? (
@@ -271,101 +266,97 @@ export default function Friends({
             onClick={() => {
               setAddFriendOpen(!addFriendOpen);
               setFilter('Add Friend');
-            }}
-          >
+            }}>
             Add Friend
           </AddBtn>
         </ActionBarBtns>
       </ActionBar>
-      {!loading ? (
-        mappingList?.length < 1 ? (
-          <FriendsList>{renderNone()}</FriendsList>
-        ) : (
-          <FriendsList>
-            {addFriendOpen ? (
-              <AddFriendContainer>
-                <Title error={searchError}>
-                  <h4>ADD FRIEND</h4>
-                  {searchError ? (
-                    <p>Hm, didn't work. Double check that.</p>
-                  ) : (
-                    <p>You can add a friend with their username.</p>
-                  )}
-                </Title>
-                <InputContent>
-                  <AddFriendInput
-                    error={searchError}
-                    onKeyDown={(e: any) =>
-                      e.key === 'Enter' && searchUsers(friendInput)
-                    }
-                    onChange={(e: any) => setFriendInput(e.target.value)}
-                    value={friendInput}
-                    placeholder='Enter a Username'
-                    type='text'
-                  ></AddFriendInput>
-                </InputContent>
-                {searchResults.map((item) => (
-                  <>
-                    <FriendBar>
-                      <UserInfo>
-                        <ProfilePicture
-                          src={item.profilePicture}
-                          alt='profilepic'
-                        ></ProfilePicture>
-                        <p>{item.username}</p>
-                      </UserInfo>
-                      <FriendButton
-                        recipientId={item.userId}
-                        relation={item.relation}
-                      />
-                    </FriendBar>
-                  </>
-                ))}
-              </AddFriendContainer>
-            ) : (
-              mappingList &&
-              mappingList.map((item, index) => (
-                <FriendBar key={index}>
-                  <UserInfo>
-                    <ProfilePicture
-                      src={item.profilePicture}
-                      alt='profilepic'
-                    ></ProfilePicture>
-                    <h3>{item.username}</h3>
-                  </UserInfo>
-                  <Actions>
-                    {!requestsFilter ? (
-                      <>
-                        <ChatBtn
-                          onClick={() => {
-                            dispatch(setFriendAction(item.username));
-                            setFriendsIsOpen(false);
-                          }}
-                        >
-                          <i className='fas fa-comment-alt'></i>
-                        </ChatBtn>
-                        <MoreBtn>
-                          <i className='fas fa-ellipsis-v'></i>
-                        </MoreBtn>
-                      </>
+      <FriendsContent>
+        {!loading ? (
+          mappingList?.length < 1 ? (
+            <FriendsList>{renderNone()}</FriendsList>
+          ) : (
+            <FriendsList>
+              {addFriendOpen ? (
+                <AddFriendContainer>
+                  <Title error={searchError}>
+                    <h4>ADD FRIEND</h4>
+                    {searchError ? (
+                      <p>Hm, didn't work. Double check that.</p>
                     ) : (
-                      <>
-                        <AcceptBtn
-                          onClick={() =>
-                            acceptRequest(userInfo.userId, item.userId)
-                          }
-                        >
-                          <i className='fas fa-check'></i>
-                        </AcceptBtn>
-                      </>
+                      <p>You can add a friend with their username.</p>
                     )}
-                  </Actions>
-                </FriendBar>
-              ))
-            )}
-          </FriendsList>
-        )
-      ) : null}
+                  </Title>
+                  <InputContent>
+                    <AddFriendInput
+                      error={searchError}
+                      onKeyDown={(e: any) =>
+                        e.key === 'Enter' && searchUsers(friendInput)
+                      }
+                      onChange={(e: any) => setFriendInput(e.target.value)}
+                      value={friendInput}
+                      placeholder='Enter a Username'
+                      type='text'></AddFriendInput>
+                  </InputContent>
+                  {searchResults.map((item) => (
+                    <>
+                      <FriendBar>
+                        <UserInfo>
+                          <ProfilePicture
+                            src={item.profilePicture}
+                            alt='profilepic'></ProfilePicture>
+                          <p>{item.username}</p>
+                        </UserInfo>
+                        <FriendButton
+                          recipientId={item.userId}
+                          relation={item.relation}
+                        />
+                      </FriendBar>
+                    </>
+                  ))}
+                </AddFriendContainer>
+              ) : (
+                mappingList &&
+                mappingList.map((item, index) => (
+                  <FriendBar key={index}>
+                    <UserInfo>
+                      <ProfilePicture
+                        src={item.profilePicture}
+                        alt='profilepic'></ProfilePicture>
+                      <h3>{item.username}</h3>
+                    </UserInfo>
+                    <Actions>
+                      {!requestsFilter ? (
+                        <>
+                          <ChatBtn
+                            onClick={() => {
+                              dispatch(setFriendAction(item.username));
+                              setFriendsIsOpen(false);
+                            }}>
+                            <i className='fas fa-comment-alt'></i>
+                          </ChatBtn>
+                          <MoreBtn>
+                            <i className='fas fa-ellipsis-v'></i>
+                          </MoreBtn>
+                        </>
+                      ) : (
+                        <>
+                          <AcceptBtn
+                            onClick={() =>
+                              acceptRequest(userInfo.userId, item.userId)
+                            }>
+                            <i className='fas fa-check'></i>
+                          </AcceptBtn>
+                        </>
+                      )}
+                    </Actions>
+                  </FriendBar>
+                ))
+              )}
+            </FriendsList>
+          )
+        ) : null}
+      </FriendsContent>
     </MainContainer>
   );
 }
