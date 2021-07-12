@@ -4,7 +4,7 @@
 
 
 
-# Authorized Login
+
 ![Screen Shot 2021-07-11 at 5 44 21 PM](https://user-images.githubusercontent.com/77520234/125215563-bec92580-e270-11eb-812e-f37e44556a67.png)
 # Connect With Friends
 ![Screen Shot 2021-07-11 at 5 43 35 PM](https://user-images.githubusercontent.com/77520234/125215559-bb359e80-e270-11eb-9517-f0c3d91ffcd6.png)
