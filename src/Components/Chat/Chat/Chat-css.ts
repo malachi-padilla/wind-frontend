@@ -11,12 +11,10 @@ export const Title = styled.div`
 `;
 
 export const ActionBar = styled(FlexRowCenterStart)`
-  height: 48px;
-  position: absolute;
-  top: 0;
+  height: 5%;
   border-bottom: ${(props) => props.theme.defaultBorderBottom};
   box-shadow: ${(props) => props.theme.defaultBoxShadow};
-  padding-left: 10px;
+  padding: 10px;
 `;
 
 export const ChatBody = styled(FlexColCenterCenter)`
@@ -25,6 +23,14 @@ export const ChatBody = styled(FlexColCenterCenter)`
   @media only screen and (max-width: 800px) {
     width: 100%;
   }
+`;
+
+export const ChatMessages = styled(FlexColCenterCenter)`
+  height: 100%;
+  width: 98%;
+  overflow-y: scroll;
+  justify-content: unset;
+  overflow-x: hidden;
 `;
 
 export const MessageWrapper = styled.div<{ secondaryMessage: boolean }>`
@@ -59,10 +65,23 @@ export const NameLabel = styled.p`
   font-size: 10px;
 `;
 
+export const InputWrapper = styled(FlexColCenterCenter)`
+  justify-content: flex-end;
+  height: 15%;
+  z-index: 1;
+  p {
+    color: ${(props) => props.theme.fontColors.defaultLightGrey};
+    align-self: flex-end;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+`;
+
 export const InputContent = styled(FlexRowCenterCenter)`
   display: flex;
   width: 98%;
   align-items: flex-end;
+  padding: 10px;
 `;
 
 export const EnterMessage = styled.textarea<{ showScrollBar: boolean }>`
@@ -92,26 +111,6 @@ export const FriendLabel = styled(FlexRowCenterCenter)`
 export const FriendLabelText = styled.h3`
   margin-left: 2px;
   color: ${(props) => props.theme.fontColors.defaultWhite};
-`;
-
-export const InputWrapper = styled(FlexColCenterCenter)`
-  justify-content: flex-end;
-  height: 10%;
-  z-index: 1;
-  p {
-    color: ${(props) => props.theme.fontColors.defaultLightGrey};
-    align-self: flex-end;
-    margin-right: 20px;
-    margin-top: 20px;
-  }
-`;
-
-export const ChatMessages = styled(FlexColCenterCenter)`
-  height: 100%;
-  width: 98%;
-  overflow-y: scroll;
-  justify-content: unset;
-  overflow-x: hidden;
 `;
 
 export const loadingFade = keyframes`

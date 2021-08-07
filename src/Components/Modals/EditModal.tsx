@@ -60,7 +60,7 @@ export default function EditModal({ setEditModalOpen, infoType }: ModalProps) {
     setUserExistsError(false);
     setUsernameError(false);
     setEmailError(false);
-  }, [userInput]);
+  }, [userInput]);  
 
   return (
     <ModalContainer onClick={() => setEditModalOpen(false)}>

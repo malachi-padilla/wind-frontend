@@ -15,21 +15,22 @@ export const StyledMainContainer = styled(MainContainer)`
 `;
 export const SideBarContents = styled(FlexColCenterCenter)`
   justify-content: unset;
+  height: 100%;
 `;
 export const RecentFriendsWrapper = styled(FlexColCenterStart)`
   height: 80%;
 `;
 export const RecentlyMessagedList = styled(FlexColCenterStart)`
   overflow-y: scroll;
+  height: 95%;
   width: 95%;
-  height: unset;
 `;
 
 export const EnterFriendWrapper = styled(FlexColCenterCenter)`
-  height: 49px;
-  line-height: 24px;
+  height: 5%;
   border-bottom: ${(props) => props.theme.defaultBorderBottom};
   box-shadow: ${(props) => props.theme.defaultBoxShadow};
+  padding: 10px;
 `;
 
 export const StyledFriendInput = styled.input<{ error: boolean }>`
@@ -37,8 +38,8 @@ export const StyledFriendInput = styled.input<{ error: boolean }>`
     props.error ? '1px solid #b92d2d' : '1px solid #1b1b1b'};
 
   background-color: ${(props) => props.theme.tertiaryDarkGrey};
-  width: 90%;
-  height: 28px;
+  width: 100%;
+  height: 90%;
   padding: 10px;
   outline: none;
   box-sizing: border-box;
@@ -57,9 +58,9 @@ export const StyledFriendInput = styled.input<{ error: boolean }>`
 export const FriendsTab = styled(FlexRowCenterStart)`
   background-color: transparent;
   width: 90%;
-  height: 42px;
+  height: 4%;
   border-radius: 4px;
-  padding: 0 8px;
+  padding: 8px;
   font-size: 16px;
   color: #888e9b;
   cursor: pointer;
@@ -74,7 +75,7 @@ export const FriendsTab = styled(FlexRowCenterStart)`
 `;
 
 export const DirectMessageTab = styled(FlexRowCenterStart)`
-  height: 40px;
+  height: 5%;
   width: 100%;
   font-size: 11px;
   padding: 18px 8px 4px 18px;
@@ -139,7 +140,7 @@ export const RemoveFriendButton = styled.button`
 `;
 
 export const ProfileBar = styled(FlexRowCenterEvenly)`
-  height: 52px;
+  height: 5%;
   padding: 10px;
   background-color: #292b2f;
   color: ${(props) => props.theme.fontColors.defaultWhite};

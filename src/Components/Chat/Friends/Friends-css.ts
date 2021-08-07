@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { PrimaryButton, SecondaryButton } from 'Theme/buttons';
 import {
+  FlexColCenterCenter,
   FlexColCenterStart,
   FlexRowCenterBetween,
   FlexRowCenterCenter,
@@ -8,16 +9,14 @@ import {
 
 export const ActionBar = styled.div`
   width: 100%;
-  height: 48px;
+  height: 5%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   background-color: ${(props) => props.theme.mainGrey};
   border-bottom: ${(props) => props.theme.defaultBorderBottom};
   box-shadow: ${(props) => props.theme.defaultBoxShadow};
-  top: 0;
-  position: absolute;
   padding: 10px;
-  z-index: 10;
 `;
 
 export const FriendsTab = styled.div`
@@ -32,6 +31,9 @@ export const FriendsTab = styled.div`
 
 export const ActionBarBtns = styled.div`
   display: flex;
+  align-items: center;
+  height: 90%;
+  padding: 10px;
   width: 50%;
 `;
 
@@ -46,6 +48,10 @@ export const Notification = styled(FlexRowCenterCenter)`
   position: absolute;
   top: -10px;
   right: -15%;
+`;
+
+export const FriendsContent = styled(FlexColCenterCenter)`
+  height: 95%;
 `;
 
 export const FriendsBtn = styled(SecondaryButton)<{ selected: boolean }>`
@@ -70,8 +76,9 @@ export const RequestBtnContents = styled(FlexRowCenterCenter)`
 `;
 
 export const FriendsList = styled(FlexColCenterStart)`
-  height: 80%;
+  height: 100%;
   margin-top: 30px;
+  overflow-y: auto;
 `;
 
 export const FriendBar = styled(FlexRowCenterBetween)`
@@ -114,7 +121,6 @@ export const ChatBtn = styled.button`
 
 export const MoreBtn = styled.button`
   ${ButtonStyles}
-  postion:relative;
 `;
 
 export const AcceptBtn = styled.button`
@@ -189,4 +195,5 @@ export const NoFriendstext = styled.h1`
     color: ${(props) => props.theme.fontColors.actionGreen};
   }
   color: ${(props) => props.theme.messaging.secondaryGrey};
+  justify-self: center;
 `;
